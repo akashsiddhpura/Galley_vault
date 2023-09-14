@@ -50,7 +50,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                 Text("Pinch Zoom",style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'MuseoModerno',
                   fontStyle: FontStyle.italic,
                   color: AppColor.white,
                 ),),
@@ -58,8 +57,7 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
 
                 const Text("Set your gallery grid image for better ",style: TextStyle(
                   fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'MuseoModerno',
+                  fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.italic,
                   color: AppColor.grey,
                 ),),
@@ -67,25 +65,23 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
 
                 const Text("view by finger tips.",style: TextStyle(
                   fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'MuseoModerno',
+                  fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.italic,
                   color: AppColor.grey,
                 ),),
                 const SizedBox(height: 30,),
              CustomButton2(onPressed: (){
-               Get.to(PrivateLocker());
+               Get.to(const PrivateLocker());
 
              }, text: AppString.kNext, color: AppColor.purpal,),
                 const SizedBox(height: 10,),
                 InkWell(
                   onTap: () {
-                    Get.to(MainScreen());
+                    Get.to(const MainScreen());
                   },
                   child: const Text(AppString.kSkip,style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'MuseoModerno',
                     fontStyle: FontStyle.italic,
                     color: AppColor.purpal,
                   ),),

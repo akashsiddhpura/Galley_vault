@@ -1,20 +1,18 @@
+
 import 'package:flutter/material.dart';
-import 'package:gallery_vault/view/res/app_colors.dart';
-import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/screen/information/welcome_screen.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-// import 'package:photo_manager/photo_manager.dart';
-// import 'package:provider/provider.dart';
-//
-// import '../../controller/functions/global_variables.dart';
-// import '../../controller/provider/gallery_data_provider.dart';
-// import '../../controller/provider/video_data_provider.dart';
-// import '../utils/navigation_utils/navigation.dart';
-// import '../utils/navigation_utils/routes.dart';
-// import '../utils/permission_handler.dart';
-// import '../utils/navigation_utils/navigation.dart';
+
+import 'package:provider/provider.dart';
+
+import '../../../controller/provider/gallery_data_provider.dart';
+
+import '../../res/app_colors.dart';
+import '../../res/assets_path.dart';
+import '../../utils/navigation_utils/navigation.dart';
+import '../../utils/navigation_utils/routes.dart';
 import '../../utils/size_utils.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,16 +24,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   bool isLoading = false;
   @override
-  // void initState() {
-  //   super.initState();
-  //   // PermissionHandler().getPermission();
-  //   _loadData();
-  // }
+  void initState() {
+    super.initState();
+    // PermissionHandler().getPermission();
+    _loadData();
+  }
 
-  // void _loadData() async {
-  //   await Provider.of<GalleryDataProvider>(context, listen: false).fetchGalleryData();
-  //   Navigation.replaceAll(Routes.kMainScreen);
-  // }
+  void _loadData() async {
+    await Provider.of<GalleryDataProvider>(context, listen: false).fetchGalleryData();
+    Navigation.replaceAll(Routes.kWelcomeScreen);
+  }
 
   @override
   Widget build(BuildContext context) {

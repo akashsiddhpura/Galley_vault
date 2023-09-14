@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/drawable_install_btn.xml.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/drawable/install_btn.xml"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/layout_layout_small_native_ad.xml.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/layout/layout_small_native_ad.xml"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/drawable-v21_launch_background.xml.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/drawable_native_bg.xml.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/drawable/native_bg.xml"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/layout_ads_big_native_admob.xml.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/layout/ads_big_native_admob.xml"
+    },
+    {
+        "merged": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-merged_res-41:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-main-35:/mipmap-mdpi/ic_launcher.png"
+    }
+]

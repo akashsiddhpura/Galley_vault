@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/pinch_zoom.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/assets_path.dart';
+
 import '../../utils/size_utils.dart';
 import '../../widgets/custom_button.dart';
 
@@ -18,9 +18,12 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+
       body: Stack(
         children: [
           Container(
@@ -43,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),),
           Positioned(
               bottom: SizeUtils.verticalBlockSize * 5,
-              right: SizeUtils.horizontalBlockSize * 10,
+              right: SizeUtils.horizontalBlockSize * 5,
               child: Column(children: [
             Text("WELCOME TO",style: TextStyle(
               fontSize: 30,
@@ -78,6 +81,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 CustomButton2(onPressed: (){
                   Get.to(const PinchZoom());
+
                 }, text: AppString.kContinue, color: AppColor.purpal,),
 
               ],))

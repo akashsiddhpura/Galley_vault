@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/duplicate_screen.dart';
+import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
 
 import '../../res/assets_path.dart';
@@ -42,7 +43,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                   Text("Private Locker",style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.white,
                   ),),
@@ -51,7 +51,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                   const Text("Protect your photos & videos lock your ",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
@@ -60,31 +59,15 @@ class _PrivateLockerState extends State<PrivateLocker> {
                   const Text(" private Photos & Videos.",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 30,),
-                  InkWell(
-                    onTap: () {
-                      Get.to(Duplicate_Screen());
-                    },
-                    child: Container(
-                      height: SizeUtils.verticalBlockSize * 7,
-                      width: SizeUtils.horizontalBlockSize * 80,
-                      decoration: BoxDecoration(
-                          color: AppColor.purpal,
-                          borderRadius: BorderRadius.circular(30)
-                      ),
-                      child: Center(child: Text(AppString.kNext,style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.italic,
-                        color: AppColor.white,
-                      )),),
-                    ),
-                  ),
+                  CustomButton2(onPressed: (){
+                    Get.to(const Duplicate_Screen());
+
+
+                  }, text: AppString.kNext, color: AppColor.purpal,),
                   const SizedBox(height: 10,),
                   InkWell(
                     onTap: () {
@@ -93,7 +76,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                     child: const Text(AppString.kSkip,style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'MuseoModerno',
                       fontStyle: FontStyle.italic,
                       color: AppColor.purpal,
                     ),),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/utils/net_conectivity.dart';

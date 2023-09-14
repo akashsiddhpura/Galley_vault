@@ -7,6 +7,8 @@ import 'package:gallery_vault/view/screen/main_screen.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/custom_button.dart';
+
 class Duplicate_Screen extends StatefulWidget {
   const Duplicate_Screen({super.key});
 
@@ -41,7 +43,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                   Text("Duplicate Scan",style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.white,
                   ),),
@@ -50,7 +51,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                   const Text("Scan for similar photos remove duplicate",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
@@ -59,31 +59,14 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                   const Text(" Photos with ease.",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Urbanist',
                     fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 30,),
-                  InkWell(
-                    onTap: () {
-                      Get.to(Insta());
-                    },
-                    child: Container(
-                      height: SizeUtils.verticalBlockSize * 7,
-                      width: SizeUtils.horizontalBlockSize * 80,
-                      decoration: BoxDecoration(
-                          color: AppColor.purpal,
-                          borderRadius: BorderRadius.circular(30)
-                      ),
-                      child: Center(child: Text(AppString.kNext,style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.italic,
-                        color: AppColor.white,
-                      )),),
-                    ),
-                  ),
+                  CustomButton2(onPressed: (){
+                    Get.to(const Insta());
+                    }, text: AppString.kNext, color: AppColor.purpal,),
+
                   const SizedBox(height: 10,),
                   InkWell(
                     onTap: () {
@@ -92,7 +75,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                     child: const Text(AppString.kSkip,style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'MuseoModerno',
                       fontStyle: FontStyle.italic,
                       color: AppColor.purpal,
                     ),),
