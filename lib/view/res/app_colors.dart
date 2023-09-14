@@ -9,6 +9,7 @@ class AppColor {
   static const greyText = Color(0xFF909194);
   static const grey = Color(0xffC4C4C4);
   static const purpal = Color(0xff9C1DFF);
+  static const blackdark =  Color(0xff1F222A);
   static Color white = Colors.white;
   static Color black = Colors.black;
 }

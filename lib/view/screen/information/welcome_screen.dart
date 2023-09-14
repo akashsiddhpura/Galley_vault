@@ -81,7 +81,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 CustomButton2(onPressed: (){
                   Get.to(const PinchZoom());
-
                 }, text: AppString.kContinue, color: AppColor.purpal,),
 
               ],))

@@ -32,7 +32,10 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
             bottom: SizeUtils.verticalBlockSize * 0,
             child: Container(height: SizeUtils.verticalBlockSize * 40,
               width: SizeUtils.screenWidth,
-              color: const Color(0xff1F222A),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                  color:AppColor.blackdark
+              ),
               child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 30,),
