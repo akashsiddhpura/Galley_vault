@@ -33,9 +33,9 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
             : DraggableScrollbar.semicircle(
                 controller: scrollController,
                 heightScrollThumb: 48.0,
-                padding: EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 10),
                 backgroundColor: Colors.deepPurple,
-                labelConstraints: BoxConstraints.tightFor(width: 80.0, height: 30.0),
+                labelConstraints: const BoxConstraints.tightFor(width: 80.0, height: 30.0),
                 child: ListView.builder(
                   controller: scrollController,
                   itemCount: gallery.recentImagesList.length,
@@ -49,8 +49,8 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
                         ),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(10),
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(10),
                           itemCount: gallery.recentImagesList[index].listOfImages!.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
@@ -101,7 +101,7 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
                                                       Icons.play_circle_fill_rounded,
                                                       color: AppColor.white,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
                                                     Wrap(

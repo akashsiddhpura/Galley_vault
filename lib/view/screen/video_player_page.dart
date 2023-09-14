@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-//import 'package:nova_videoplayer/functions/global_variables.dart';
+import 'package:gallery_vault/controller/functions/history.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-
-import '../../controller/functions/history.dart';
 
 class VideoPLayerPage extends StatefulWidget {
   final List<AssetEntity> videoList;

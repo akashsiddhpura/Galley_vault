@@ -38,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(AssetsPath.welcomebg),fit: BoxFit.cover
-                )
+                ),
             ),
           ),),
           Positioned(

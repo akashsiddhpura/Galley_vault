@@ -10,6 +10,7 @@ class AppColor {
   static const grey = Color(0xffC4C4C4);
   static const purpal = Color(0xff9C1DFF);
   static const blackdark =  Color(0xff1F222A);
+  static const graydark =  Color(0xff4E4F54);
   static Color white = Colors.white;
   static Color black = Colors.black;
 }

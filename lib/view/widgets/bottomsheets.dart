@@ -377,7 +377,7 @@ class AppBottomSheets {
                   width: SizeUtils.horizontalBlockSize * 90,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: const Color(0xff4E4F54)
+                    color: AppColor.graydark,
                   ),
                   child: const TextField(
                     decoration: InputDecoration(
@@ -400,7 +400,8 @@ class AppBottomSheets {
                         width: SizeUtils.horizontalBlockSize * 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                            color: const Color(0xff4E4F54)
+                            color: AppColor.graydark
+
                         ),
                         child: Center(child:
                         Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),

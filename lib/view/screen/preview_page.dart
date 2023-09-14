@@ -111,10 +111,10 @@ class _PreviewPageState extends State<PreviewPage> {
                             return Container(
                               alignment: Alignment.center,
                               color: Colors.black,
-                              child: CircularProgressIndicator(),
+                              child: const CircularProgressIndicator(),
                             );
                           },
-                          backgroundDecoration: BoxDecoration(color: Colors.black),
+                          backgroundDecoration: const BoxDecoration(color: Colors.black),
                           imageProvider: FileImage(snapshot.data!),
                         ),
                       );
@@ -139,7 +139,7 @@ class _PreviewPageState extends State<PreviewPage> {
                           : Container(
                               alignment: Alignment.center,
                               color: Colors.black,
-                              child: CircularProgressIndicator(),
+                              child: const CircularProgressIndicator(),
                             );
                     } else {
                       return const Center(child: Text('Unsupported media type'));
