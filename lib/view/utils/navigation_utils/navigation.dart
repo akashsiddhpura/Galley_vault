@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 // import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +11,6 @@ class Navigation {
     FocusManager.instance.primaryFocus?.unfocus();
     Get.to<dynamic>(child);
   }
-
   static Future pushNamed(
     String routeName, {
     dynamic arg,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/duplicate_screen.dart';
+import 'package:gallery_vault/view/screen/main_screen.dart';
+import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
 
-import '../../res/assets_path.dart';
-import '../../utils/size_utils.dart';
-import '../main_screen.dart';
+
 
 class PrivateLocker extends StatefulWidget {
   const PrivateLocker({super.key});
@@ -35,7 +36,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                   color:AppColor.blackdark
-
               ),
               child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -51,7 +51,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                     color: AppColor.white,
                   ),),
                   const SizedBox(height: 10,),
-
                   const Text("Protect your photos & videos lock your ",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
@@ -59,7 +58,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 5,),
-
                   const Text(" private Photos & Videos.",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
@@ -69,8 +67,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                   const SizedBox(height: 30,),
                   CustomButton2(onPressed: (){
                     Get.to(const Duplicate_Screen());
-
-
                   }, text: AppString.kNext, color: AppColor.purpal,),
                   const SizedBox(height: 10,),
                   InkWell(
@@ -84,7 +80,6 @@ class _PrivateLockerState extends State<PrivateLocker> {
                       color: AppColor.purpal,
                     ),),
                   ),
-
                 ],
               ),
             ),)

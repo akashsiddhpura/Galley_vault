@@ -5,9 +5,8 @@ import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/insta.dart';
 import 'package:gallery_vault/view/screen/main_screen.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
-
-import '../../widgets/custom_button.dart';
 
 class Duplicate_Screen extends StatefulWidget {
   const Duplicate_Screen({super.key});
@@ -50,7 +49,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                     color: AppColor.white,
                   ),),
                   const SizedBox(height: 10,),
-
                   const Text("Scan for similar photos remove duplicate",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
@@ -58,7 +56,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 5,),
-
                   const Text(" Photos with ease.",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
@@ -69,7 +66,6 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                   CustomButton2(onPressed: (){
                     Get.to(const Insta());
                     }, text: AppString.kNext, color: AppColor.purpal,),
-
                   const SizedBox(height: 10,),
                   InkWell(
                     onTap: () {
@@ -82,10 +78,9 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                       color: AppColor.purpal,
                     ),),
                   ),
-
                 ],
               ),
-            ),)
+            ),),
         ],
       ),
     );

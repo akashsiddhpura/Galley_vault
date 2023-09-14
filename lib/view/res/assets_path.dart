@@ -2,7 +2,7 @@ class AssetsPath {
   AssetsPath._();
 
   /// Font Family
-  static const String fontsFamily = 'Poppins';
+
 
   static const String appIcons = 'assets/images/';
   static const String welcomebg = 'asset/images/welcome_bg.png';

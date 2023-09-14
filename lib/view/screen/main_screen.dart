@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/screen/recent_gallery_list.dart';
 import 'package:gallery_vault/view/widgets/custom_appbar.dart';
-import 'package:get/get.dart';
-import 'package:photo_manager/photo_manager.dart';
-
-import '../utils/permission_handler.dart';
 import '../widgets/bottomsheets.dart';
 import 'album_list_screeen.dart';
 

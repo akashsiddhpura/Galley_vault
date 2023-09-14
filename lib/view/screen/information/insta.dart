@@ -4,9 +4,8 @@ import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/main_screen.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
-
-import '../../widgets/custom_button.dart';
 
 class Insta extends StatefulWidget {
   const Insta({super.key});
@@ -35,7 +34,6 @@ class _InstaState extends State<Insta> {
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                 color:AppColor.blackdark,
               ),
-
               child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 30,),

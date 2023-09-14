@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
+import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
-import '../../controller/provider/gallery_data_provider.dart';
-import '../res/app_colors.dart';
 
 class AppBottomSheets {
   bool isLoading = false;
@@ -50,7 +49,7 @@ class AppBottomSheets {
                       ),
                     ),
                     isLoading
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : Row(
@@ -202,14 +201,14 @@ class AppBottomSheets {
               // Default selection
 
               return Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Displayed Columns:"),
+                    const Text("Displayed Columns:"),
                     RadioListTile(
-                      title: Text("Column 1"),
+                      title: const Text("Column 1"),
                       value: 1,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -219,7 +218,7 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: Text("Column 2"),
+                      title: const Text("Column 2"),
                       value: 2,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -229,7 +228,7 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: Text("Column 3"),
+                      title: const Text("Column 3"),
                       value: 3,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -239,7 +238,7 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: Text("Column 4"),
+                      title: const Text("Column 4"),
                       value: 4,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -248,7 +247,7 @@ class AppBottomSheets {
                         });
                       },
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -256,9 +255,9 @@ class AppBottomSheets {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("Cancel"),
+                          child: const Text("Cancel"),
                         ),
-                        SizedBox(width: 16.0),
+                        const SizedBox(width: 16.0),
                         ElevatedButton(
                           onPressed: () {
                             // Perform the OK action with the selectedColumn
@@ -267,7 +266,7 @@ class AppBottomSheets {
                             gallery.notifyListeners();
                             Navigator.pop(context);
                           },
-                          child: Text("OK"),
+                          child: const Text("OK"),
                         ),
                       ],
                     ),
@@ -289,14 +288,14 @@ class AppBottomSheets {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Sort By:"),
+                      const Text("Sort By:"),
                       for (SortOption option in SortOption.values)
                         RadioListTile(
                           title: Text(gallery.optionToString(option)),
@@ -308,8 +307,8 @@ class AppBottomSheets {
                             });
                           },
                         ),
-                      SizedBox(height: 16.0),
-                      Text("Sort Order:"),
+                      const SizedBox(height: 16.0),
+                      const Text("Sort Order:"),
                       for (SortOrder order in SortOrder.values)
                         RadioListTile(
                           title: Text(gallery.orderToString(order)),
@@ -321,7 +320,7 @@ class AppBottomSheets {
                             });
                           },
                         ),
-                      SizedBox(height: 16.0),
+                      // SizedBox(height: 16.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -329,9 +328,9 @@ class AppBottomSheets {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text("Cancel"),
+                            child: const Text("Cancel",style: TextStyle(color: Colors.black),),
                           ),
-                          SizedBox(width: 16.0),
+                          const SizedBox(width: 16.0),
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
@@ -339,7 +338,7 @@ class AppBottomSheets {
                               });
                               Navigator.pop(context);
                             },
-                            child: Text("OK"),
+                            child: const Text("OK"),
                           ),
                         ],
                       ),
@@ -352,5 +351,87 @@ class AppBottomSheets {
         });
       },
     );
+  }
+
+  void openAlbumsBottomSheet(BuildContext context){
+    showBottomSheet(context: context, builder: (context) {
+      return StatefulBuilder(builder: (context, setState) {
+        return  SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Container(
+            decoration: const BoxDecoration(
+                color: AppColor.blackdark,
+              borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
+            ),
+            padding: const EdgeInsets.all(20.0),
+            child: Column(mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Text("Create New Albums",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: AppColor.white),),
+                const SizedBox(height: 10,),
+                const Divider(thickness: 1,),
+                const SizedBox(height: 30,),
+
+                Container(
+                  height: SizeUtils.verticalBlockSize * 8,
+                  width: SizeUtils.horizontalBlockSize * 90,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: const Color(0xff4E4F54)
+                  ),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(left: 20,top: 12),
+                      hintText: "Enter name",
+                      helperStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.w400,color: Color(0xffFFFFFF))
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30,),
+                Row(
+                  children: [
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(height: SizeUtils.verticalBlockSize * 6,
+                        width: SizeUtils.horizontalBlockSize * 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                            color: const Color(0xff4E4F54)
+                        ),
+                        child: Center(child:
+                        Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                      ),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(height: SizeUtils.verticalBlockSize * 6,
+                        width: SizeUtils.horizontalBlockSize * 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: AppColor.purpal,
+                        ),
+                        child: Center(child:
+                        Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
+          ),
+        );
+      },);
+    },);
   }
 }

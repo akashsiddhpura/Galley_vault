@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
-import 'package:gallery_vault/controller/functions/gobal_functions.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 enum SortOption { name, lastModifiedDate, size, path }
@@ -9,7 +7,7 @@ enum SortOption { name, lastModifiedDate, size, path }
 enum SortOrder { ascending, descending }
 
 class GalleryDataProvider extends ChangeNotifier {
-  List<AssetPathEntity> _nonEmptyFolderList = [];
+  final List<AssetPathEntity> _nonEmptyFolderList = [];
   List<AssetPathEntity> _allGalleryFolders = [];
   List<AssetEntity> _allRecentList = [];
   final List<List<AssetEntity>> _folderThumbnail = [];
@@ -42,7 +40,6 @@ class GalleryDataProvider extends ChangeNotifier {
     for (var image in _allRecentList) {
       addImageToRecentList(image);
     }
-
     // notifyListeners();
   }
 
@@ -82,7 +79,6 @@ class GalleryDataProvider extends ChangeNotifier {
     _allRecentList.sort((a, b) {
       int result = 0;
       result = a.modifiedDateTime.compareTo(b.modifiedDateTime);
-
       return -result;
     });
   }
@@ -97,7 +93,6 @@ class GalleryDataProvider extends ChangeNotifier {
 
   Future<List<AssetEntity>> loadAssetsInFolder(index) async {
     List<AssetEntity> assets = await _nonEmptyFolderList[index].getAssetListRange(start: 0, end: 10000);
-
     return assets;
   }
 

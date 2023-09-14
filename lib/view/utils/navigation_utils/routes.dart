@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-
 import '../../screen/file_detail_screen.dart';
 import '../../screen/folder_data_screen.dart';
+import '../../screen/information/duplicate_screen.dart';
+import '../../screen/information/insta.dart';
 import '../../screen/information/pinch_zoom.dart';
 import '../../screen/information/private_locker.dart';
 import '../../screen/information/splash_screen.dart';
@@ -17,8 +18,10 @@ mixin Routes {
   static const String kMainScreen = "/MainScreen";
   static const String kPinchZoom = "/PinchZoom";
   static const String kPrivateLocker = "/PrivateLocker";
+  static const String kDuplicateScreen = "/Duplicate_Screen";
   static const String kFolderDataScreen = "/FolderDataScreen";
   static const String kPreviewPage = "/PreviewPage";
+  static const String kInsta = "/Insta";
   static const String kFileDetailScreen = "/FileDetailScreen";
   static const String kWelcomeScreen = "/WelcomeScreen";
 
@@ -41,6 +44,16 @@ mixin Routes {
     GetPage<dynamic>(
       name: kPrivateLocker,
       page: () => const PrivateLocker(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kInsta,
+      page: () => const Insta(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kDuplicateScreen,
+      page: () => const Duplicate_Screen(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(

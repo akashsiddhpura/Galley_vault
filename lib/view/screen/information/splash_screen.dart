@@ -1,17 +1,13 @@
-
 import 'package:flutter/material.dart';
+import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
+import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/screen/information/welcome_screen.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
+import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:get/get.dart';
-
 import 'package:provider/provider.dart';
-
-import '../../../controller/provider/gallery_data_provider.dart';
-
-import '../../res/app_colors.dart';
-import '../../res/assets_path.dart';
-import '../../utils/navigation_utils/navigation.dart';
-import '../../utils/navigation_utils/routes.dart';
-import '../../utils/size_utils.dart';
 
 
 class SplashScreen extends StatefulWidget {

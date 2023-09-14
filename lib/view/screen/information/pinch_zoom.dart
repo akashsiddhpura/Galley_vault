@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/private_locker.dart';
 import 'package:gallery_vault/view/screen/main_screen.dart';
-
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
 
-import '../../res/assets_path.dart';
-
 
 class PinchZoom extends StatefulWidget {
   const PinchZoom({super.key});
-
   @override
   State<PinchZoom> createState() => _PinchZoomState();
 }
@@ -21,12 +18,8 @@ class PinchZoom extends StatefulWidget {
 class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
 
   @override
-
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           Container(
@@ -42,7 +35,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                 color:AppColor.blackdark
-              
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -58,7 +50,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                   color: AppColor.white,
                 ),),
                 const SizedBox(height: 10,),
-
                 const Text("Set your gallery grid image for better ",style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w400,
@@ -66,7 +57,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                   color: AppColor.grey,
                 ),),
                 const SizedBox(height: 5,),
-
                 const Text("view by finger tips.",style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w400,
@@ -76,7 +66,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                 const SizedBox(height: 30,),
              CustomButton2(onPressed: (){
                Get.to(const PrivateLocker());
-
              }, text: AppString.kNext, color: AppColor.purpal,),
                 const SizedBox(height: 10,),
                 InkWell(
@@ -90,7 +79,6 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                     color: AppColor.purpal,
                   ),),
                 ),
-
               ],
             ),
           ),)
