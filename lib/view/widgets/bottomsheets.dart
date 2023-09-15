@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
@@ -27,10 +29,14 @@ class AppBottomSheets {
               width: double.maxFinite,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: SizeUtils.horizontalBlockSize * 5, vertical: SizeUtils.verticalBlockSize * 1.5),
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeUtils.horizontalBlockSize * 5,
+                    vertical: SizeUtils.verticalBlockSize * 1.5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -38,14 +44,19 @@ class AppBottomSheets {
                       child: Container(
                         height: 3,
                         width: 40,
-                        decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: SizeUtils.verticalBlockSize * 1, bottom: SizeUtils.verticalBlockSize * 2),
+                      padding: EdgeInsets.only(
+                          top: SizeUtils.verticalBlockSize * 1,
+                          bottom: SizeUtils.verticalBlockSize * 2),
                       child: const Text(
                         "Set a wallpaper",
-                        style: TextStyle(color: AppColor.primaryClr, fontSize: 15),
+                        style:
+                            TextStyle(color: AppColor.primaryClr, fontSize: 15),
                       ),
                     ),
                     isLoading
@@ -60,14 +71,18 @@ class AppBottomSheets {
                                 onTap: () async {
                                   isLoading = true;
                                   setState(() {});
-                                  bool result = await WallpaperManager.setWallpaperFromFile(imagePath!, WallpaperManager.HOME_SCREEN);
+                                  bool result = await WallpaperManager
+                                      .setWallpaperFromFile(imagePath!,
+                                          WallpaperManager.HOME_SCREEN);
                                   setState(() {
                                     isLoading = false;
                                     Get.back();
                                     if (result) {
-                                      ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(successSnackBar);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(failedSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(failedSnackBar);
                                     }
                                   });
                                 },
@@ -77,7 +92,10 @@ class AppBottomSheets {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(color: Colors.blue.shade400, borderRadius: BorderRadius.circular(10)),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue.shade400,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         child: Icon(
                                           Icons.home_filled,
                                           color: AppColor.white,
@@ -90,7 +108,9 @@ class AppBottomSheets {
                                       const Text(
                                         "Home Screen",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(color: AppColor.primaryClr, fontSize: 12),
+                                        style: TextStyle(
+                                            color: AppColor.primaryClr,
+                                            fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -100,14 +120,18 @@ class AppBottomSheets {
                                 onTap: () async {
                                   isLoading = true;
                                   setState(() {});
-                                  bool result = await WallpaperManager.setWallpaperFromFile(imagePath!, WallpaperManager.LOCK_SCREEN);
+                                  bool result = await WallpaperManager
+                                      .setWallpaperFromFile(imagePath!,
+                                          WallpaperManager.LOCK_SCREEN);
                                   setState(() {
                                     isLoading = false;
                                     Get.back();
                                     if (result) {
-                                      ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(successSnackBar);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(failedSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(failedSnackBar);
                                     }
                                   });
                                 },
@@ -117,7 +141,10 @@ class AppBottomSheets {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(color: Colors.blue.shade400, borderRadius: BorderRadius.circular(10)),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue.shade400,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         child: Icon(
                                           Icons.lock_outline_rounded,
                                           color: AppColor.white,
@@ -130,7 +157,9 @@ class AppBottomSheets {
                                       const Text(
                                         "Lock Screen",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(color: AppColor.primaryClr, fontSize: 12),
+                                        style: TextStyle(
+                                            color: AppColor.primaryClr,
+                                            fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -140,14 +169,18 @@ class AppBottomSheets {
                                 onTap: () async {
                                   isLoading = true;
                                   setState(() {});
-                                  bool result = await WallpaperManager.setWallpaperFromFile(imagePath!, WallpaperManager.BOTH_SCREEN);
+                                  bool result = await WallpaperManager
+                                      .setWallpaperFromFile(imagePath!,
+                                          WallpaperManager.BOTH_SCREEN);
                                   setState(() {
                                     isLoading = false;
                                     Get.back();
                                     if (result) {
-                                      ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(successSnackBar);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(failedSnackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(failedSnackBar);
                                     }
                                   });
                                 },
@@ -157,7 +190,10 @@ class AppBottomSheets {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(color: Colors.blue.shade400, borderRadius: BorderRadius.circular(10)),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue.shade400,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         child: Icon(
                                           Icons.photo_library,
                                           color: AppColor.white,
@@ -170,7 +206,9 @@ class AppBottomSheets {
                                       const Text(
                                         "Home and lock Screens",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(color: AppColor.primaryClr, fontSize: 12),
+                                        style: TextStyle(
+                                            color: AppColor.primaryClr,
+                                            fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -191,174 +229,131 @@ class AppBottomSheets {
   int selectedColumn = 3;
   void openColumnSelectionBottomSheet(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
-        return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
+        return Consumer<GalleryDataProvider>(
+            builder: (context, gallery, child) {
           selectedColumn = gallery.columnCount;
 
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              // Default selection
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+            child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                // Default selection
 
-              return Container(
-                height: SizeUtils.verticalBlockSize * 43,
-                decoration: const BoxDecoration(
-                    color: AppColor.blackdark,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Text("Displayed Columns:",style: TextStyle(color: AppColor.white)),
-                    RadioListTile(
-                      activeColor: AppColor.purpal,
-                      title:  Text("Column 1",style: TextStyle(color:selectedColumn==1? AppColor.purpal:AppColor.greyText),),
-                      value: 1,
-                      groupValue: selectedColumn,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedColumn = value ?? 1;
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: AppColor.purpal,
-                      title:  Text("Column 2",style: TextStyle(color:selectedColumn==2? AppColor.purpal:AppColor.greyText),),
-                      value: 2,
-                      groupValue: selectedColumn,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedColumn = value ?? 2;
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: AppColor.purpal,
-                      title:  Text("Column 3",style: TextStyle(color:selectedColumn==3? AppColor.purpal:AppColor.greyText),),
-                      value: 3,
-                      groupValue: selectedColumn,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedColumn = value ?? 3;
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: AppColor.purpal,
-                      title:  Text("Column 4",style: TextStyle(color:selectedColumn==4? AppColor.purpal:AppColor.greyText),),
-                      value: 4,
-                      groupValue: selectedColumn,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedColumn = value ?? 4;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 16.0),
-                    Row(
-                      children: [
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(height: SizeUtils.verticalBlockSize * 6,
-                            width: SizeUtils.horizontalBlockSize * 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: AppColor.graydark
-
-                            ),
-                            child: Center(child:
-                            Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
-                          ),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            // Perform the OK action with the selectedColumn
-                            print("Selected Column: ${gallery.columnCount}");
-                            gallery.columnCount = selectedColumn;
-                            gallery.notifyListeners();
-                            Navigator.pop(context);
-                          },
-                          child: Container(height: SizeUtils.verticalBlockSize * 6,
-                            width: SizeUtils.horizontalBlockSize * 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: AppColor.purpal,
-                            ),
-                            child: Center(child:
-                            Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
-                          ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-
-                  ],
-                ),
-              );
-            },
-          );
-        });
-      },
-    );
-  }
-  int select  = 0 ;
-  void openFolderSortingBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return SingleChildScrollView(
-                physics:  const NeverScrollableScrollPhysics(),
-                child: Container(
-                  height: SizeUtils.verticalBlockSize * 70,
+                return Container(
+                  height: SizeUtils.verticalBlockSize * 50,
                   decoration: const BoxDecoration(
-                    color: AppColor.blackdark,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
-                  ),
-                  padding: const EdgeInsets.all(15.0),
+                      color: AppColor.blackdark,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25))),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text("Sort By:",style: TextStyle(color: AppColor.white),),
-                      const Divider(thickness: 1,),
-                      for (SortOption option in SortOption.values)
-                        RadioListTile(
-                          activeColor: AppColor.purpal,
-                          title: Text(gallery.optionToString(option),style: TextStyle(color: select==1? AppColor.purpal:AppColor.greyText),),
-                          value: option,
-                          groupValue: gallery.selectedSortOption,
-                          onChanged: (value) {
-                            setState(() {
-                              gallery.selectedSortOption = value!;
-                            });
-                          },
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 0),
+                          height: 3,
+                          width: 25,
+                          decoration: BoxDecoration(
+                              color: AppColor.greyText,
+                              borderRadius: BorderRadius.circular(10)),
                         ),
-                      // const SizedBox(height: 16.0),
-                       const Divider(thickness: 1,),
-                       // Text("Sort Order:",style: TextStyle(color: AppColor.white),),
-                      for (SortOrder order in SortOrder.values)
-                   RadioListTile(
-                          activeColor: AppColor.purpal,
-                          title: Text(gallery.orderToString(order),style: const TextStyle(color: AppColor.greyText),),
-                          value: order,
-                          groupValue: gallery.selectedSortOrder,
-                          onChanged: (value) {
-                            setState(() {
-                              gallery.selectedSortOrder = value!;
-                            });
-                          },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Text("Displayed Columns:",
+                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w600,fontSize: 15)),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Divider(
+                          thickness: 1,
+                          color: AppColor.dividercolor,
                         ),
-                      // SizedBox(height: 16.0),
-
+                      ),
+                      RadioListTile(
+                        activeColor: AppColor.purpal,
+                        title: Text(
+                          "Column 1",
+                          style: TextStyle(
+                              color: selectedColumn == 1
+                                  ? AppColor.purpal
+                                  : AppColor.greyText),
+                        ),
+                        value: 1,
+                        groupValue: selectedColumn,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColumn = value ?? 1;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: AppColor.purpal,
+                        title: Text(
+                          "Column 2",
+                          style: TextStyle(
+                              color: selectedColumn == 2
+                                  ? AppColor.purpal
+                                  : AppColor.greyText),
+                        ),
+                        value: 2,
+                        groupValue: selectedColumn,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColumn = value ?? 2;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: AppColor.purpal,
+                        title: Text(
+                          "Column 3",
+                          style: TextStyle(
+                              color: selectedColumn == 3
+                                  ? AppColor.purpal
+                                  : AppColor.greyText),
+                        ),
+                        value: 3,
+                        groupValue: selectedColumn,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColumn = value ?? 3;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: AppColor.purpal,
+                        title: Text(
+                          "Column 4",
+                          style: TextStyle(
+                              color: selectedColumn == 4
+                                  ? AppColor.purpal
+                                  : AppColor.greyText),
+                        ),
+                        value: 4,
+                        groupValue: selectedColumn,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColumn = value ?? 4;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 16.0),
                       Row(
                         children: [
                           const Spacer(),
@@ -366,33 +361,48 @@ class AppBottomSheets {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: Container(height: SizeUtils.verticalBlockSize * 6,
+                            child: Container(
+                              height: SizeUtils.verticalBlockSize * 6,
                               width: SizeUtils.horizontalBlockSize * 40,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
-                                  color: AppColor.graydark
-
+                                  color: AppColor.graydark),
+                              child: Center(
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.white),
+                                ),
                               ),
-                              child: Center(child:
-                              Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
                             ),
                           ),
                           const Spacer(),
                           InkWell(
                             onTap: () {
-                              setState(() {
-                                gallery.sortList();
-                              });
+                              // Perform the OK action with the selectedColumn
+                              print("Selected Column: ${gallery.columnCount}");
+                              gallery.columnCount = selectedColumn;
+                              gallery.notifyListeners();
                               Navigator.pop(context);
                             },
-                            child: Container(height: SizeUtils.verticalBlockSize * 6,
+                            child: Container(
+                              height: SizeUtils.verticalBlockSize * 6,
                               width: SizeUtils.horizontalBlockSize * 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 color: AppColor.purpal,
                               ),
-                              child: Center(child:
-                              Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                              child: Center(
+                                child: Text(
+                                  "Ok",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.white),
+                                ),
+                              ),
                             ),
                           ),
                           const Spacer(),
@@ -400,95 +410,328 @@ class AppBottomSheets {
                       ),
                     ],
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         });
       },
     );
   }
 
-  void openAlbumsBottomSheet(BuildContext context){
-    showBottomSheet(context: context, builder: (context) {
-      return StatefulBuilder(builder: (context, setState) {
-        return  SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: Container(
-            decoration: const BoxDecoration(
-                color: AppColor.blackdark,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
-            ),
-            padding: const EdgeInsets.all(20.0),
-            child: Column(mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                 Text("Create New Albums",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: AppColor.white),),
-                const SizedBox(height: 10,),
-                const Divider(thickness: 1,),
-                const SizedBox(height: 30,),
+  void openFolderSortingBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child:
+              Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
+            return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Container(
+                    // height: SizeUtils.verticalBlockSize * 70,
+                    decoration: const BoxDecoration(
+                        color: AppColor.blackdark,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25))),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 0),
+                            height: 3,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                color: AppColor.greyText,
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                          child: Text(
+                            "Sort By:",
+                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w600,fontSize: 15),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Divider(
+                            color: AppColor.dividercolor,
+                            thickness: 1,
+                          ),
+                        ),
+                        for (SortOption option in SortOption.values)
+                          RadioListTile(
+                            activeColor: AppColor.purpal,
+                            title: Text(
+                              gallery.optionToString(option),
+                              style: TextStyle(
+                                  color: gallery.selectedSortOption == option
+                                      ? AppColor.purpal
+                                      : AppColor.greyText),
+                            ),
+                            value: option,
+                            groupValue: gallery.selectedSortOption,
+                            onChanged: (value) {
+                              setState(() {
+                                gallery.selectedSortOption = value!;
+                              });
+                            },
+                          ),
+                        // const SizedBox(height: 16.0),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Divider(
+                            color:  AppColor.dividercolor,
+                            thickness: 1,
+                          ),
+                        ),
+                        // Text("Sort Order:",style: TextStyle(color: AppColor.white),),
+                        for (SortOrder order in SortOrder.values)
+                          RadioListTile(
+                            activeColor: AppColor.purpal,
+                            title: Text(
+                              gallery.orderToString(order),
+                              style:  TextStyle(color: gallery.selectedSortOrder == order? AppColor.purpal: AppColor.greyText),
+                            ),
+                            value: order,
+                            groupValue: gallery.selectedSortOrder,
+                            onChanged: (value) {
+                              setState(() {
+                                gallery.selectedSortOrder = value!;
+                              });
+                            },
+                          ),
+                        const SizedBox(height: 16.0),
 
-                Container(
-                  height: SizeUtils.verticalBlockSize * 8,
-                  width: SizeUtils.horizontalBlockSize * 90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: AppColor.graydark,
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(left: 20,top: 12),
-                      hintText: "Enter name",
-                      helperStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.w400,color: Color(0xffFFFFFF))
+                        Row(
+                          children: [
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: SizeUtils.verticalBlockSize * 6,
+                                width: SizeUtils.horizontalBlockSize * 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: AppColor.graydark),
+                                child: Center(
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColor.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  gallery.sortList();
+                                });
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: SizeUtils.verticalBlockSize * 6,
+                                width: SizeUtils.horizontalBlockSize * 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: AppColor.purpal,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "ok",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColor.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
+                  ),
+                );
+              },
+            );
+          }),
+        );
+      },
+    );
+  }
+
+  void openAlbumsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: AppColor.blackdark,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          topLeft: Radius.circular(30))),
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 0),
+                          height: 3,
+                          width: 25,
+                          decoration: BoxDecoration(
+                              color: AppColor.greyText,
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          "Create New Albums",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: AppColor.white),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: const Divider(
+                          color:  AppColor.dividercolor,
+                          thickness: 1,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        height: SizeUtils.verticalBlockSize * 8,
+                        width: SizeUtils.horizontalBlockSize * 90,
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          color: AppColor.graydark,
+                        ),
+                        child: const TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.only(left: 20, top: 12),
+                              hintText: "Enter name",
+                              helperStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xffFFFFFF))),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        children: [
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: SizeUtils.verticalBlockSize * 6,
+                              width: SizeUtils.horizontalBlockSize * 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: AppColor.graydark),
+                              child: Center(
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: SizeUtils.verticalBlockSize * 6,
+                              width: SizeUtils.horizontalBlockSize * 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: AppColor.purpal,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "ok",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30,),
-                Row(
-                  children: [
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(height: SizeUtils.verticalBlockSize * 6,
-                        width: SizeUtils.horizontalBlockSize * 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                            color: AppColor.graydark
-
-                        ),
-                        child: Center(child:
-                        Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
-                      ),
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(height: SizeUtils.verticalBlockSize * 6,
-                        width: SizeUtils.horizontalBlockSize * 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: AppColor.purpal,
-                        ),
-                        child: Center(child:
-                        Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                )
-              ],
-            ),
+              );
+            },
           ),
         );
-      },);
-    },);
+      },
+    );
   }
 }

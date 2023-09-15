@@ -27,7 +27,7 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
             height: SizeUtils.screenHeight ,
             width: SizeUtils.screenWidth,
             color: AppColor.black,
-            child: Center(child: Image.asset(AssetsPath.duplicat,height: SizeUtils.verticalBlockSize * 85,)),
+            child: Center(child: Image.asset(AssetsPath.duplicate2,height: SizeUtils.verticalBlockSize * 85,)),
           ),
           Positioned(
             bottom: SizeUtils.verticalBlockSize * 0,

@@ -25,7 +25,7 @@ PreferredSize customAppBar(
       toolbarHeight: SizeUtils.verticalBlockSize * 8,
       title: Text(
         title ?? "",
-        style :  CommonTextStyle.title,
+        style :   CommonTextStyle.title,
       ),
       centerTitle: true,
       // titleSpacing: SizeUtils.horizontalBlockSize * 10,
@@ -64,7 +64,7 @@ PreferredSize customAppBar(
                               Get.back();
                             // }
                           },
-                      child: Icon(CupertinoIcons.back)
+                      child: const Icon(CupertinoIcons.back)
                       // Image.asset(
                       //   AssetsPath.backIc,
                       // ),

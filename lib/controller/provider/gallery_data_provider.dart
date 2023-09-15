@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 enum SortOption { name, lastModifiedDate, size, path }
@@ -29,6 +30,25 @@ class GalleryDataProvider extends ChangeNotifier {
     "0 item",
     "",
   ];
+  List text3 = [
+    "Photo Editor",
+    "Private Safe",
+    "Favorites",
+    "Recycle Bin",
+    "Duplicate",
+    "Language",
+    "Settings",
+  ];
+  List images2 = [
+    AssetsPath.photoedit,
+    AssetsPath.privatesafe,
+    AssetsPath.star,
+    AssetsPath.recyclebin,
+    AssetsPath.duplicate,
+    AssetsPath.language,
+    AssetsPath.settings,
+  ];
+
 
   List<AssetPathEntity> get allGalleryFolders => _nonEmptyFolderList;
   List<AssetEntity> get allRecentList => _allRecentList;

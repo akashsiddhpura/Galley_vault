@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
-
 import 'controller/functions/new_playlist_class.dart';
 import 'controller/provider/gallery_data_provider.dart';
 import 'controller/provider/preview_page_provider.dart';
@@ -137,3 +136,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+

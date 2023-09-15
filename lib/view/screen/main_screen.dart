@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/screen/recent_gallery_list.dart';
-import 'package:gallery_vault/view/widgets/custom_appbar.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:gallery_vault/view/widgets/bottomsheets.dart';
+import 'package:gallery_vault/view/widgets/common_textstyle.dart';
 import 'package:image_picker/image_picker.dart';
-import '../widgets/bottomsheets.dart';
+import 'package:provider/provider.dart';
 import 'album_list_screeen.dart';
 import 'explore_screen.dart';
 
@@ -15,6 +20,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
+
   Future<void> openCamera() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -26,6 +32,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       // User canceled the image selection.
     }
   }
+
   Future<void> openGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -37,6 +44,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       // User canceled the image selection.
     }
   }
+
   TabController? tabController;
   late List<Widget> _children;
   @override
@@ -56,107 +64,261 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
     return Scaffold(
-      appBar: customAppBar(
-          title: "Gallery",
-          appBarHeight: 12,
-          bgClr: AppColor.black,
-          leadingIcon:  Icon(
-            Icons.menu,
-            color: AppColor.white,
-          ),
-          action: [
-            if (tabController!.index == 0)
-              PopupMenuButton(
-                color: AppColor.blackdark,
+      appBar: AppBar(
+        title: Text(
+          "Gallery",
+          style: CommonTextStyle.title,
+        ),
+        centerTitle: true,
+        backgroundColor: AppColor.black,
+        actions: [
+          if (tabController!.index == 0)
+            PopupMenuButton(
+              color: AppColor.blackdark,
               onSelected: (value) async {
                 if (value == 1) {
-                openCamera();
+                  openCamera();
                 } else if (value == 2) {
-               openGallery();
+                  openGallery();
                 }
               },
-              icon: Icon(Icons.camera_alt_outlined,color: AppColor.white,),
-               itemBuilder: (context) =>
-
-               [
+              icon: Icon(
+                Icons.camera_alt_outlined,
+                color: AppColor.white,
+              ),
+              itemBuilder: (context) => [
                 PopupMenuItem(
-                 value: 1,
-                 child: Text(
-                   "Camera",
-                   style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
-                 ),
-               ),
+                  value: 1,
+                  child: Text(
+                    "Camera",
+                    style: TextStyle(
+                        color: AppColor.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15),
+                  ),
+                ),
                 PopupMenuItem(
-                 value: 2,
-                 child: Text(
-                   "Gallery",
-                   style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
-                 ),
-               ),
-               ] ,
-
-     ),
-            if (tabController!.index == 0)
-              PopupMenuButton<int>(
-                  itemBuilder: (context) => [
-                         PopupMenuItem(
-                          value: 1,
-                          child: Text(
-                            "Sort By",
-                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
-                          ),
+                  value: 2,
+                  child: Text(
+                    "Gallery",
+                    style: TextStyle(
+                        color: AppColor.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+          if (tabController!.index == 0)
+            PopupMenuButton<int>(
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 1,
+                        child: Text(
+                          "Sort By",
+                          style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
                         ),
-                         PopupMenuItem(
-                          value: 2,
-                          child: Text(
-                            "Column Count",
-                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
-                          ),
+                      ),
+                      PopupMenuItem(
+                        value: 2,
+                        child: Text(
+                          "Column Count",
+                          style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                onSelected: (value) async {
+                  if (value == 1) {
+                    AppBottomSheets().openFolderSortingBottomSheet(context);
+                  } else if (value == 2) {
+                    AppBottomSheets().openColumnSelectionBottomSheet(context);
+                  }
+                },
+                offset: const Offset(10, 30),
+                color: AppColor.blackdark,
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.more_vert_rounded,
+                    color: AppColor.white,
+                  ),
+                )),
+        ],
+        bottom: TabBar(
+          controller: tabController,
+          labelColor: AppColor.purpal,
+          dividerColor: AppColor.black,
+          indicatorColor: AppColor.purpal,
+          tabs: const [
+            Tab(
+              text: "Albums",
+            ),
+            Tab(
+              text: "All Media",
+            ),
+            Tab(
+              text: "Explore",
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        width: SizeUtils.screenWidth,
+        backgroundColor: AppColor.black,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 8,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: InkWell(
+                    onTap: () {
+                      Navigation.pop();
+                    },
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: AppColor.white,
+                        ))),
+              ),
+              const SizedBox(
+                height: 1,
+              ),
+              Container(
+                height: SizeUtils.verticalBlockSize * 10,
+                width: SizeUtils.horizontalBlockSize * 20,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: AppColor.blackdark,
+                    image:
+                        const DecorationImage(image: AssetImage(AssetsPath.appicon),fit: BoxFit.cover)),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                "Gallery - Vault, Photo Album",
+                style: TextStyle(
+                    color: Color(0xffEFDBFF),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          "Photos",
+                          style: TextStyle(color: AppColor.white, fontSize: 14),
+                        ),
+                        const Text(
+                          "895",
+                          style:
+                              TextStyle(color: AppColor.greyText, fontSize: 13),
                         ),
                       ],
-                  onSelected: (value) async {
-                    if (value == 1) {
-                      AppBottomSheets().openFolderSortingBottomSheet(context);
-                    } else if (value == 2) {
-                      AppBottomSheets().openColumnSelectionBottomSheet(context);
-                    }
-                  },
-                  offset: const Offset(0, 30),
-                  color: AppColor.blackdark,
-                  elevation: 2,
-                  child:  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.more_vert_rounded,
-                      color: AppColor.white,
                     ),
-                  )),
-          ],
-          bottom: TabBar(
-            controller: tabController,
-            labelColor: AppColor.purpal,
-            dividerColor: AppColor.black,
-            indicatorColor: AppColor.purpal,
-            tabs: const [
-              Tab(
-
-                text: "Albums",
+                    Column(
+                      children: [
+                        Text(
+                          "Videos",
+                          style: TextStyle(color: AppColor.white),
+                        ),
+                        const Text(
+                          "256",
+                          style:
+                              TextStyle(color: AppColor.greyText, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Albums",
+                          style: TextStyle(color: AppColor.white),
+                        ),
+                        const Text(
+                          "25",
+                          style:
+                              TextStyle(color: AppColor.greyText, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Tab(
-                text: "All Media",
+              const SizedBox(
+                height: 10,
               ),
-              Tab(
-                text: "Explore",
+              const Divider(
+                color: Color(0xff35383F),
+                thickness: 1,
               ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Center(
+                  child: Image.asset(AssetsPath.premuum),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                children: List.generate(
+                    7,
+                    (index) => Column(
+                      children: [
+                        Container(
+                              height: SizeUtils.verticalBlockSize * 13,
+                              width: SizeUtils.horizontalBlockSize * 28,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: AppColor.blackdark),
+                              margin: const EdgeInsets.all(7),
+                          child: Center(
+                            child: Image.asset(gallery.images2[index],height: SizeUtils.verticalBlockSize * 6,),
+                          ),
+                            ),
+                        Text(gallery.text3[index],style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: AppColor.white),),
+                      ],
+                    )),
+              ),
+              const Center(
+                child: Text("Version 2.5",style: TextStyle(color: AppColor.blackdark,fontSize: 15,fontWeight: FontWeight.w500),),
+              )
             ],
           ),
-          showLeading: true),
+        ),
+      ),
       body: TabBarView(
         controller: tabController,
         children: _children,
       ),
     );
+    });
+
   }
 }
 // import 'package:flutter/material.dart';
@@ -212,4 +374,3 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 //     );
 //   }
 // }
-

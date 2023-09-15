@@ -28,25 +28,24 @@ class _Explore_ScreenState extends State<Explore_Screen> {
             padding: const EdgeInsets.all(10.0),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20,),
                 Wrap(
                   children: List.generate(3, (index) =>
                       Container(
                         height: SizeUtils.verticalBlockSize * 21,
                         width: SizeUtils.horizontalBlockSize * 42,
-                        margin: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: AppColor.blackdark,
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: 20,),
+                            const SizedBox(height: 20,),
                             Center(
                               child: Image.asset(gallery.images[index], height: SizeUtils
                                   .verticalBlockSize * 9,),
                             ),
-                            SizedBox(height: 20,),
+                            const SizedBox(height: 20,),
                             Text(
                               gallery.text1[index],
                               textAlign: TextAlign.start,
@@ -56,7 +55,7 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500),
                             ),
-                            SizedBox(height: 5,),
+                            const SizedBox(height: 5,),
                             Text(
                               gallery.text2[index],
                               textAlign: TextAlign.start,
@@ -70,13 +69,13 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                         ),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("Create Your Photos",style:  TextStyle(color: AppColor.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -108,7 +107,7 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
