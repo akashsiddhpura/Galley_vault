@@ -4,6 +4,8 @@ import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/private_locker.dart';
 import 'package:gallery_vault/view/screen/main_screen.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,7 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
             height: SizeUtils.screenHeight ,
             width: SizeUtils.screenWidth,
             color: AppColor.black,
-            child: Image.asset(AssetsPath.pinchzoom),
+            child: Center(child: Image.asset(AssetsPath.pinchzoom,height: SizeUtils.verticalBlockSize * 85,)),
           ),
           Positioned(
             bottom: SizeUtils.verticalBlockSize * 0,
@@ -46,36 +48,34 @@ class _PinchZoomState extends State<PinchZoom> with TickerProviderStateMixin {
                 Text("Pinch Zoom",style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.italic,
-                  color: AppColor.white,
+                      color: AppColor.white,
                 ),),
                 const SizedBox(height: 10,),
                 const Text("Set your gallery grid image for better ",style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                  color: AppColor.grey,
+                      color: AppColor.grey,
                 ),),
                 const SizedBox(height: 5,),
                 const Text("view by finger tips.",style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                  color: AppColor.grey,
+                      color: AppColor.grey,
                 ),),
                 const SizedBox(height: 30,),
              CustomButton2(onPressed: (){
-               Get.to(const PrivateLocker());
+               Navigation.pushNamed(Routes.kPrivateLocker, arg: "").then((value) {
+                 setState(() {});
+               });
              }, text: AppString.kNext, color: AppColor.purpal,),
                 const SizedBox(height: 10,),
                 InkWell(
                   onTap: () {
-                    Get.to(const MainScreen());
+                    Navigation.replaceAll(Routes.kMainScreen);
                   },
                   child: const Text(AppString.kSkip,style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
                     color: AppColor.purpal,
                   ),),
                 ),

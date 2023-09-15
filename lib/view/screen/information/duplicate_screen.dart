@@ -4,6 +4,8 @@ import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/insta.dart';
 import 'package:gallery_vault/view/screen/main_screen.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/custom_button.dart';
 import 'package:get/get.dart';
@@ -25,7 +27,7 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
             height: SizeUtils.screenHeight ,
             width: SizeUtils.screenWidth,
             color: AppColor.black,
-            child: Image.asset(AssetsPath.duplicat),
+            child: Center(child: Image.asset(AssetsPath.duplicat,height: SizeUtils.verticalBlockSize * 85,)),
           ),
           Positioned(
             bottom: SizeUtils.verticalBlockSize * 0,
@@ -45,37 +47,36 @@ class _Duplicate_ScreenState extends State<Duplicate_Screen> {
                   Text("Duplicate Scan",style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
                     color: AppColor.white,
                   ),),
                   const SizedBox(height: 10,),
                   const Text("Scan for similar photos remove duplicate",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 5,),
                   const Text(" Photos with ease.",style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
                     color: AppColor.grey,
                   ),),
                   const SizedBox(height: 30,),
                   CustomButton2(onPressed: (){
-                    Get.to(const Insta());
+                    Navigation.pushNamed(Routes.kInsta, arg: "").then((value) {
+                      setState(() {});
+                    });
                     }, text: AppString.kNext, color: AppColor.purpal,),
                   const SizedBox(height: 10,),
                   InkWell(
                     onTap: () {
-                      Get.to(const MainScreen());
+                      Navigation.replaceAll(Routes.kMainScreen);
+
                     },
                     child: const Text(AppString.kSkip,style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.italic,
-                      color: AppColor.purpal,
+                        color: AppColor.purpal,
                     ),),
                   ),
                 ],

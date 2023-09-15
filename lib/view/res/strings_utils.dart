@@ -9,6 +9,5 @@ class AppString {
   // font family
   static const kMuseoModerno = "MuseoModerno";
   static const kUrbanist = "Urbanist";
-  static const  kPoppins = 'Poppins';
 
 }

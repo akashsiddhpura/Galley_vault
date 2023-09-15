@@ -64,6 +64,8 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+
+
 class CustomButton2 extends StatelessWidget {
   double? width;
 
@@ -102,7 +104,6 @@ class CustomButton2 extends StatelessWidget {
         child: Center(child: Text( text ?? "",style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          fontStyle: FontStyle.italic,
           color: AppColor.white,
         )),),
       ),
