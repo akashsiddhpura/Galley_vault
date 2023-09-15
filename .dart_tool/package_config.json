@@ -405,9 +405,9 @@
     },
     {
       "name": "image_picker",
-      "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-1.0.2",
+      "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-1.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "image_picker_android",
@@ -926,7 +926,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-09-14T12:35:20.565131Z",
+  "generated": "2023-09-15T05:38:52.100258Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

@@ -14,6 +14,21 @@ class GalleryDataProvider extends ChangeNotifier {
   bool getVideoThumb = false;
   bool dummySet = false;
   int columnCount = 3;
+  List images = [
+    'asset/images/video.png',
+    'asset/images/lock2.png',
+    'asset/images/cleaner.png'
+  ];
+  List text1 = [
+    "Video",
+    "Private Safe",
+    "Cleaner",
+  ];
+  List text2 = [
+    "25 item",
+    "0 item",
+    "",
+  ];
 
   List<AssetPathEntity> get allGalleryFolders => _nonEmptyFolderList;
   List<AssetEntity> get allRecentList => _allRecentList;

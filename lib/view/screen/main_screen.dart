@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/screen/recent_gallery_list.dart';
 import 'package:gallery_vault/view/widgets/custom_appbar.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widgets/bottomsheets.dart';
 import 'album_list_screeen.dart';
+import 'explore_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,6 +15,28 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
+  Future<void> openCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      // Handle the selected image, e.g., display it or process it.
+      // pickedFile.path contains the path to the selected image file.
+    } else {
+      // User canceled the image selection.
+    }
+  }
+  Future<void> openGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // Handle the selected image, e.g., display it or process it.
+      // pickedFile.path contains the path to the selected image file.
+    } else {
+      // User canceled the image selection.
+    }
+  }
   TabController? tabController;
   late List<Widget> _children;
   @override
@@ -26,7 +50,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     _children = [
       const AlbumListScreen(),
       const RecentGalleryList(),
-      Container(),
+      const Explore_Screen(),
     ];
   }
 
@@ -36,26 +60,58 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       appBar: customAppBar(
           title: "Gallery",
           appBarHeight: 12,
-          leadingIcon: const Icon(
+          bgClr: AppColor.black,
+          leadingIcon:  Icon(
             Icons.menu,
-            color: AppColor.primaryClr,
+            color: AppColor.white,
           ),
           action: [
             if (tabController!.index == 0)
+              PopupMenuButton(
+                color: AppColor.blackdark,
+              onSelected: (value) async {
+                if (value == 1) {
+                openCamera();
+                } else if (value == 2) {
+               openGallery();
+                }
+              },
+              icon: Icon(Icons.camera_alt_outlined,color: AppColor.white,),
+               itemBuilder: (context) =>
+
+               [
+                PopupMenuItem(
+                 value: 1,
+                 child: Text(
+                   "Camera",
+                   style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
+                 ),
+               ),
+                PopupMenuItem(
+                 value: 2,
+                 child: Text(
+                   "Gallery",
+                   style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
+                 ),
+               ),
+               ] ,
+
+     ),
+            if (tabController!.index == 0)
               PopupMenuButton<int>(
                   itemBuilder: (context) => [
-                        const PopupMenuItem(
+                         PopupMenuItem(
                           value: 1,
                           child: Text(
                             "Sort By",
-                            style: TextStyle(color: AppColor.primaryClr, fontSize: 15),
+                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
                           ),
                         ),
-                        const PopupMenuItem(
+                         PopupMenuItem(
                           value: 2,
                           child: Text(
                             "Column Count",
-                            style: TextStyle(color: AppColor.primaryClr, fontSize: 15),
+                            style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w500, fontSize: 15),
                           ),
                         ),
                       ],
@@ -67,24 +123,28 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     }
                   },
                   offset: const Offset(0, 30),
-                  color: AppColor.white,
+                  color: AppColor.blackdark,
                   elevation: 2,
-                  child: const Padding(
+                  child:  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.more_vert_rounded,
-                      color: AppColor.primaryClr,
+                      color: AppColor.white,
                     ),
                   )),
           ],
           bottom: TabBar(
             controller: tabController,
+            labelColor: AppColor.purpal,
+            dividerColor: AppColor.black,
+            indicatorColor: AppColor.purpal,
             tabs: const [
               Tab(
+
                 text: "Albums",
               ),
               Tab(
-                text: "Recent",
+                text: "All Media",
               ),
               Tab(
                 text: "Explore",

@@ -20,14 +20,14 @@ PreferredSize customAppBar(
     preferredSize:
         Size.fromHeight(SizeUtils.verticalBlockSize * (appBarHeight ?? 8)),
     child: AppBar(
-      backgroundColor: bgClr ?? AppColor.bgClr,
+      backgroundColor: bgClr ?? AppColor.blackdark,
       surfaceTintColor: AppColor.bgClr,
       toolbarHeight: SizeUtils.verticalBlockSize * 8,
       title: Text(
         title ?? "",
-        style: CommonTextStyle.titleStyle,
+        style :  CommonTextStyle.title,
       ),
-      centerTitle: false,
+      centerTitle: true,
       // titleSpacing: SizeUtils.horizontalBlockSize * 10,
       actions: action ?? [],
       elevation: 5,

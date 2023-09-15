@@ -11,6 +11,7 @@ class AppColor {
   static const purpal = Color(0xff9C1DFF);
   static const blackdark =  Color(0xff1F222A);
   static const graydark =  Color(0xff4E4F54);
+  static const homebg =  Color(0xff35383F);
   static Color white = Colors.white;
   static Color black = Colors.black;
 }

@@ -201,14 +201,20 @@ class AppBottomSheets {
               // Default selection
 
               return Container(
+                height: SizeUtils.verticalBlockSize * 43,
+                decoration: const BoxDecoration(
+                    color: AppColor.blackdark,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
+                ),
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Displayed Columns:"),
+                     Text("Displayed Columns:",style: TextStyle(color: AppColor.white)),
                     RadioListTile(
-                      title: const Text("Column 1"),
+                      activeColor: AppColor.purpal,
+                      title:  Text("Column 1",style: TextStyle(color:selectedColumn==1? AppColor.purpal:AppColor.greyText),),
                       value: 1,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -218,7 +224,8 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: const Text("Column 2"),
+                      activeColor: AppColor.purpal,
+                      title:  Text("Column 2",style: TextStyle(color:selectedColumn==2? AppColor.purpal:AppColor.greyText),),
                       value: 2,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -228,7 +235,8 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: const Text("Column 3"),
+                      activeColor: AppColor.purpal,
+                      title:  Text("Column 3",style: TextStyle(color:selectedColumn==3? AppColor.purpal:AppColor.greyText),),
                       value: 3,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -238,7 +246,8 @@ class AppBottomSheets {
                       },
                     ),
                     RadioListTile(
-                      title: const Text("Column 4"),
+                      activeColor: AppColor.purpal,
+                      title:  Text("Column 4",style: TextStyle(color:selectedColumn==4? AppColor.purpal:AppColor.greyText),),
                       value: 4,
                       groupValue: selectedColumn,
                       onChanged: (value) {
@@ -249,27 +258,46 @@ class AppBottomSheets {
                     ),
                     const SizedBox(height: 16.0),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(
-                          onPressed: () {
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {
                             Navigator.pop(context);
                           },
-                          child: const Text("Cancel"),
+                          child: Container(height: SizeUtils.verticalBlockSize * 6,
+                            width: SizeUtils.horizontalBlockSize * 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: AppColor.graydark
+
+                            ),
+                            child: Center(child:
+                            Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                          ),
                         ),
-                        const SizedBox(width: 16.0),
-                        ElevatedButton(
-                          onPressed: () {
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {
                             // Perform the OK action with the selectedColumn
                             print("Selected Column: ${gallery.columnCount}");
                             gallery.columnCount = selectedColumn;
                             gallery.notifyListeners();
                             Navigator.pop(context);
                           },
-                          child: const Text("OK"),
+                          child: Container(height: SizeUtils.verticalBlockSize * 6,
+                            width: SizeUtils.horizontalBlockSize * 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: AppColor.purpal,
+                            ),
+                            child: Center(child:
+                            Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                          ),
                         ),
+                        const Spacer(),
                       ],
                     ),
+
                   ],
                 ),
               );
@@ -279,7 +307,7 @@ class AppBottomSheets {
       },
     );
   }
-
+  int select  = 0 ;
   void openFolderSortingBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -288,17 +316,24 @@ class AppBottomSheets {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
+                physics:  const NeverScrollableScrollPhysics(),
                 child: Container(
+                  height: SizeUtils.verticalBlockSize * 70,
+                  decoration: const BoxDecoration(
+                    color: AppColor.blackdark,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
+                  ),
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Sort By:"),
+                       Text("Sort By:",style: TextStyle(color: AppColor.white),),
+                      const Divider(thickness: 1,),
                       for (SortOption option in SortOption.values)
                         RadioListTile(
-                          title: Text(gallery.optionToString(option)),
+                          activeColor: AppColor.purpal,
+                          title: Text(gallery.optionToString(option),style: TextStyle(color: select==1? AppColor.purpal:AppColor.greyText),),
                           value: option,
                           groupValue: gallery.selectedSortOption,
                           onChanged: (value) {
@@ -307,11 +342,13 @@ class AppBottomSheets {
                             });
                           },
                         ),
-                      const SizedBox(height: 16.0),
-                      const Text("Sort Order:"),
+                      // const SizedBox(height: 16.0),
+                       const Divider(thickness: 1,),
+                       // Text("Sort Order:",style: TextStyle(color: AppColor.white),),
                       for (SortOrder order in SortOrder.values)
-                        RadioListTile(
-                          title: Text(gallery.orderToString(order)),
+                   RadioListTile(
+                          activeColor: AppColor.purpal,
+                          title: Text(gallery.orderToString(order),style: const TextStyle(color: AppColor.greyText),),
                           value: order,
                           groupValue: gallery.selectedSortOrder,
                           onChanged: (value) {
@@ -321,25 +358,44 @@ class AppBottomSheets {
                           },
                         ),
                       // SizedBox(height: 16.0),
+
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          TextButton(
-                            onPressed: () {
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
                               Navigator.pop(context);
                             },
-                            child: const Text("Cancel",style: TextStyle(color: Colors.black),),
+                            child: Container(height: SizeUtils.verticalBlockSize * 6,
+                              width: SizeUtils.horizontalBlockSize * 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: AppColor.graydark
+
+                              ),
+                              child: Center(child:
+                              Text("Cancel",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                            ),
                           ),
-                          const SizedBox(width: 16.0),
-                          ElevatedButton(
-                            onPressed: () {
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
                               setState(() {
                                 gallery.sortList();
                               });
                               Navigator.pop(context);
                             },
-                            child: const Text("OK"),
+                            child: Container(height: SizeUtils.verticalBlockSize * 6,
+                              width: SizeUtils.horizontalBlockSize * 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: AppColor.purpal,
+                              ),
+                              child: Center(child:
+                              Text("ok",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: AppColor.white),),),
+                            ),
                           ),
+                          const Spacer(),
                         ],
                       ),
                     ],

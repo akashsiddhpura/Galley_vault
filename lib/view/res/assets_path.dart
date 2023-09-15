@@ -14,8 +14,18 @@ class AssetsPath {
   static const String p1 = 'asset/images/P1.png';
   static const String p2 = 'asset/images/p2.png';
   static const String p3 = 'asset/images/p3.png';
+  static const String upgrade = 'asset/images/upgrade.png';
   static const String splash = 'asset/images/splash img.png';
   static const String lock = 'asset/images/lock.png';
   static const String pinchzoom = 'asset/images/pinch zoom.png';
+  static const String frame = 'asset/images/Frame.png';
+  static const String frame2 = 'asset/images/Frame_2.png';
+  static const String ellipse = 'asset/images/Ellipse 1.png';
   static const String splashScreen = '${appIcons}splash_screen.png';
+
+
+
+
+
+
 }
