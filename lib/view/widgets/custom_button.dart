@@ -17,6 +17,7 @@ class CustomButton extends StatelessWidget {
   final Color? textColor;
   bool? bordered = false;
   final Color? buttonColor;
+  final Color? color;
   final Color? borderColor;
   final double? radius;
   final Gradient? gradient;
@@ -26,7 +27,7 @@ class CustomButton extends StatelessWidget {
   final double? iconSize;
 
   CustomButton(
-      {Key? key, this.buttonShadow, this.width, this.height, this.style, required this.onPressed, required this.text, this.fontWeight, this.fontSize, this.textColor, this.buttonColor, this.bordered, this.borderColor, this.gradient, this.radius, this.textStyle, this.buttonIcon, this.iconSize, required Color color})
+      {Key? key, this.buttonShadow, this.width, this.height, this.style, required this.onPressed, required this.text, this.fontWeight, this.fontSize, this.textColor, this.buttonColor, this.bordered, this.borderColor, this.gradient, this.radius, this.textStyle, this.buttonIcon, this.iconSize,  this.color })
       : super(key: key);
 
   @override
@@ -46,7 +47,7 @@ class CustomButton extends StatelessWidget {
         height: height ?? SizeUtils.horizontalBlockSize * 16,
         decoration: BoxDecoration(
           // color: buttonColor ?? AppColor.primaryClr,
-          color: AppColor.purpal,
+          color: color?? AppColor.blackdark,
           borderRadius: BorderRadius.circular(radius ?? 30),
           border: Border.all(
             color: bordered == true ? Color(0xFF4F5051) : Colors.transparent,

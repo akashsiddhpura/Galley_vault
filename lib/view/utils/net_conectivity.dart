@@ -10,7 +10,7 @@ class _NoConnectivityBanner extends StatelessWidget {
         body: SafeArea(
           top: false,
           child: Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             width: double.infinity,
             color: Colors.red,
             height: 50,

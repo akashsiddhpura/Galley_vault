@@ -22,11 +22,20 @@ class _AlbumListScreenState extends State<AlbumListScreen> {
     return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
       return Scaffold(
         body: gallery.folderThumbnail.isEmpty || gallery.getVideoThumb == false
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: AppColor.primaryClr,
-                ),
-              )
+            ? Container(
+          height: SizeUtils.screenHeight,
+          width: SizeUtils.screenWidth,
+          color: AppColor.black,
+              child: const Column(
+                children: [
+                  Center(
+                      child: CircularProgressIndicator(
+                        color: AppColor.purpal,
+                      ),
+                    ),
+                ],
+              ),
+            )
             : Container(
           height: SizeUtils.screenHeight,
               width: SizeUtils.screenWidth,
@@ -144,6 +153,7 @@ class _AlbumListScreenState extends State<AlbumListScreen> {
                       child: InkWell(
                         onTap: () {
                           AppBottomSheets().openAlbumsBottomSheet(context);
+
                         },
                         child: Container(height: SizeUtils.verticalBlockSize * 6,
                   width: SizeUtils.horizontalBlockSize * 40,

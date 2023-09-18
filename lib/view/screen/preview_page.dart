@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
+import 'package:gallery_vault/controller/Getx/preview_page_controller.dart';
 import 'package:gallery_vault/controller/provider/preview_page_provider.dart';
+import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
 import 'package:gallery_vault/view/widgets/dialogs.dart';
+import 'package:get/get.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_editor_plus/utils.dart';
 import 'package:open_file/open_file.dart';
@@ -19,6 +24,7 @@ import '../../controller/functions/favoritedb.dart';
 import '../utils/navigation_utils/routes.dart';
 import '../widgets/bottomsheets.dart';
 
+
 class PreviewPage extends StatefulWidget {
   const PreviewPage({super.key});
 
@@ -27,6 +33,9 @@ class PreviewPage extends StatefulWidget {
 }
 
 class _PreviewPageState extends State<PreviewPage> {
+  CounterController controller = Get.put(CounterController());
+
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +53,7 @@ class _PreviewPageState extends State<PreviewPage> {
       return Scaffold(
         appBar: AppBar(
             title: Text(
-              "Gallery",
+              preview.assetsList[preview.currentIndex].title.toString(),
               style: TextStyle(
                   color: AppColor.white,
                   fontWeight: FontWeight.w600,
@@ -88,15 +97,15 @@ class _PreviewPageState extends State<PreviewPage> {
                         FavoriteDb.favoriteVideos.notifyListeners();
                       },
                       icon: FavoriteDb.isFavor(
-                              preview.assetsList[preview.currentIndex])
+                          preview.assetsList[preview.currentIndex])
                           ? const Icon(
-                              CupertinoIcons.heart_fill,
-                              color: Colors.red,
-                            )
+                        CupertinoIcons.heart_fill,
+                        color: Colors.red,
+                      )
                           : Icon(
-                              CupertinoIcons.heart,
-                              color: AppColor.white,
-                            ),
+                        CupertinoIcons.heart,
+                        color: AppColor.white,
+                      ),
                     );
                   }),
               IconButton(
@@ -113,271 +122,368 @@ class _PreviewPageState extends State<PreviewPage> {
           height: SizeUtils.screenHeight,
           width: SizeUtils.screenWidth,
           color: AppColor.black,
-          child: Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: PageView.builder(
-
-                controller: preview.pageController,
-                itemCount: preview.assetsList.length,
-
-                onPageChanged: preview.handlePageChange,
-                itemBuilder: (context, index) {
-                  final mediaItem = preview.assetsList[index];
-                  return FutureBuilder<File?>(
-                    future: preview.assetsList[index].file,
-                    builder: (BuildContext context, AsyncSnapshot<File?> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done &&
-                          snapshot.data != null) {
-                        if (mediaItem.type == AssetType.image) {
-                          return SizedBox(
-                            height: double.infinity,
-                            width: double.infinity,
-                            child: PhotoView(
-                              enableRotation: true,
-                              minScale: 0.0,
-                              maxScale: 1.0,
-                              loadingBuilder: (context, imageChunkEvent) {
-                                return Container(
-                                  alignment: Alignment.center,
-                                  color: Colors.black,
-                                  child: const CircularProgressIndicator(),
-                                );
-                              },
-                              backgroundDecoration:
-                                  const BoxDecoration(color: Colors.black),
-                              imageProvider: FileImage(snapshot.data!),
-                            ),
-                          );
-                        } else if (mediaItem.type == AssetType.video) {
-                          return preview.loaded &&
-                                  preview.chewieController.videoPlayerController
-                                      .value.isInitialized
-                              ? GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      preview.chewieController.pause();
-                                    });
-                                  },
-                                  child: Center(
-                                    child: SizedBox(
-                                      // height: MediaQuery.of(context).size.height / 2,
-                                      height: double.infinity,
-                                      child: Chewie(
-                                        controller: preview.chewieController,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  alignment: Alignment.center,
-                                  color: Colors.black,
-                                  child: const CircularProgressIndicator(),
-                                );
-                        } else {
-                          return const Center(
-                              child: Text('Unsupported media type'));
-                        }
-                      } else {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: const SizedBox(
-                            height: 50,
-                            width: 70,
-                            child: Icon(
-                              Icons.image,
-                              color: Colors.grey,
-                            ),
+          // padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: PageView.builder(
+              controller: preview.pageController,
+              itemCount: preview.assetsList.length,
+              onPageChanged: preview.handlePageChange,
+              itemBuilder: (context, index) {
+                final mediaItem = preview.assetsList[index];
+                return FutureBuilder<File?>(
+                  future: preview.assetsList[index].file,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<File?> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.data != null) {
+                      if (mediaItem.type == AssetType.image) {
+                        return SizedBox(
+                          height: double.infinity,
+                          width: double.infinity,
+                          child: PhotoView(
+                            enableRotation: true,
+                            minScale: 0.0,
+                            maxScale: 1.0,
+                            loadingBuilder: (context, imageChunkEvent) {
+                              return Container(
+                                alignment: Alignment.center,
+                                color: Colors.black,
+                                child: const CircularProgressIndicator(),
+                              );
+                            },
+                            backgroundDecoration:
+                            const BoxDecoration(color: Colors.black),
+                            imageProvider: FileImage(snapshot.data!),
                           ),
                         );
+                      } else if (mediaItem.type == AssetType.video) {
+                        return preview.loaded &&
+                            preview.chewieController.videoPlayerController
+                                .value.isInitialized
+                            ? GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              preview.chewieController.pause();
+                            });
+                          },
+                          child: Center(
+                            child: SizedBox(
+                              // height: MediaQuery.of(context).size.height / 2,
+                              height: double.infinity,
+                              child: Chewie(
+                                controller: preview.chewieController,
+                              ),
+                            ),
+                          ),
+                        )
+                            : Container(
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: const CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const Center(
+                            child: Text('Unsupported media type'));
                       }
-                    },
-                  );
-                }),
-          ),
+                    } else {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: const SizedBox(
+                          height: 50,
+                          width: 70,
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                );
+              }),
         ),
         bottomNavigationBar: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             color: Colors.black,
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: SizeUtils.verticalBlockSize * 7,
-                  width: SizeUtils.horizontalBlockSize * 18,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,color: AppColor.blackdark
-                  ),
-                  child: IconButton(
-                    highlightColor: Colors.white38,
-                    onPressed: () async {
-                      await Share.shareFiles([
-                        (await preview.assetsList[preview.currentIndex].file)!
-                            .path
-                      ]);
-                    },
-                    icon: const Icon(
-                      Icons.share,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: SizeUtils.verticalBlockSize * 7,
-                  width: SizeUtils.horizontalBlockSize * 18,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,color: AppColor.blackdark
-                  ),
-                  child: IconButton(
-                    highlightColor: Colors.white38,
-                    onPressed: () {
-                      AppDialogs().scaleDialog(
-                          context, preview.assetsList[preview.currentIndex]);
-                    },
-                    icon: const Icon(
-                      Icons.delete_outlined,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                if (!preview.isVideo)
-                  Container(
-                    height: SizeUtils.verticalBlockSize * 7,
-                    width: SizeUtils.horizontalBlockSize * 18,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,color: AppColor.blackdark
-                    ),
-                    child: IconButton(
-                      highlightColor: Colors.white38,
-                      onPressed: () async {
-                        final bytes = await XFile(File((await preview
-                                            .assetsList[preview.currentIndex]
-                                            .file)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    5,
+                        (index) =>
+                    index == 0
+                        ? Stack(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                              AssetsPath.iconbottem,
+                              height: SizeUtils.verticalBlockSize * 7,
+                            )),
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child:  IconButton(
+                              hoverColor: AppColor.purpal,
+                              highlightColor: AppColor.purpal.withOpacity(.3),
+                              onPressed: () async {
+                                await Share.shareFiles([
+                                  (await preview
+                                      .assetsList[preview.currentIndex]
+                                      .file)!
+                                      .path
+                                ]);
+                              },
+                              icon: Icon(
+                                Icons.share,
+                                color: AppColor.white,
+                              ),
+                            ),
+
+                        )
+                      ],
+                    )
+                        : index == 1
+                        ? Stack(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                              AssetsPath.iconbottem,
+                              height: SizeUtils.verticalBlockSize * 7,
+                            )),
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child:  IconButton(
+                              hoverColor: AppColor.purpal,
+                              highlightColor: AppColor.purpal,
+                              onPressed: () {
+                                AppDialogs().scaleDialog(
+                                    context,
+                                    preview.assetsList[
+                                    preview.currentIndex]);
+                              },
+                              icon: Icon(
+                                Icons.delete_outlined,
+                                color: AppColor.white,
+                              ),
+                            ),
+                        )
+                      ],
+                    )
+                        : index == 2
+                        ? Stack(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                              AssetsPath.iconbottem,
+                              height: SizeUtils.verticalBlockSize * 7,
+                            )),
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child: IconButton(
+                              hoverColor: AppColor.purpal,
+                              highlightColor: AppColor.purpal.withOpacity(.3),
+                              onPressed: () async {
+                                final bytes = await XFile(File(
+                                    (await preview
+                                        .assetsList[
+                                    preview
+                                        .currentIndex]
+                                        .file)
                                         ?.path ??
-                                    '')
-                                .path)
-                            .readAsBytes(); // Converts the file to UInt8List
+                                        '')
+                                    .path)
+                                    .readAsBytes(); // Converts the file to UInt8List
 
-                        var editedImage = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImageEditor(
-                              image: bytes,
-                              features: const ImageEditorFeatures(
-                                pickFromGallery: false,
-                                captureFromCamera: false,
-                                crop: true,
-                                blur: true,
-                                brush: true,
-                                emoji: true,
-                                filters: true,
-                                flip: true,
-                                rotate: true,
-                                text: true,
+                                var editedImage =
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ImageEditor(
+                                          image: bytes,
+                                          features:
+                                          const ImageEditorFeatures(
+                                            pickFromGallery: false,
+                                            captureFromCamera: false,
+                                            crop: true,
+                                            blur: true,
+                                            brush: true,
+                                            emoji: true,
+                                            filters: true,
+                                            flip: true,
+                                            rotate: true,
+                                            text: true,
+                                          ),
+                                        ),
+                                  ),
+                                );
+
+                                final Uint8List rawData =
+                                    editedImage;
+                                String fileName =
+                                    "${DateTime
+                                    .now()
+                                    .hashCode}_${DateTime
+                                    .now()
+                                    .millisecondsSinceEpoch}";
+
+                                final AssetEntity? entity =
+                                await PhotoManager.editor
+                                    .saveImage(
+                                  rawData,
+                                  relativePath: preview
+                                      .assetsList[
+                                  preview.currentIndex]
+                                      .relativePath,
+                                  title: '$fileName.jpg',
+                                );
+                                print((await entity?.file)!.path);
+                              },
+                              icon: Icon(
+                                Icons.photo_filter_rounded,
+                                color:  AppColor.white,
                               ),
                             ),
-                          ),
-                        );
+                        )
+                      ],
+                    )
+                        : index == 3
+                        ? Stack(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                              AssetsPath.iconbottem,
+                              height:
+                              SizeUtils.verticalBlockSize * 7,
+                            )),
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child: IconButton(
+                              hoverColor: AppColor.purpal,
+                              highlightColor: AppColor.purpal
+                                  .withOpacity(.3),
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.lock_outline_rounded,
+                                color: AppColor.white,
+                              ),
+                            ),
 
-                        final Uint8List rawData = editedImage;
-                        String fileName =
-                            "${DateTime.now().hashCode}_${DateTime.now().millisecondsSinceEpoch}";
+                        )
+                      ],
+                    )
+                        : Stack(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                              AssetsPath.iconbottem,
+                              height:
+                              SizeUtils.verticalBlockSize * 7,
+                            )),
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child:  PopupMenuButton(
+                                itemBuilder: (context) =>
+                                [
+                                  PopupMenuItem(
+                                    value: 1,
+                                    child: Text(
+                                      "Open with",
+                                      style: TextStyle(
+                                          color: AppColor
+                                              .white,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                  if (!preview.isVideo)
+                                    PopupMenuItem(
+                                      value: 2,
+                                      child: Text(
+                                        "Set as wallpaper",
+                                        style: TextStyle(
+                                            color: AppColor
+                                                .white,
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  PopupMenuItem(
+                                    value: 3,
+                                    child: Text(
+                                      "Move To",
+                                      style: TextStyle(
+                                          color: AppColor
+                                              .white,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    value: 4,
+                                    child: Text(
+                                      "Copy To",
+                                      style: TextStyle(
+                                          color: AppColor
+                                              .white,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                ],
+                                onSelected: (value) async {
+                                  controller.select.value = index;
+                                  if (value == 1) {
+                                    OpenFile.open((await preview
+                                        .assetsList[preview
+                                        .currentIndex]
+                                        .file)!
+                                        .path);
+                                  } else if (value == 2) {
+                                    AppBottomSheets().openWallpaperBottomSheet(
+                                        imagePath: (await preview
+                                            .assetsList[
+                                        preview
+                                            .currentIndex]
+                                            .file)
+                                            ?.path ??
+                                            '');
+                                  } else
+                                  if (value == 3) {} else if (value == 4) {}
+                                },
+                                offset: Offset(
+                                    0,
+                                    (preview.isVideo
+                                        ? -185
+                                        : -230)),
+                                color: AppColor.blackdark,
+                                elevation: 2,
+                                child: Obx(() {
+                                  return Icon(
+                                    Icons.more_vert_rounded,
+                                    color: controller.select.value == index
+                                        ? AppColor.purpal
+                                        : AppColor.white,
+                                  );
+                                })),
 
-                        final AssetEntity? entity =
-                            await PhotoManager.editor.saveImage(
-                          rawData,
-                          relativePath: preview
-                              .assetsList[preview.currentIndex].relativePath,
-                          title: '$fileName.jpg',
-                        );
-                        print((await entity?.file)!.path);
-                      },
-                      icon: const Icon(
-                        Icons.photo_filter_rounded,
-                        color: Colors.white,
-                      ),
+                        )
+                      ],
                     ),
                   ),
-                Container(
-                  height: SizeUtils.verticalBlockSize * 7,
-                  width: SizeUtils.horizontalBlockSize * 18,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,color: AppColor.blackdark
-                  ),
-                  child: IconButton(
-                    highlightColor: Colors.white38,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.lock_outline_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: SizeUtils.verticalBlockSize * 7,
-                  width: SizeUtils.horizontalBlockSize * 18,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,color: AppColor.blackdark
-                  ),
-                  child: PopupMenuButton(
-                      itemBuilder: (context) => [
-                             PopupMenuItem(
-                              value: 1,
-                              child: Text(
-                                "Open with",
-                                style: TextStyle(
-                                    color: AppColor.white, fontSize: 15),
-                              ),
-                            ),
-                            if (!preview.isVideo)
-                               PopupMenuItem(
-                                value: 2,
-                                child: Text(
-                                  "Set as wallpaper",
-                                  style: TextStyle(
-                                      color: AppColor.white, fontSize: 15),
-                                ),
-                              ),
-                             PopupMenuItem(
-                              value: 3,
-                              child: Text(
-                                "Move To",
-                                style: TextStyle(
-                                    color: AppColor.white, fontSize: 15),
-                              ),
-                            ),
-                             PopupMenuItem(
-                              value: 4,
-                              child: Text(
-                                "Copy To",
-                                style: TextStyle(
-                                    color: AppColor.white, fontSize: 15),
-                              ),
-                            ),
-                          ],
-                      onSelected: (value) async {
-                        if (value == 1) {
-                          OpenFile.open((await preview
-                                  .assetsList[preview.currentIndex].file)!
-                              .path);
-                        } else if (value == 2) {
-                          AppBottomSheets().openWallpaperBottomSheet(
-                              imagePath: (await preview
-                                          .assetsList[preview.currentIndex].file)
-                                      ?.path ??
-                                  '');
-                        } else if (value == 3) {
-                        } else if (value == 4) {}
-                      },
-                      offset: Offset(0, (preview.isVideo ? -185 : -230)),
-                      color: AppColor.blackdark,
-
-                      elevation: 2,
-                      child: const Icon(
-                        Icons.more_vert_rounded,
-                        color: Colors.white,
-                      )),
                 ),
               ],
             ),
@@ -418,13 +524,19 @@ class EasyImageView extends StatefulWidget {
 
 class _EasyImageViewState extends State<EasyImageView> {
   final TransformationController _transformationController =
-      TransformationController();
+  TransformationController();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
         child: InteractiveViewer(
           transformationController: _transformationController,
           minScale: widget.minScale,

@@ -8,13 +8,13 @@ class ExitPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 15),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
       child: SingleChildScrollView(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColor.bgClr,
             ),
             child: Container(
@@ -51,7 +51,7 @@ class ExitPopup extends StatelessWidget {
                               width: SizeUtils.horizontalBlockSize * 35,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.red),
-                              child: Text(
+                              child: const Text(
                                 "No",
                                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white),
                               ),

@@ -1,10 +1,23 @@
+
+// import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
+import 'package:gallery_vault/view/screen/photo_edit.dart';
+
 import 'package:gallery_vault/view/utils/size_utils.dart';
+//
+// import 'package:image_editor_plus/image_editor_plus.dart';
+// import 'package:image_editor_plus/utils.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/provider/gallery_data_provider.dart';
+import '../../controller/provider/preview_page_provider.dart';
+// import 'album_list_screeen.dart';
+// import 'folder_data_screen.dart';
 
 class Explore_Screen extends StatefulWidget {
   const Explore_Screen({super.key});
@@ -19,7 +32,9 @@ class _Explore_ScreenState extends State<Explore_Screen> {
   Widget build(BuildContext context) {
     return Consumer<GalleryDataProvider>(builder: (context, gallery, child)
     {
-      return Scaffold(
+      return Consumer<PreviewPageProvider>(builder: (context, preview, child) {
+
+        return Scaffold(
         body: Container(
           height: SizeUtils.screenHeight,
           width: SizeUtils.screenWidth,
@@ -110,32 +125,37 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  height: SizeUtils.verticalBlockSize * 10,
-                  width: SizeUtils.screenWidth ,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>    const PhotoEdit(),));
+                  },
+                  child: Container(
+                    height: SizeUtils.verticalBlockSize * 10,
+                    width: SizeUtils.screenWidth ,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                  color: AppColor.blackdark,
-                  border: Border.all(width: 0.5,color: AppColor.white.withOpacity(0.5))
+                  borderRadius: BorderRadius.circular(10),
+                    color: AppColor.blackdark,
+                    border: Border.all(width: 0.5,color: AppColor.white.withOpacity(0.5))
               ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: ListTile(
-                      leading: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Image.asset(AssetsPath.ellipse),
-                          Positioned(
-                              top: 0,
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Center(child: Image.asset(AssetsPath.frame2,height: SizeUtils.verticalBlockSize*15,)))
-                        ],
-                      ) ,
-                      title: Text("Photo Editor",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 15,color: AppColor.white),),
-                      subtitle: const Text("Edit Photo Like Pro",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12,color: AppColor.greyText),),
-                      trailing: Icon(Icons.arrow_forward_ios_outlined,color: AppColor.white,),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ListTile(
+                        leading: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Image.asset(AssetsPath.ellipse),
+                            Positioned(
+                                top: 0,
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Center(child: Image.asset(AssetsPath.frame2,height: SizeUtils.verticalBlockSize*15,)))
+                          ],
+                        ) ,
+                        title: Text("Photo Editor",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 15,color: AppColor.white),),
+                        subtitle: const Text("Edit Photo Like Pro",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12,color: AppColor.greyText),),
+                        trailing: Icon(Icons.arrow_forward_ios_outlined,color: AppColor.white,),
+                      ),
                     ),
                   ),
                 )
@@ -144,6 +164,8 @@ class _Explore_ScreenState extends State<Explore_Screen> {
           ),
         ),
       );
+      });
+
     });
   }
 }

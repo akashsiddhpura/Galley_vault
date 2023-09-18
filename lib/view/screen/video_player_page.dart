@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/controller/functions/history.dart';
+import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
@@ -145,11 +147,16 @@ class _VideoPLayerPageState extends State<VideoPLayerPage> {
               ),
             ),
           )
-        : const Scaffold(
+        :  Scaffold(
             backgroundColor: Colors.black,
-            body: Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
+            body: Container(
+              height: SizeUtils.screenHeight,
+              width: SizeUtils.screenWidth,
+              color: AppColor.black,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
               ),
             ),
           );

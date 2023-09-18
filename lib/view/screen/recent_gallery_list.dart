@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -28,9 +26,14 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
     return Consumer<GalleryDataProvider>(
       builder: (context, gallery, child) {
         return gallery.allRecentList.isEmpty && !gallery.dummySet
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? Container(
+          height: SizeUtils.screenHeight,
+          width: SizeUtils.screenWidth,
+          color: AppColor.black,
+              child: const Center(
+                  child: CircularProgressIndicator(color: AppColor.purpal,),
+                ),
+            )
             : Container(
           height: SizeUtils.screenHeight,
           width: SizeUtils.screenWidth,

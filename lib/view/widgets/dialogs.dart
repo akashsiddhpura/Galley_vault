@@ -2,10 +2,8 @@ import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
-
 import '../res/app_colors.dart';
 import '../utils/navigation_utils/navigation.dart';
 import 'common_textstyle.dart';
@@ -26,31 +24,31 @@ class AppDialogs {
               surfaceTintColor: AppColor.bgClr,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               child: Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Icon(CupertinoIcons.settings, size: SizeUtils.horizontalBlockSize * 30),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Text(
                       "Allow Permission",
                       style: CommonTextStyle.titleStyle,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Text(
                       displayText ?? "",
                       textAlign: TextAlign.center,
                       style: CommonTextStyle.listTileBold,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     CustomButton(
                       onPressed: onPressed,
                       text: "Allow",
                       width: SizeUtils.horizontalBlockSize * 40,
                       height: 50, color: AppColor.black,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                   ],
                 ),
               ),
@@ -65,11 +63,11 @@ class AppDialogs {
 
       title: "Developer Option ON",
       middleText: "Please Turn Off Developer Option and Enjoy App Continue",
-      titleStyle: TextStyle(
+      titleStyle: const TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.bold,
       ),
-      middleTextStyle: TextStyle(
+      middleTextStyle: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w500,
       ),
@@ -78,12 +76,12 @@ class AppDialogs {
       radius: 20.0,
       confirm: ElevatedButton(
         onPressed: onRecheck,
-        child: Text(
-          "Recheck",
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-        ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.green),
+        ),
+        child:  const Text(
+          "Recheck",
+          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       ),
 
@@ -92,12 +90,12 @@ class AppDialogs {
           if (isBack) Get.back();
           AppSettings.openAppSettings(type: AppSettingsType.developer, asAnotherTask: true);
         },
-        child: Text(
-          "Turn Off",
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-        ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.red),
+        ),
+        child: const Text(
+          "Turn Off",
+          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       ),
     );
@@ -105,53 +103,61 @@ class AppDialogs {
 
   Widget _deleteImageDialog(BuildContext context, AssetEntity assetEntity) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.blackdark,
       surfaceTintColor: AppColor.bgClr,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Align(alignment: Alignment.centerRight, child: InkWell(onTap: Get.back, child: Icon(Icons.close, color: Colors.grey, size: 25))),
-            SizedBox(
+            Align(alignment: Alignment.centerRight, child: InkWell(onTap: Get.back, child: const Icon(Icons.close, color: Colors.grey, size: 25))),
+            const SizedBox(
               height: 10,
             ),
             Text(
               "Are you sure you want to\nDelete File?",
               textAlign: TextAlign.center,
-              style: CommonTextStyle.listTileBold,
+              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,color: AppColor.white),
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: CustomButton(
-                onPressed: () {},
-                text: "ADD TO RECYCLE BIN",
-                width: SizeUtils.horizontalBlockSize * 50,
-                height: 40,
-                radius: 5,
-                textStyle: TextStyle(fontSize: 15, color: Colors.white),  color: AppColor.black,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: CustomButton(
-                onPressed: () async {
-                  final List<String> result = await PhotoManager.editor.deleteWithIds(
-                    <String>[assetEntity.id],
-                  );
-                  Navigation.doublePop();
-                },
-                buttonColor: Colors.grey,
-                text: "DELETE",
-                width: SizeUtils.horizontalBlockSize * 50,
-                height: 40,
-                radius: 5,
-                textStyle: TextStyle(fontSize: 15, color: Colors.white), color: AppColor.black,
-              ),
+            Row(
+              children: [
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: CustomButton(
+                    onPressed: () {},
+                    text: "RECYCLE  BIN",
+                    width: SizeUtils.horizontalBlockSize * 30,
+                    height: 40,
+                    radius: 20,
+                    textStyle:  TextStyle(fontSize: 14, color: AppColor.white),  color: AppColor.blackdark,
+                  ),
+                ),
+                const SizedBox(width: 20,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: CustomButton(
+                    onPressed: () async {
+                      final List<String> result = await PhotoManager.editor.deleteWithIds(
+                        <String>[assetEntity.id],
+                      );
+                      Navigation.doublePop();
+                    },
+                    buttonColor: Colors.grey,
+                    text: "DELETE",
+                    width: SizeUtils.horizontalBlockSize * 30,
+                    height: 40,
+                    radius: 20,
+                    textStyle: TextStyle(fontSize: 14, color: AppColor.white), color: AppColor.purpal,
+                  ),
+                ),
+                const Spacer(),
+
+              ],
             ),
           ],
         ),

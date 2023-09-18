@@ -16,9 +16,9 @@ class GalleryDataProvider extends ChangeNotifier {
   bool dummySet = false;
   int columnCount = 3;
   List images = [
-    'asset/images/video.png',
-    'asset/images/lock2.png',
-    'asset/images/cleaner.png'
+    AssetsPath.video,
+    AssetsPath.lock2,
+    AssetsPath.cleaner,
   ];
   List text1 = [
     "Video",

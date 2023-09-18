@@ -50,7 +50,7 @@ class _FolderDataScreenState extends State<FolderDataScreen> {
             onTap: () {
               Navigation.pop();
             },
-            child: Icon(
+            child:  Icon(
               Icons.arrow_back_ios_new,
               color: AppColor.white,
             ),
@@ -60,9 +60,14 @@ class _FolderDataScreenState extends State<FolderDataScreen> {
         ),
           // appBar: customAppBar(title: gallery.allGalleryFolders[index!].name, showLeading: true),
           body: assetsList.isEmpty
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? Container(
+            height: SizeUtils.screenHeight,
+            width: SizeUtils.screenWidth,
+            color: AppColor.black,
+                child:  const Center(
+                    child: CircularProgressIndicator(color: AppColor.purpal,),
+                  ),
+              )
               : Container(
             height: SizeUtils.screenHeight,
             width: SizeUtils.screenWidth,
@@ -123,38 +128,48 @@ class _FolderDataScreenState extends State<FolderDataScreen> {
                                         fit: BoxFit.cover,
                                       ),
                                     ),
+
                                     Visibility(
                                       visible: assetsList[index].type == AssetType.video,
                                       child: FittedBox(
                                         child: Container(
-                                          decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(5)),
+                                          width: SizeUtils.horizontalBlockSize * 10,
+                                          decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(10)),
                                           margin: const EdgeInsets.all(5.0),
                                           padding: const EdgeInsets.all(2.0),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.play_circle_fill_rounded,
-                                                color: AppColor.white,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Wrap(
-                                                children: [
-                                                  Text(
-                                                    durationToString(
-                                                      assetsList[index].duration,
-                                                    ),
-                                                    style: const TextStyle(color: Colors.white),
+                                          child:
+                                          Center(
+                                            child: Wrap(
+                                              children: [
+                                                Text(
+                                                  durationToString(
+                                                    assetsList[index].duration,
                                                   ),
-                                                ],
-                                              ),
-                                            ],
+                                                  style: const TextStyle(color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
                                           ),
+
                                         ),
                                       ),
-                                    )
+                                    ),
+                                  Positioned(
+                                      top: 0,
+                                      bottom: 0,
+                                      right: 0,
+                                      left: 0,
+                                      child:   Visibility(
+                                    visible: assetsList[index].type == AssetType.video,
+                                    child:  Center(
+                                      child: Icon(
+                                        Icons.play_circle_outline,
+                                        color: AppColor.white,
+                                        size: 35,
+                                      ),
+                                    ),
+                                    ),
+                                  )
                                   ],
                                 ),
                               );

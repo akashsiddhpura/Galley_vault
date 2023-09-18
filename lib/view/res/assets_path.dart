@@ -14,7 +14,7 @@ class AssetsPath {
   static const String photoedit = 'asset/images/photoediter2.png';
   static const String privatesafe = 'asset/images/privatesafee.png';
   static const String privatesafe2 = 'asset/images/privatesafe2.png';
-  static const String star = 'asset/images/star2png';
+  static const String star = 'asset/images/star.png';
   static const String recyclebin = 'asset/images/recyclebin2.png';
   static const String duplicate = 'asset/images/duplicate2.png';
   static const String language = 'asset/images/lunuage2.png';
@@ -31,11 +31,12 @@ class AssetsPath {
   static const String frame2 = 'asset/images/Frame_2.png';
   static const String appicon = 'asset/images/App icon.png';
   static const String ellipse = 'asset/images/Ellipse 1.png';
+  static const String video = 'asset/images/video.png';
+  static const String lock2 = 'asset/images/lock2.png';
+  static const String cleaner =  'asset/images/cleaner.png';
+  static const String iconbottem =  'asset/images/icon_bottem.png';
+  static const String drawer =  'asset/images/drawer_icon.png';
   static const String splashScreen = '${appIcons}splash_screen.png';
-
-
-
-
 
 
 }
