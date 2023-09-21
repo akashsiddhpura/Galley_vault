@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
@@ -8,7 +9,6 @@ import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/bottomsheets.dart';
 import 'package:gallery_vault/view/widgets/common_textstyle.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../widgets/version_popup.dart';
@@ -25,25 +25,16 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Future<void> openCamera() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      // Handle the selected image, e.g., display it or process it.
-      // pickedFile.path contains the path to the selected image file.
+      GallerySaver.saveImage(pickedFile.path, albumName: "Avi's Camera").then((value) {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Photo saved to gallery')),
+      );
     } else {
-      // User canceled the image selection.
-    }
-  }
-
-  Future<void> openGallery() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      // Handle the selected image, e.g., display it or process it.
-      // pickedFile.path contains the path to the selected image file.
-    } else {
-      // User canceled the image selection.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('sorry you have not selected photo')),
+      );
     }
   }
 
@@ -59,7 +50,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
     _children = [
       const AlbumListScreen(),
-      const RecentGalleryList(),
+      RecentGalleryList(),
       const Explore_Screen(),
     ];
   }
@@ -95,8 +86,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 onSelected: (value) async {
                   if (value == 1) {
                     openCamera();
-                  } else if (value == 2) {
-                    openGallery();
                   }
                 },
                 icon: Icon(
@@ -108,20 +97,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     value: 1,
                     child: Text(
                       "Camera",
-                      style: TextStyle(
-                          color: AppColor.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: Text(
-                      "Gallery",
-                      style: TextStyle(
-                          color: AppColor.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15),
+                      style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
                     ),
                   ),
                 ],
@@ -133,20 +109,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           value: 1,
                           child: Text(
                             "Sort By",
-                            style: TextStyle(
-                                color: AppColor.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15),
+                            style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
                           ),
                         ),
                         PopupMenuItem(
                           value: 2,
                           child: Text(
                             "Column Count",
-                            style: TextStyle(
-                                color: AppColor.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15),
+                            style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
                           ),
                         ),
                       ],
@@ -213,19 +183,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColor.blackdark,
-                        image: const DecorationImage(
-                            image: AssetImage(AssetsPath.appicon),
-                            fit: BoxFit.cover)),
+                        image: const DecorationImage(image: AssetImage(AssetsPath.appicon), fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   const Text(
                     "Gallery - Vault, Photo Album",
-                    style: TextStyle(
-                        color: Color(0xffEFDBFF),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600),
+                    style: TextStyle(color: Color(0xffEFDBFF), fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 20,
@@ -239,13 +204,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           children: [
                             Text(
                               "Photos",
-                              style: TextStyle(
-                                  color: AppColor.white, fontSize: 14),
+                              style: TextStyle(color: AppColor.white, fontSize: 14),
                             ),
-                            const Text(
-                              "895",
-                              style: TextStyle(
-                                  color: AppColor.greyText, fontSize: 13),
+                             Text(
+                              "${gallery.allRecentList.length}",
+                              style: TextStyle(color: AppColor.greyText, fontSize: 13),
                             ),
                           ],
                         ),
@@ -255,10 +218,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               "Videos",
                               style: TextStyle(color: AppColor.white),
                             ),
-                            const Text(
-                              "256",
-                              style: TextStyle(
-                                  color: AppColor.greyText, fontSize: 13),
+                             Text(
+                              "${gallery.allVideoList.length}",
+                              style: const TextStyle(color: AppColor.greyText, fontSize: 13),
                             ),
                           ],
                         ),
@@ -268,10 +230,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               "Albums",
                               style: TextStyle(color: AppColor.white),
                             ),
-                            const Text(
-                              "25",
-                              style: TextStyle(
-                                  color: AppColor.greyText, fontSize: 13),
+                             Text(
+                              "${gallery.allGalleryFolders.length}",
+                              style: TextStyle(color: AppColor.greyText, fontSize: 13),
                             ),
                           ],
                         ),
@@ -327,24 +288,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   child: Container(
                                     height: SizeUtils.verticalBlockSize * 12,
                                     width: SizeUtils.horizontalBlockSize * 28,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: AppColor.blackdark),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: AppColor.blackdark),
                                     margin: const EdgeInsets.all(7),
                                     child: Center(
                                       child: Stack(
                                         children: [
                                           Image.asset(
                                             gallery.images2[index],
-                                            height:
-                                                SizeUtils.verticalBlockSize * 6,
+                                            height: SizeUtils.verticalBlockSize * 6,
                                           ),
-                                          Positioned(
-                                              bottom: 5,
-                                              child: index == 1
-                                                  ? Image.asset(
-                                                      AssetsPath.privatesafe2)
-                                                  : const SizedBox()),
+                                          Positioned(bottom: 5, child: index == 1 ? Image.asset(AssetsPath.privatesafe2) : const SizedBox()),
                                         ],
                                       ),
                                     ),
@@ -352,10 +305,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 ),
                                 Text(
                                   gallery.text3[index],
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.white),
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColor.white),
                                 ),
                               ],
                             )),
@@ -371,10 +321,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         },
                         child: Text(
                           "Version 2.5",
-                          style: TextStyle(
-                              color: AppColor.blackdark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
+                          style: TextStyle(color: AppColor.blackdark, fontSize: 15, fontWeight: FontWeight.w500),
                         )),
                   )
                 ],

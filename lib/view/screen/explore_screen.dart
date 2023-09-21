@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/screen/photo_edit.dart';
+import 'package:gallery_vault/view/screen/video_screen.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 
 import 'package:gallery_vault/view/utils/size_utils.dart';
 //
@@ -45,42 +48,56 @@ class _Explore_ScreenState extends State<Explore_Screen> {
               children: [
                 Wrap(
                   children: List.generate(3, (index) =>
-                      Container(
-                        height: SizeUtils.verticalBlockSize * 21,
-                        width: SizeUtils.horizontalBlockSize * 42,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColor.blackdark,
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20,),
-                            Center(
-                              child: Image.asset(gallery.images[index], height: SizeUtils
-                                  .verticalBlockSize * 9,),
-                            ),
-                            const SizedBox(height: 20,),
-                            Text(
-                              gallery.text1[index],
-                              textAlign: TextAlign.start,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(color: AppColor.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(height: 5,),
-                            Text(
-                              gallery.text2[index],
-                              textAlign: TextAlign.start,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: AppColor.greyText,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
+                      InkWell(
+                        onTap: () {
+                          index == 0
+                              ? Navigator.push(context, MaterialPageRoute(builder: (context) => const VideoScreen(),))
+                              :
+                          index == 1
+                              ? Navigation.pushNamed(
+                            Routes.kPrivateSafe,
+                          ).then((value) {
+                            setState(() {});
+                          })
+                              :SizedBox();
+                        },
+                        child: Container(
+                          height: SizeUtils.verticalBlockSize * 21,
+                          width: SizeUtils.horizontalBlockSize * 42,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColor.blackdark,
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20,),
+                              Center(
+                                child: Image.asset(gallery.images[index], height: SizeUtils
+                                    .verticalBlockSize * 9,),
+                              ),
+                              const SizedBox(height: 20,),
+                              Text(
+                                gallery.text1[index],
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style:  TextStyle(color: AppColor.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(height: 5,),
+                              Text(
+                                gallery.text2[index],
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: AppColor.greyText,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
                         ),
                       )),
                 ),

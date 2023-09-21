@@ -75,6 +75,11 @@ class _PreviewPageState extends State<PreviewPage> {
                       Widget? child) {
                     return IconButton(
                       onPressed: () {
+                        setState(() {
+                          setState(() {
+                            preview.assetsList[preview.currentIndex].id;
+                          });
+                        });
                         if (FavoriteDb.isFavor(
                             preview.assetsList[preview.currentIndex])) {
                           FavoriteDb.delete(
@@ -95,6 +100,7 @@ class _PreviewPageState extends State<PreviewPage> {
                         }
                         // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
                         FavoriteDb.favoriteVideos.notifyListeners();
+
                       },
                       icon: FavoriteDb.isFavor(
                           preview.assetsList[preview.currentIndex])

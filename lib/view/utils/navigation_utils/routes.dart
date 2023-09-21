@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import '../../screen/favorites_screen.dart';
+import '../../screen/favorite_videos_page.dart';
+
 import '../../screen/file_detail_screen.dart';
 import '../../screen/folder_data_screen.dart';
+import '../../screen/image_selection_screen.dart';
 import '../../screen/information/duplicate_screen.dart';
 import '../../screen/information/insta.dart';
 import '../../screen/information/pinch_zoom.dart';
@@ -9,11 +11,15 @@ import '../../screen/information/private_locker.dart';
 import '../../screen/information/splash_screen.dart';
 import '../../screen/information/welcome_screen.dart';
 import '../../screen/main_screen.dart';
+import '../../screen/preview_page_2.dart';
 import '../../screen/photo_edit.dart';
 import '../../screen/preview_page.dart';
 import '../../screen/private_safe.dart';
+import '../../screen/private_safe/confirm_pin.dart';
+import '../../screen/private_safe/private_photo.dart';
+import '../../screen/private_safe/security_screen.dart';
 import '../../screen/recycle _bin.dart';
-
+import '../../screen/video_screen.dart';
 
 mixin Routes {
   static const defaultTransition = Transition.rightToLeft;
@@ -25,13 +31,19 @@ mixin Routes {
   static const String kPrivateLocker = "/PrivateLocker";
   static const String kDuplicateScreen = "/Duplicate_Screen";
   static const String kFolderDataScreen = "/FolderDataScreen";
+  static const String kSecurityScreen = "/SecurityScreen";
   static const String kPreviewPage = "/PreviewPage";
+  static const String kPriviewPage2 = "/PriviewPage2";
   static const String kFavoritesScreen = "/Favorites_Screen";
   static const String kRecycleBin = "/Recycle_Bin";
+  static const String kConfirmPin = "/ConfirmPin";
+  static const String kPrivatePhoto = "/PrivatePhoto";
   static const String kInsta = "/Insta";
+  static const String kVideoScreen = "/VideoScreen";
   static const String kPrivateSafe = "/Private_Safe";
   static const String kFileDetailScreen = "/FileDetailScreen";
   static const String kWelcomeScreen = "/WelcomeScreen";
+  static const String kImageSelectionScreen = "/ImageSelectionScreen";
 
   static List<GetPage<dynamic>> routes = [
     GetPage<dynamic>(
@@ -55,8 +67,13 @@ mixin Routes {
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
+      name: kPrivatePhoto,
+      page: () => const PrivatePhoto(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
       name: kFavoritesScreen,
-      page: () => const Favorites_Screen(),
+      page: () =>  FavouriteScreen(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
@@ -65,8 +82,23 @@ mixin Routes {
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
+      name: kConfirmPin,
+      page: () => const ConfirmPin(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kSecurityScreen,
+      page: () => const SecurityScreen(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
       name: kPrivateSafe,
       page: () => const Private_Safe(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kVideoScreen,
+      page: () => const VideoScreen(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
@@ -100,8 +132,18 @@ mixin Routes {
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
+      name: kPriviewPage2,
+      page: () =>  PriviewPage2(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
       name: kFileDetailScreen,
       page: () => const FileDetailScreen(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kImageSelectionScreen,
+      page: () =>  ImageSelectionScreen(),
       transition: defaultTransition,
     ),
     //

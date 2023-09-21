@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
+import 'package:gallery_vault/view/utils/Share_Preference.dart';
 import 'package:gallery_vault/view/utils/net_conectivity.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -18,6 +21,9 @@ import 'controller/provider/gallery_data_provider.dart';
 import 'controller/provider/preview_page_provider.dart';
 
 Future<void> main() async {
+
+
+
   /// hive
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(PlaylistAdapter().typeId)) {
@@ -29,18 +35,28 @@ Future<void> main() async {
   await Hive.openBox<String>('FavoriteDB');
 
   await Hive.openBox<Playlist>('playlistDb');
+
+  Future<void> initService() async{
+    await Get.putAsync(() => AppSharedPreference().initializeStorage());
+  }
+  await initService();
+
   PhotoManager.clearFileCache();
   runApp(const MyApp());
+
+
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialBinding: AppBinding(),
+      initialBinding: InitalBinding(),
       theme: ThemeData(
           fontFamily: AppString.kUrbanist,
           useMaterial3: true,
@@ -137,4 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+late AppSharedPreference myPref;
 
+class InitalBinding implements Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    myPref = Get.find();
+  }
+
+}

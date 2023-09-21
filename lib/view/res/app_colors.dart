@@ -13,8 +13,9 @@ class AppColor {
   static const graydark =  Color(0xff4E4F54);
   static const dividercolor =   Color(0xff35383F);
   static const homebg =  Color(0xff35383F);
-  static const red =  Color(0xffF13939
-  );
+  static const green =  Color(0xff30EC59);
+  static const deeppurple =  Color(0xff521581);
+  static const red =  Color(0xffF13939);
   static Color white = Colors.white;
   static Color black = Colors.black;
 }

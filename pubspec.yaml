@@ -14,6 +14,8 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
+  gallery_saver: ^2.0.1
+  shared_preferences: ^2.2.1
   get: ^4.6.5
   get_storage: ^2.1.1
   loading_animation_widget: ^1.2.0+4
@@ -24,6 +26,7 @@ dependencies:
   onesignal_flutter:
   loading_indicator: ^3.1.1
   flutter_jailbreak_detection: ^1.10.0
+  flutter_secure_storage: ^5.0.3
   app_settings: ^5.0.0
 #  google_mobile_ads: ^3.0.0
 #  facebook_audience_network: ^1.0.1
@@ -49,6 +52,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   draggable_scrollbar: ^0.1.0
   image_picker: ^1.0.4
+  path_provider: ^2.1.1
 
 
 
