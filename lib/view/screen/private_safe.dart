@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
+import 'package:gallery_vault/view/screen/private_safe/confirm_pin.dart';
 
 import 'package:gallery_vault/view/screen/private_safe/security_screen.dart';
 
 
 import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'album_list_screeen.dart';
 
 class Private_Safe extends StatefulWidget {
   const Private_Safe({super.key});
@@ -16,22 +17,22 @@ class Private_Safe extends StatefulWidget {
 }
 
 class _Private_SafeState extends State<Private_Safe> with TickerProviderStateMixin {
-  // TabController? tabController;
-  // late List<Widget> _children;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // PermissionHandler().getPermission();
-  //   tabController = TabController(length: 2, vsync: this);
-  //   tabController!.addListener(() {
-  //     setState(() {});
-  //   });
-  //   _children = [
-  //     const PrivateAlbums(),
-  //     const PrivatePhoto(),
-  //   ];
-  // }
+  String? privateSafePin ;
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTimeSetPin();
+    // setFirstTimeLoginStatus();
+  }
+
+  Future<void> checkFirstTimeSetPin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     privateSafePin = prefs.getString('privateSafePin')  ;
+
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,22 +54,8 @@ class _Private_SafeState extends State<Private_Safe> with TickerProviderStateMix
           ),
           centerTitle: true,
           backgroundColor: AppColor.blackdark,
-          // bottom: TabBar(
-          //   controller: tabController,
-          //   labelColor: AppColor.purpal,
-          //   dividerColor: AppColor.black,
-          //   indicatorColor: AppColor.purpal,
-          //   tabs: const [
-          //     Tab(
-          //       text: "Albums",
-          //     ),
-          //     Tab(
-          //       text: "Photo",
-          //     ),
-          //   ],
-          // ),
         ),
-        body:  SecurityScreen(),
+        body:privateSafePin==null ? const SecurityScreen():const ConfirmPin() ,
       );
 
   }

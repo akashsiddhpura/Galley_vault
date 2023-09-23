@@ -319,7 +319,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 builder: (context) => VersionPopup(),
                               ));
                         },
-                        child: Text(
+                        child: const Text(
                           "Version 2.5",
                           style: TextStyle(color: AppColor.blackdark, fontSize: 15, fontWeight: FontWeight.w500),
                         )),
@@ -338,56 +338,3 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 }
 
-// import 'package:flutter/material.dart';
-// import 'package:photo_manager/photo_manager.dart';
-// import 'package:provider/provider.dart';
-//
-// import '../../controller/functions/global_variables.dart';
-// import '../../controller/provider/gallery_data_provider.dart';
-// import '../../controller/provider/video_data_provider.dart';
-// import '../utils/navigation_utils/navigation.dart';
-// import '../utils/navigation_utils/routes.dart';
-// import '../utils/permission_handler.dart';
-//
-// class SplashScreen extends StatefulWidget {
-//   const SplashScreen({super.key});
-//
-//   @override
-//   State<SplashScreen> createState() => _SplashScreenState();
-// }
-//
-// class _SplashScreenState extends State<SplashScreen> {
-//   bool isLoading = false;
-//   @override
-//   void initState() {
-//     super.initState();
-//     // PermissionHandler().getPermission();
-//     _loadData();
-//   }
-//
-//   void _loadData() async {
-//     await Provider.of<GalleryDataProvider>(context, listen: false).fetchGalleryData();
-//     Navigation.replaceAll(Routes.kMainScreen);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Center(
-//         child: Stack(
-//           children: [
-//             Positioned(
-//               bottom: MediaQuery.of(context).size.height * .08,
-//               right: MediaQuery.of(context).size.width * .05,
-//               child: Text(
-//                 'Gallery',
-//                 style: TextStyle(fontFamily: "Inter", fontSize: MediaQuery.of(context).size.height * 0.023, color: Colors.black),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

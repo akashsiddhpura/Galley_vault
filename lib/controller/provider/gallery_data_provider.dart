@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import 'package:photo_manager/photo_manager.dart';
@@ -17,6 +18,7 @@ class GalleryDataProvider extends ChangeNotifier {
   List<AssetEntity> _allVideoList = [];
   List<AssetEntity> _allRecentList = [];
   List<AssetEntity> selectedImageList = [];
+  List<AssetEntity> selectedImageList2 = [];
   final List<List<AssetEntity>> _folderThumbnail = [];
   bool getVideoThumb = false;
   bool dummySet = false;
@@ -84,30 +86,6 @@ class GalleryDataProvider extends ChangeNotifier {
 
     // notifyListeners();
   }
-  _fetchGalleryData()async{
-    _allGalleryFolders.clear();
-    _allRecentList.clear();
-    recentImagesList.clear();
-    final PermissionState ps = await PhotoManager.requestPermissionExtend();
-
-    final albums = await PhotoManager.getAssetPathList(type: RequestType.common);
-    final recentAlbum = albums.first;
-    final assetCount = await recentAlbum.assetCountAsync;
-    final recentAssets = await recentAlbum.getAssetListRange(start: 0, end: assetCount - 1);
-
-    albums.removeAt(0);
-    _allGalleryFolders = albums;
-    _allRecentList = recentAssets.toList();
-
-    sortRecentListWithModifiedDate();
-    fetchFolderThumbnail();
-    for (var image in _allRecentList) {
-      addImageToRecentList(image);
-    }
-    fetchVideos();
-
-  }
-
 
   Future<void> fetchVideos() async {
     _allVideoList.clear();
@@ -284,11 +262,62 @@ class GalleryDataProvider extends ChangeNotifier {
     }
   }
 
+  void selectInstaGridImage(AssetEntity assetEntity) {
+    if (selectedImageList.contains(assetEntity)) {
+      selectedImageList.remove(assetEntity);
+      notifyListeners();
+    } else {
+      selectedImageList.add(assetEntity);
+      notifyListeners();
+    }
+  }
+
+  void clearSelectedImageList() {
+    selectedImageList.clear();
+    notifyListeners();
+  }
+
   Future<void> saveImagesToFolder(List<AssetEntity> images, {String? folderName}) async {
     for (var i = 0; i < images.length; i++) {
       File? file = await images[i].file;
       await GallerySaver.saveImage(file!.path, albumName: folderName).then((value) {});
     }
+  }
+
+  void movePhoto(AssetPathEntity accessiblePath, AssetEntity yourEntity) async {
+    // Make sure your path entity is accessible.
+    final AssetPathEntity pathEntity = accessiblePath;
+    final AssetEntity entity = yourEntity;
+
+    File? file = await entity.file;
+    final fileName = file!.path.split('/').last;
+// copy the file to a new path
+//     final File newImage = file.copySync('${accessiblePath.path}/$fileName');
+
+    // bool response = await PhotoManager.editor.android.moveAssetToAnother(
+    //   entity: entity,
+    //   target: pathEntity,
+    // );
+    // print(response);
+  }
+
+  void copyPhoto(AssetPathEntity accessiblePath, AssetEntity yourEntity) async {
+    // Make sure your path entity is accessible.
+    // Make sure your path entity is accessible.
+    final AssetPathEntity anotherPathEntity = accessiblePath;
+    final AssetEntity entity = yourEntity;
+    final AssetEntity? newEntity = await PhotoManager.editor.copyAssetToPath(
+      asset: entity,
+      pathEntity: anotherPathEntity,
+    );
+// copy the file to a new path
+//     final File newImage = file.copySync('${accessiblePath.path}/$fileName');
+
+    // bool response = await PhotoManager.editor.android.moveAssetToAnother(
+    //   entity: entity,
+    //   target: pathEntity,
+    // );
+    // print(response);
   }
 }
 

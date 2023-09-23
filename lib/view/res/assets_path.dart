@@ -1,3 +1,7 @@
+
+
+
+
 class AssetsPath {
   AssetsPath._();
 
@@ -24,6 +28,7 @@ class AssetsPath {
   static const String p3 = 'asset/images/p3.png';
   static const String premuum = 'asset/images/premuum.png';
   static const String security = 'asset/images/security_.png';
+  static const String private = 'asset/images/private.png';
   static const String upgrade = 'asset/images/upgrade.png';
   static const String splash = 'asset/images/splash img.png';
   static const String lock = 'asset/images/lock.png';
@@ -37,7 +42,12 @@ class AssetsPath {
   static const String cleaner =  'asset/images/cleaner.png';
   static const String iconbottem =  'asset/images/icon_bottem.png';
   static const String drawer =  'asset/images/drawer_icon.png';
+
   static const String splashScreen = '${appIcons}splash_screen.png';
 
 
+  /*  Loader   */
+
+  static const String loader =  'asset/json/Loader.json';
 }
+

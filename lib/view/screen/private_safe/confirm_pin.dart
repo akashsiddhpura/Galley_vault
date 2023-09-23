@@ -5,6 +5,7 @@ import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/bottomsheets.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../controller/provider/gallery_data_provider.dart';
 import '../../utils/navigation_utils/navigation.dart';
@@ -36,10 +37,10 @@ class _ConfirmPinState extends State<ConfirmPin> {
   String confirmpin = ''; //s
   int selectedIndex = -1;
 
-  // store the entered PIN
   // Navigation.pushNamed(Routes.kFolderDataScreen).then((value) => const Duration(milliseconds: 300));
 
-  void addToPin(String digit, bool selectcolor) {
+  Future<void> addToPin(String digit, bool selectcolor) async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (confirmpin.length < 4) {
         confirmpin += digit;
@@ -49,7 +50,10 @@ class _ConfirmPinState extends State<ConfirmPin> {
       if (confirmpin.length == 4) {
         onSubmit = true;
         isMatch = Get.arguments == confirmpin;
-        Future.delayed(Duration(milliseconds: 300), () {
+        if (isMatch) {
+          prefs.setString('privateSafePin', Get.arguments);
+        }
+        Future.delayed(const Duration(milliseconds: 300), () {
           Get.arguments == confirmpin ? AppBottomSheets().openPrivateSafeBinBottomSheet(context) : const SizedBox();
         });
         setState(() {});
@@ -74,7 +78,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 170),
+            const SizedBox(height:130),
             Center(child: Image.asset(AssetsPath.security)),
             const SizedBox(height: 20),
             Text(
@@ -114,7 +118,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
               height: 20,
             ),
             if (onSubmit && isMatch == false)
-              Text(
+              const Text(
                 "Confirm PIN not Match",
                 style: TextStyle(color: AppColor.red, fontSize: 12, fontWeight: FontWeight.w700),
               ),

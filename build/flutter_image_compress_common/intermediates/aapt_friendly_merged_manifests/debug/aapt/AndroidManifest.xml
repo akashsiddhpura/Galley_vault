@@ -5,7 +5,6 @@
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="16"
         tools:overrideLibrary="androidx.heifwriter" />
 
 </manifest>

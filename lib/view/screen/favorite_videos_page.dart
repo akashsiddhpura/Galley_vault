@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
-import 'package:gallery_vault/view/screen/preview_page.dart';
-import 'package:gallery_vault/view/screen/video_player_page.dart';
+
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
-import 'package:gallery_vault/view/utils/size_utils.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 
@@ -51,22 +49,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               backgroundColor: AppColor.black,
               body: SafeArea(
                   child:
-                      // ValueListenableBuilder(
-                      //     valueListenable: FavoriteDb.favoriteVideos,
-                      //     builder: (BuildContext ctx, List<AssetEntity> favoriteData, Widget? child) {
-                      // if (favoriteData.isEmpty) {
-                      //   return const Padding(
-                      //     padding: EdgeInsets.only(top: 70, left: 10),
-                      //     child: Align(
-                      //       alignment: Alignment.center,
-                      //       child: Text(
-                      //         'No Favorite Videos',
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   return
                       Padding(
                 padding: const EdgeInsets.only(top: 18.0, left: 10, right: 10),
                 child: GridView.builder(

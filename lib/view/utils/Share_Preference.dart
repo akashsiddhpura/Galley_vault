@@ -12,12 +12,12 @@ class AppSharedPreference {
 
 
   final firstTimeLogin = true.val('firstTimeLogin');
-  final prefs = ''.val('firstTimeLogin');
+  final prefs = ''.val('pin');
 
 
 
   // Create a function to set the user preference.
-  Future<void> setUserPreference({String value = "firstTimeLogin"}) async {
+  Future<void> setUserPreference({String value = "pin"}) async {
    prefs.val = value;
   }
 

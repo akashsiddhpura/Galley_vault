@@ -272,6 +272,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "flutter_overlay_loader",
+      "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_overlay_loader-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.15",
       "packageUri": "lib/",
@@ -528,6 +534,12 @@
       "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "lottie",
+      "rootUri": "file:///C:/Users/Mahadev/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "matcher",
@@ -1010,7 +1022,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-09-20T07:36:15.045370Z",
+  "generated": "2023-09-22T11:08:40.389539Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

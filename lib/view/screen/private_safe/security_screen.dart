@@ -3,10 +3,12 @@ import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../controller/provider/gallery_data_provider.dart';
 import '../../utils/navigation_utils/navigation.dart';
 import '../../utils/navigation_utils/routes.dart';
+import 'confirm_pin.dart';
 
 class SecurityScreen extends StatefulWidget {
   // final TextEditingController controller;
@@ -21,11 +23,11 @@ class SecurityScreen extends StatefulWidget {
 
 class _SecurityScreenState extends State<SecurityScreen> {
   int select = 0;
-  dynamic save;
+  String? save;
   bool demo = false;
 
-  bool SelectedColor = false;
-  List allname = [
+  bool selectedColor = false;
+  List allName = [
     "1",
     "2",
     "3",
@@ -45,12 +47,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
     // PermissionHandler().getPermission();
   }
 
-  void addToPin(String digit, bool selectcolor) {
-    setState(() {
+  Future<void> addToPin(String digit, bool selectcolor) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pin', save!);
+    setState(()  {
       if (pin.length < 4) {
         pin += digit;
         selectcolor = true;
-        SelectedColor = selectcolor;
+        selectedColor = selectcolor;
       }
       if (pin.length == 4) {
         setState(() {
@@ -77,10 +81,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 50),
-          Text(
-            pin,
-            style: TextStyle(fontSize: 20, color: AppColor.white),
-          ),
+
           Center(child: Image.asset(AssetsPath.security)),
           const SizedBox(height: 20),
           Text(
@@ -127,7 +128,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                             highlightColor: AppColor.purpal.withOpacity(.3),
                             onTap: () {
                               setState(() {
-                                addToPin('${index + 1}', SelectedColor == true);
+                                addToPin('${index + 1}', selectedColor == true);
                                 save = pin;
                               });
                               demo = true;
@@ -142,7 +143,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                               margin: const EdgeInsets.only(left: 30, right: 30),
                               child: Center(
                                 child: Text(
-                                  allname[index],
+                                  allName[index],
                                   style: TextStyle(color: AppColor.white, fontSize: 24, fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -160,7 +161,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                     highlightColor: AppColor.purpal.withOpacity(.3),
                     onTap: () {
                       setState(() {
-                        addToPin('${0}', SelectedColor == true);
+                        addToPin('${0}', selectedColor == true);
                         save = pin;
                       });
                     },

@@ -1,14 +1,18 @@
+
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/functions/gobal_functions.dart';
 import '../../../controller/provider/gallery_data_provider.dart';
 import '../../res/app_colors.dart';
+import '../../res/assets_path.dart';
 import '../../utils/navigation_utils/navigation.dart';
 import '../../utils/navigation_utils/routes.dart';
 
@@ -21,10 +25,27 @@ class PrivatePhoto extends StatefulWidget {
 
 class _PrivatePhotoState extends State<PrivatePhoto> {
   ScrollController scrollController = ScrollController();
+  bool empty = false;
+  Future<List<File>> getImagesFromPrivateFolder() async {
+    final appDir = await getApplicationDocumentsDirectory();
+    final privateDir = Directory('${appDir.path}/.private');
+    if (!privateDir.existsSync()) {
+      return [];
+    }
+
+    final files = privateDir.listSync();
+    final imageFiles = files.where((file) =>
+    file is File && file.path.toLowerCase().endsWith('.jpg')); // Change the file extension to the desired image format
+
+    return imageFiles.cast<File>().toList();
+  }
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      empty = true;
+    });
 
   }
 
@@ -32,7 +53,18 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
   Widget build(BuildContext context) {
     return Consumer<GalleryDataProvider>(
       builder: (context, gallery, child) {
-        return Scaffold(
+        return empty==true? Scaffold(
+          floatingActionButton: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)
+            ),
+            backgroundColor: AppColor.purpal,
+            onPressed: () {
+            },
+            child:  Center(child: Icon(Icons.add,color: AppColor.white,)
+           ),
+          ),
+
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
@@ -49,20 +81,7 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
             ),
             centerTitle: true,
             backgroundColor: AppColor.blackdark,
-            // bottom: TabBar(
-            //   controller: tabController,
-            //   labelColor: AppColor.purpal,
-            //   dividerColor: AppColor.black,
-            //   indicatorColor: AppColor.purpal,
-            //   tabs: const [
-            //     Tab(
-            //       text: "Albums",
-            //     ),
-            //     Tab(
-            //       text: "Photo",
-            //     ),
-            //   ],
-            // ),
+
           ),
           backgroundColor: AppColor.black,
           body: gallery.allRecentList.isEmpty && !gallery.dummySet
@@ -204,6 +223,51 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
                     ),
                   ),
                 ),
+        ):Scaffold(
+          floatingActionButton: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)
+            ),
+            backgroundColor: AppColor.purpal,
+            onPressed: () {
+
+            },
+            child:  Center(child: Icon(Icons.add,color: AppColor.white,)
+            ),
+          ),
+
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigation.pop();
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColor.white,
+              ),
+            ),
+            title: Text(
+              "Private Safe",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: AppColor.white),
+            ),
+            centerTitle: true,
+            backgroundColor: AppColor.blackdark,
+
+          ),
+          backgroundColor: AppColor.black,
+          body: Align(
+            alignment: Alignment.center,
+            child: Column(mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(child: Image.asset(AssetsPath.private,height: 100,)),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("No Photos and Videos",style: TextStyle(color: AppColor.white,fontSize: 22,fontWeight: FontWeight.w600),)
+              ],
+            ),
+          ),
         );
       },
     );

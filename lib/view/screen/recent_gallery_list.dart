@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:get/get.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,8 @@ import '../utils/navigation_utils/routes.dart';
 // ignore: must_be_immutable
 class RecentGalleryList extends StatefulWidget {
   bool? isSelectImage;
-  RecentGalleryList({super.key, this.isSelectImage});
+  bool? isSelectImage2;
+  RecentGalleryList({super.key, this.isSelectImage, this.isSelectImage2});
 
   @override
   State<RecentGalleryList> createState() => _RecentGalleryListState();
@@ -88,15 +91,28 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
                               AssetEntity data = gallery.recentImagesList[index].listOfImages![i];
                               return InkWell(
                                 onTap: () async {
-                                  if (widget.isSelectImage == true) {
-                                    gallery.selectImage(data);
+                                  if (Get.arguments == "Insta Grid" && widget.isSelectImage2 == false) {
+                                    AssetEntity data2 = gallery.recentImagesList[index].listOfImages![i];
+                                    // gallery.selectInstaGridImage(data2);
+                                    // gallery.clearSelectedImageList();
+
+                                    File? imageFile = await data2.file.then((value) {
+                                      Navigation.replace(
+                                        Routes.kInstaGrideScreen,
+                                        arguments: value,
+                                      );
+                                    });
                                   } else {
-                                    if (index >= 0 && index < gallery.recentImagesList.length) {
-                                      int cumulativeIndex = gallery.calculateCumulativeIndex(index, i);
-                                      Navigation.pushNamed(Routes.kPreviewPage, arg: {"assetsList": gallery.allRecentList, "index": cumulativeIndex})
-                                          .then((value) {
-                                        setState(() {});
-                                      });
+                                    if (widget.isSelectImage == true) {
+                                      gallery.selectImage(data);
+                                    } else {
+                                      if (index >= 0 && index < gallery.recentImagesList.length) {
+                                        int cumulativeIndex = gallery.calculateCumulativeIndex(index, i);
+                                        Navigation.pushNamed(Routes.kPreviewPage,
+                                            arg: {"assetsList": gallery.allRecentList, "index": cumulativeIndex}).then((value) {
+                                          setState(() {});
+                                        });
+                                      }
                                     }
                                   }
                                 },
@@ -161,7 +177,7 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
                                             Positioned(
                                               top: -2,
                                               right: 5,
-                                              child:Visibility(
+                                              child: Visibility(
                                                 visible: gallery.selectedImageList.contains(data),
                                                 child: Container(
                                                   height: SizeUtils.verticalBlockSize * 4,
@@ -169,7 +185,6 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
                                                   decoration: const BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: AppColor.green,
-
                                                   ),
                                                   alignment: Alignment.center,
                                                   child: Icon(
@@ -211,6 +226,3 @@ class _RecentGalleryListState extends State<RecentGalleryList> {
     );
   }
 }
-
-
-

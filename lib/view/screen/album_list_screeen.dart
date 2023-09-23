@@ -50,7 +50,7 @@ class _AlbumListScreenState extends State<AlbumListScreen> {
           height: SizeUtils.screenHeight,
           width: SizeUtils.screenWidth,
           color: AppColor.black,
-              child: const Column(
+              child: const Column(mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                       child: CircularProgressIndicator(

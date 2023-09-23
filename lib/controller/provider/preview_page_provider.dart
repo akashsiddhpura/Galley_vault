@@ -59,6 +59,12 @@ class PreviewPageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  AssetEntity get yourEntity => yourEntity;
+
+  AssetPathEntity get accessiblePath => accessiblePath;
+
+
+
   @override
   void dispose() {
     pageController.dispose();

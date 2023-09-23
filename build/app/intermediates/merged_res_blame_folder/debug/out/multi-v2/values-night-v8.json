@@ -1,8 +1,25 @@
 {
     "logs": [
         {
-            "outputFile": "gallery.hidepictures.photovault.lockgallery.gallery_vault.app-mergeDebugResources-39:/values-night-v8/values-night-v8.xml",
+            "outputFile": "D:\\Flutter\\Flutter Projects\\Git Projects\\Gallery Vault\\Galley_vault\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\Mahadev\\.gradle\\caches\\transforms-3\\ad497e25fec82333a025ea3f0dae33f5\\transformed\\appcompat-1.6.1\\res\\values-night-v8\\values-night-v8.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,125,209,293,389,491,593,687",
+                        "endColumns": "69,83,83,95,101,101,93,88",
+                        "endOffsets": "120,204,288,384,486,588,682,771"
+                    },
+                    "to": {
+                        "startLines": "10,11,12,13,14,15,16,17",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "532,602,686,770,866,968,1070,1164",
+                        "endColumns": "69,83,83,95,101,101,93,88",
+                        "endOffsets": "597,681,765,861,963,1065,1159,1248"
+                    }
+                },
                 {
                     "source": "D:\\Flutter\\Flutter Projects\\Git Projects\\Gallery Vault\\Galley_vault\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
@@ -14,29 +31,12 @@
                         "endOffsets": "475,981"
                     },
                     "to": {
-                        "startLines": "2,6",
+                        "startLines": "2,7",
                         "startColumns": "4,4",
-                        "startOffsets": "55,236",
-                        "endLines": "5,8",
+                        "startOffsets": "55,363",
+                        "endLines": "6,9",
                         "endColumns": "12,12",
-                        "endOffsets": "231,400"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Mahadev\\.gradle\\caches\\transforms-3\\226ba0f93c2c315a294c49e9db2ca9af\\transformed\\appcompat-1.6.1\\res\\values-night-v8\\values-night-v8.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,125,209,293,389,491,593,687",
-                        "endColumns": "69,83,83,95,101,101,93,88",
-                        "endOffsets": "120,204,288,384,486,588,682,771"
-                    },
-                    "to": {
-                        "startLines": "9,10,11,12,13,14,15,16",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "405,475,559,643,739,841,943,1037",
-                        "endColumns": "69,83,83,95,101,101,93,88",
-                        "endOffsets": "470,554,638,734,836,938,1032,1121"
+                        "endOffsets": "358,527"
                     }
                 }
             ]
