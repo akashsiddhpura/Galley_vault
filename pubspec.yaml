@@ -43,7 +43,7 @@ dependencies:
   photo_manager: ^2.5.2
   provider: ^6.0.5
   video_player: ^2.5.2
-  image_editor_plus: ^0.2.5
+  image_editor_plus:
   permission_handler:
   device_info_plus: ^8.1.0
   intl:
@@ -55,6 +55,7 @@ dependencies:
   draggable_scrollbar: ^0.1.0
   image_picker: ^1.0.4
   path_provider: ^2.1.1
+  file_picker:
 
 
 

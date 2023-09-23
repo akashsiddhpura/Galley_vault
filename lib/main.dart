@@ -2,6 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
+import 'package:gallery_vault/view/screen/demo.dart';
+import 'package:gallery_vault/view/screen/demo2.dart';
 import 'package:gallery_vault/view/utils/Share_Preference.dart';
 import 'package:gallery_vault/view/utils/net_conectivity.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
@@ -21,6 +23,8 @@ import 'controller/provider/gallery_data_provider.dart';
 import 'controller/provider/preview_page_provider.dart';
 
 Future<void> main() async {
+
+
 
 
 
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
           disabledColor: Colors.transparent,
           backgroundColor: AppColor.primaryClr,
           scaffoldBackgroundColor: AppColor.bgClr),
+      // home: SourceScreen(),
       initialRoute: Routes.splash,
       getPages: Routes.routes,
       builder: EasyLoading.init(

@@ -1,28 +1,29 @@
 import 'package:get/get.dart';
-import '../../screen/explore_screen.dart';
-import '../../screen/favorite_videos_page.dart';
 
-import '../../screen/file_detail_screen.dart';
-import '../../screen/folder_data_screen.dart';
-import '../../screen/image_selection_screen.dart';
+import '../../screen/MainPage/Albums/Edit Photo/photo_edit.dart';
+import '../../screen/MainPage/Albums/Favorite/favorite_videos_page.dart';
+import '../../screen/MainPage/Albums/FileDetail/file_detail_screen.dart';
+import '../../screen/MainPage/Albums/Folder/folder_data_screen.dart';
+import '../../screen/MainPage/Albums/Preview/preview_page.dart';
+import '../../screen/MainPage/Albums/Preview/preview_page_2.dart';
+import '../../screen/MainPage/All Media/image_selection_screen.dart';
+import '../../screen/MainPage/Explore/InastaGrid/instagride_screen.dart';
+import '../../screen/MainPage/Explore/explore_screen.dart';
+import '../../screen/MainPage/Explore/private_safe/confirm_pin.dart';
+import '../../screen/MainPage/Explore/private_safe/confirmpin2.dart';
+import '../../screen/MainPage/Explore/private_safe/private_photo.dart';
+import '../../screen/MainPage/Explore/private_safe/private_safe.dart';
+import '../../screen/MainPage/Explore/private_safe/security_screen.dart';
+import '../../screen/MainPage/main_screen.dart';
+import '../../screen/MainPage/setting_screen.dart';
+import '../../screen/VideoPlayer/video_screen.dart';
 import '../../screen/information/duplicate_screen.dart';
 import '../../screen/information/insta.dart';
 import '../../screen/information/pinch_zoom.dart';
 import '../../screen/information/private_locker.dart';
 import '../../screen/information/splash_screen.dart';
 import '../../screen/information/welcome_screen.dart';
-import '../../screen/instagride_screen.dart';
-import '../../screen/main_screen.dart';
-import '../../screen/preview_page_2.dart';
-import '../../screen/photo_edit.dart';
-import '../../screen/preview_page.dart';
-import '../../screen/private_safe.dart';
-import '../../screen/private_safe/confirm_pin.dart';
-import '../../screen/private_safe/confirmpin2.dart';
-import '../../screen/private_safe/private_photo.dart';
-import '../../screen/private_safe/security_screen.dart';
-import '../../screen/recycle _bin.dart';
-import '../../screen/video_screen.dart';
+
 
 mixin Routes {
   static const defaultTransition = Transition.rightToLeft;
@@ -84,7 +85,7 @@ mixin Routes {
     ),
     GetPage<dynamic>(
       name: kRecycleBin,
-      page: () => const Recycle_Bin(),
+      page: () => const Setting_Screen(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(

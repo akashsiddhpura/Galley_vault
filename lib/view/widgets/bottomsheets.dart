@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
@@ -13,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../../controller/provider/preview_page_provider.dart';
 import '../utils/navigation_utils/navigation.dart';
 
 class AppBottomSheets {
@@ -626,106 +628,6 @@ class AppBottomSheets {
     );
   }
 
-  void openRecycleBinBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
-      context: context,
-      builder: (context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: StatefulBuilder(
-            builder: (context, setState) {
-              return SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Container(
-                  decoration: const BoxDecoration(
-                      color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-                  padding: const EdgeInsets.all(0.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          "Are you sure?",
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22, color: AppColor.white),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          "You want restored all images and videos.",
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: AppColor.greyText),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: Container(
-                              height: SizeUtils.verticalBlockSize * 6,
-                              width: SizeUtils.horizontalBlockSize * 40,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: AppColor.graydark),
-                              child: Center(
-                                child: Text(
-                                  "No",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: Container(
-                              height: SizeUtils.verticalBlockSize * 6,
-                              width: SizeUtils.horizontalBlockSize * 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: AppColor.red,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
   void openDeleteBottomSheet(BuildContext context, AssetEntity assetEntity) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -919,8 +821,10 @@ class AppBottomSheets {
                           IconButton(
                             onPressed: () async {
                               moveImageToPrivateFolder(imageFile);
-                              Navigation.pushNamed(Routes.kPrivatePhoto);
-                            },
+                              // Navigation.pushNamed(Routes.kPrivatePhoto);
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully Add To PrivateSafe")));
+                              Get.back();
+                              },
                             icon: Container(
                               height: SizeUtils.verticalBlockSize * 6,
                               width: SizeUtils.horizontalBlockSize * 40,
@@ -1144,6 +1048,7 @@ class AppBottomSheets {
       barrierColor: Colors.transparent,
       context: context,
       builder: (context) {
+        return Consumer<PreviewPageProvider>(builder: (context, preview, child) {
         return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
           return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
@@ -1285,7 +1190,11 @@ class AppBottomSheets {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                gallery.copyPhoto(gallery.allGalleryFolders[index], assetEntity);
+                                // File? imageFile = await preview.assetsList[preview.currentIndex].file;
+
+                                await GallerySaver.saveImage(imageFile.path,albumName: gallery.allGalleryFolders[index].name);
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("SuccessFully Copy to Image")));
+                                Get.back();
                               },
                               icon: Container(
                                 height: SizeUtils.verticalBlockSize * 6.5,
@@ -1316,7 +1225,8 @@ class AppBottomSheets {
             ),
           );
         });
-      },
+        });
+        },
     );
   }
 
@@ -1420,11 +1330,10 @@ class AppBottomSheets {
                         child: IconButton(
                           onPressed: () {
                             saveindex;
-
-                            Navigation.pushNamed(
-                              Routes.kMainScreen,
-                              arg: {saveindex, name2},
-                            ).then((value) => setState(() {}));
+                            Navigation.replace(
+                              Routes.kPrivatePhoto,
+                              arguments: {saveindex, name2},
+                            );
                           },
                           icon: Container(
                             height: SizeUtils.verticalBlockSize * 6,

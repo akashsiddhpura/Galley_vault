@@ -42,18 +42,12 @@ class GalleryDataProvider extends ChangeNotifier {
     "Photo Editor",
     "Private Safe",
     "Favorites",
-    "Recycle Bin",
-    "Duplicate",
-    "Language",
     "Settings",
   ];
   List images2 = [
     AssetsPath.photoedit,
     AssetsPath.privatesafe,
     AssetsPath.star,
-    AssetsPath.recyclebin,
-    AssetsPath.duplicate,
-    AssetsPath.language,
     AssetsPath.settings,
   ];
 
@@ -124,23 +118,6 @@ class GalleryDataProvider extends ChangeNotifier {
       recentImagesList.add(RecentImages(
         dateTime: DateTime(imageDate.year, imageDate.month, imageDate.day),
         listOfImages: [image],
-      ));
-    }
-  }
-
-  void addVideoToRecentList(AssetEntity video) {
-    // DateTime imageDate = image.modifiedDateTime;
-    DateTime videoDate = video.modifiedDateTime;
-
-    int existingIndex = recentVideoList.indexWhere(
-        (item) => item.dateTime?.year == videoDate.year && item.dateTime?.month == videoDate.month && item.dateTime?.day == videoDate.day);
-
-    if (existingIndex != -1) {
-      recentVideoList[existingIndex].listOfVideo?.add(video);
-    } else {
-      recentVideoList.add(RecentVideo(
-        dateTime: DateTime(videoDate.year, videoDate.month, videoDate.day),
-        listOfVideo: [video],
       ));
     }
   }
@@ -280,7 +257,12 @@ class GalleryDataProvider extends ChangeNotifier {
   Future<void> saveImagesToFolder(List<AssetEntity> images, {String? folderName}) async {
     for (var i = 0; i < images.length; i++) {
       File? file = await images[i].file;
-      await GallerySaver.saveImage(file!.path, albumName: folderName).then((value) {});
+
+      if (images[i].type == AssetType.image) {
+        await GallerySaver.saveImage(file!.path, albumName: folderName).then((value) {});
+      } else if (images[i].type == AssetType.video) {
+        await GallerySaver.saveVideo(file!.path, albumName: folderName).then((value) {});
+      }
     }
   }
 

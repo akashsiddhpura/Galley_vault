@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
-import 'package:gallery_vault/main.dart';
+
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
-import 'package:gallery_vault/view/screen/information/welcome_screen.dart';
-import 'package:gallery_vault/view/screen/main_screen.dart';
-import 'package:gallery_vault/view/utils/Share_Preference.dart';
+
 import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

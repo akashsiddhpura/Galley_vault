@@ -3,7 +3,7 @@ import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
 import 'package:gallery_vault/view/screen/information/insta.dart';
-import 'package:gallery_vault/view/screen/main_screen.dart';
+
 import 'package:gallery_vault/view/utils/navigation_utils/navigation.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';

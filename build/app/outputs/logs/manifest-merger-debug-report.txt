@@ -74,6 +74,7 @@ INJECTED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vaul
 INJECTED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\android\app\src\main\AndroidManifest.xml:1:1-61:12
 MERGED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\android\app\src\main\AndroidManifest.xml:1:1-61:12
 MERGED from [:flutter_wallpaper_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_wallpaper_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-10:12
+MERGED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:image_picker_android] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-19:12
 MERGED from [:flutter_plugin_android_lifecycle] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:app_settings] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\app_settings\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
@@ -217,6 +218,8 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Us
 		ADDED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\android\app\src\main\AndroidManifest.xml:3:22-64
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\android\app\src\main\AndroidManifest.xml:4:5-79
+MERGED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-80
+MERGED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-80
 MERGED from [:photo_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\photo_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-80
 MERGED from [:photo_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\photo_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-80
 	android:name
@@ -255,6 +258,8 @@ INJECTED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vaul
 INJECTED from D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\android\app\src\main\AndroidManifest.xml
 MERGED from [:flutter_wallpaper_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_wallpaper_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_wallpaper_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_wallpaper_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:image_picker_android] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:image_picker_android] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
@@ -479,6 +484,18 @@ uses-permission#android.permission.SET_WALLPAPER
 ADDED from [:flutter_wallpaper_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_wallpaper_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-72
 	android:name
 		ADDED from [:flutter_wallpaper_manager] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\flutter_wallpaper_manager\intermediates\merged_manifest\debug\AndroidManifest.xml:7:22-69
+queries
+ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-15:15
+intent#action:name:android.intent.action.GET_CONTENT+data:mimeType:*/*
+ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-14:18
+action#android.intent.action.GET_CONTENT
+ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-72
+	android:name
+		ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:11:21-69
+data
+ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-44
+	android:mimeType
+		ADDED from [:file_picker] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\file_picker\intermediates\merged_manifest\debug\AndroidManifest.xml:13:19-41
 provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
 ADDED from [:image_picker_android] D:\Flutter\Flutter Projects\Git Projects\Gallery Vault\Galley_vault\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:8:9-16:20
 	android:grantUriPermissions
