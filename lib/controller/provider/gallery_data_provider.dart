@@ -8,6 +8,8 @@ import 'package:hive/hive.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 
+import '../functions/favoritedb.dart';
+
 enum SortOption { name, lastModifiedDate, size, path }
 
 enum SortOrder { ascending, descending }
@@ -70,6 +72,7 @@ class GalleryDataProvider extends ChangeNotifier {
     albums.removeAt(0);
     _allGalleryFolders = albums;
     _allRecentList = recentAssets.toList();
+    FavoriteDb.initialize(_allRecentList);
 
     sortRecentListWithModifiedDate();
     fetchFolderThumbnail();
@@ -282,74 +285,8 @@ class GalleryDataProvider extends ChangeNotifier {
     // );
     // print(response);
   }
-
-  void copyPhoto(AssetPathEntity accessiblePath, AssetEntity yourEntity) async {
-    // Make sure your path entity is accessible.
-    // Make sure your path entity is accessible.
-    final AssetPathEntity anotherPathEntity = accessiblePath;
-    final AssetEntity entity = yourEntity;
-    final AssetEntity? newEntity = await PhotoManager.editor.copyAssetToPath(
-      asset: entity,
-      pathEntity: anotherPathEntity,
-    );
-// copy the file to a new path
-//     final File newImage = file.copySync('${accessiblePath.path}/$fileName');
-
-    // bool response = await PhotoManager.editor.android.moveAssetToAnother(
-    //   entity: entity,
-    //   target: pathEntity,
-    // );
-    // print(response);
-  }
 }
 
-class FavoriteDb {
-  static bool isInitialized = false;
-  static final favoriteDB = Hive.box<String>('FavoriteDB');
-  static ValueNotifier<List<AssetEntity>> favoriteVideos = ValueNotifier([]);
-
-  static initialize(List<AssetEntity> videos) {
-    for (AssetEntity video in videos) {
-      if (isFavor(video)) {
-        favoriteVideos.value.add(video);
-      }
-    }
-    isInitialized = true;
-  }
-
-  static isFavor(AssetEntity video) {
-    if (favoriteDB.values.contains(video.id)) {
-      return true;
-    }
-    return false;
-  }
-
-  static add(AssetEntity video) async {
-    favoriteDB.add(video.id);
-    favoriteVideos.value.add(video);
-    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    FavoriteDb.favoriteVideos.notifyListeners();
-  }
-
-  static delete(String id) async {
-    int deletekey = 0;
-    if (!favoriteDB.values.contains(id)) {
-      return;
-    }
-    final Map<dynamic, String> favorMap = favoriteDB.toMap();
-    favorMap.forEach((key, value) {
-      if (value == id) {
-        deletekey = key;
-      }
-    });
-    favoriteDB.delete(deletekey);
-    favoriteVideos.value.removeWhere((song) => song.id == id);
-  }
-
-  static clear() async {
-    FavoriteDb.favoriteVideos.value.clear();
-  }
-}
 
 class RecentImages {
   DateTime? dateTime;

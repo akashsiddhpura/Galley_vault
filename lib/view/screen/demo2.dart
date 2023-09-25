@@ -1,175 +1,94 @@
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:path_provider/path_provider.dart';
-//
-// class ImageMoveScreen2 extends StatefulWidget {
-//   @override
-//   _ImageMoveScreen2State createState() => _ImageMoveScreen2State();
-// }
-//
-// class _ImageMoveScreen2State extends State<ImageMoveScreen2> {
-//   File? _pickedImage;
-//
-//   Future<void> pickAndMoveImage() async {
-//     final picker = ImagePicker();
-//     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-//
-//     if (pickedFile != null) {
-//       final sourceFile = File(pickedFile.path);
-//       // final destinationDir = Directory('path_to_destination_folder');
-//       final tempDir = await getTemporaryDirectory();
-//       final destinationDir = Directory('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}_.png');
-//
-//
-//       if (!await destinationDir.exists()) {
-//         await destinationDir.create(recursive: true);
-//       }
-//
-//       final destinationPath = '${destinationDir.path}/your_image.png';
-//
-//       await sourceFile.rename(destinationPath);
-//
-//       if (await File(destinationPath).exists()) {
-//         setState(() {
-//           _pickedImage = File(destinationPath);
-//         });
-//       }
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.black,
-//       appBar: AppBar(
-//         title: Text('Move Image Example'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             if (_pickedImage != null)
-//               Image.file(
-//                 _pickedImage!,
-//                 width: 200,
-//                 height: 200,
-//               ),
-//             ElevatedButton(
-//               onPressed: pickAndMoveImage,
-//               child: const Text('Pick and Move Image'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// void main() {
-//   runApp(MaterialApp(
-//     home: ImageMoveScreen2(),
-//   ));
-// }
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
-
-class SourceScreen extends StatefulWidget {
+class GalleryApp extends StatefulWidget {
   @override
-  _SourceScreenState createState() => _SourceScreenState();
+  _GalleryAppState createState() => _GalleryAppState();
 }
 
-class _SourceScreenState extends State<SourceScreen> {
-  List<XFile>? _selectedPhotos = [];
+class _GalleryAppState extends State<GalleryApp> {
+  File? _selectedImage;
+  String? _message;
 
-  Future<void> _pickPhotos() async {
-    final picker = ImagePicker();
-    final selectedImages = await picker.pickMultiImage();
+  Future<void> _pickImage() async {
+    try {
+      final imagePicker = ImagePicker();
+      final XFile? image = await imagePicker.pickImage(
+        source: ImageSource.gallery,
+      );
 
-    if (selectedImages.isNotEmpty) {
+      if (image != null) {
+        final movedImage = await _moveToPrivateFolder(image);
+        setState(() {
+          _selectedImage = movedImage;
+          _message = 'Image moved to private folder.';
+        });
+      } else {
+        setState(() {
+          _message = 'No image selected.';
+        });
+      }
+    } catch (e) {
       setState(() {
-        _selectedPhotos = selectedImages;
+        _message = 'Failed to move image: $e';
       });
     }
   }
 
-  void _navigateToDestinationScreen() {
-    if (_selectedPhotos != null && _selectedPhotos!.isNotEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DestinationScreen(selectedPhotos: _selectedPhotos!),
-        ),
-      );
+  Future<File?> _moveToPrivateFolder(XFile image) async {
+    final appDir = (await getExternalStorageDirectories())!.first;
+    final privateDir = Directory('${appDir.path}/private');
+    print(privateDir);
+    if (!await privateDir.exists()) {
+      await privateDir.create();
     }
+    var basNameWithExtension = path.basename(image.path);
+
+    final sourceFile = File(path.join(appDir.path, image.path));
+    final destinationFile = File(path.join(appDir.path, "$privateDir/image.jpg"));
+
+    // Check if the source file exists before moving it.
+    if (await sourceFile.exists()) {
+      // Move the image from the source to the destination.
+      final movedImage = await File(image.path).rename(basNameWithExtension);
+      print('Image moved successfully.');
+      return movedImage;
+    } else {
+      print('Source image does not exist.');
+    }
+
+    return null;
+    // final newImagePath = join(privateDir.path, basename(image.path));
+    // final movedImage = await File(image.path).rename(newImagePath);
+    // Get.to(HomeScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Photo Manager - Source Screen'),
+        title: const Text('Gallery App'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_selectedPhotos != null && _selectedPhotos!.isNotEmpty)
-              Column(
-                children: _selectedPhotos!.map((photo) {
-                  return Image.file(File(photo.path));
-                }).toList(),
-              ),
+            if (_selectedImage != null)
+              Image.file(
+                _selectedImage!,
+                width: 200,
+                height: 200,
+              )
+            else
+              const Text('No Image Selected'),
             ElevatedButton(
-              onPressed: _pickPhotos,
-              child: Text('Select Photos'),
+              onPressed: _pickImage,
+              child: const Text('Pick Image'),
             ),
-            ElevatedButton(
-              onPressed: _navigateToDestinationScreen,
-              child: Text('Go to Destination Screen'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DestinationScreen extends StatelessWidget {
-  final List<XFile> selectedPhotos;
-
-
-  DestinationScreen({required this.selectedPhotos});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Photo Manager - Destination Screen'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              children: selectedPhotos.map((photo) {
-                return Image.file(File(photo.path));
-              }).toList(),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await GallerySaver.saveImage(selectedPhotos.first.path);
-                // await GallerySaver.saveImage().then((value) {});
-
-                // Implement logic to save or use the selected photos as needed
-              },
-              child: Text('Save Photos'),
-            ),
+            if (_message != null) Text(_message!),
           ],
         ),
       ),

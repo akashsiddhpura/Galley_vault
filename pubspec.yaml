@@ -40,7 +40,7 @@ dependencies:
   chewie: ^1.4.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  photo_manager: ^2.5.2
+  photo_manager: ^2.7.1
   provider: ^6.0.5
   video_player: ^2.5.2
   image_editor_plus:
@@ -51,6 +51,7 @@ dependencies:
   flutter_wallpaper_manager: ^0.0.4
   open_file: ^3.3.2
   connectivity_plus:
+  privacy_screen: ^0.0.6
   flutter_easyloading: ^3.0.5
   draggable_scrollbar: ^0.1.0
   image_picker: ^1.0.4

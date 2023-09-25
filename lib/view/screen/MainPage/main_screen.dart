@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     final picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      GallerySaver.saveImage(pickedFile.path, albumName: "Avi's Camera").then((value) {});
+      GallerySaver.saveImage(pickedFile.path, albumName: "Camera").then((value) {});
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Photo saved to gallery')),
       );

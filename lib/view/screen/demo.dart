@@ -1,43 +1,25 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ImageMoveScreen extends StatelessWidget {
-  Future<void> moveImage() async {
-    // Source and destination paths
-    final tempDir = await getTemporaryDirectory();
-    final String sourcePath = '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}_.png';
-    const String destinationPath = 'path_to_destination_folder/your_image.png';
 
-    try {
-      // Create a File object for the source image
-      final File sourceFile = File(sourcePath);
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
-      // Check if the source file exists
-      if (await sourceFile.exists()) {
-        // Create a Directory object for the destination folder
-        final Directory destinationDir = Directory('path_to_destination_folder');
+class _HomeScreenState extends State<HomeScreen> {
+  List<File> selectedPhotos = [];
 
-        // Ensure that the destination folder exists, create it if necessary
-        if (!await destinationDir.exists()) {
-          await destinationDir.create(recursive: true);
-        }
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-        // Move the image to the destination folder
-        await sourceFile.rename(destinationPath);
-
-        // Check if the image was successfully moved
-        final File movedFile = File(destinationPath);
-        if (await movedFile.exists()) {
-          print('Image moved successfully');
-        } else {
-          print('Image move failed');
-        }
-      } else {
-        print('Source image does not exist');
-      }
-    } catch (e) {
-      print('Error: $e');
+    if (pickedFile != null) {
+      setState(() {
+        selectedPhotos.add(File(pickedFile.path));
+      });
     }
   }
 
@@ -45,21 +27,91 @@ class ImageMoveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Move Image Example'),
+        title: Text('Hide Photos Example'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: moveImage,
-          child: Text('Move Image 2'),
-        ),
+      body: Column(
+        children: <Widget>[
+          ElevatedButton(
+            onPressed: pickImage,
+            child: Text('Pick a Photo from Gallery'),
+          ),
+          Expanded(
+            child: GridView.builder(
+              itemCount: selectedPhotos.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                final photo = selectedPhotos[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PhotoDetailScreen(photo: photo),
+                      ),
+                    );
+                  },
+                  child: Image.file(
+                    photo,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: ImageMoveScreen(),
-  ));
+class PhotoDetailScreen extends StatelessWidget {
+  final File photo;
+
+  PhotoDetailScreen({required this.photo});
+
+  Future<void> movePhotoToPrivateDirectory(BuildContext context) async {
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+    final privateDirectory = await getApplicationSupportDirectory();
+    final destinationFile = File('${privateDirectory.path}/${photo.path.split('/').last}');
+
+    try {
+      await photo.copy(destinationFile.path);
+      // await photo.delete();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Photo moved to private directory.'),
+        ),
+      );
+    } catch (e) {
+      print('Error moving photo: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Photo Detail'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Image.file(photo),
+          ElevatedButton(
+            onPressed: () {
+              movePhotoToPrivateDirectory(context);
+              // Navigator.pop(context);
+            },
+            child: Text('Move to Private Screen'),
+          ),
+
+        ],
+      ),
+    );
+  }
 }
+
 

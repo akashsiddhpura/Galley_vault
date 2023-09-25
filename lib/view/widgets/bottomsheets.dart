@@ -824,7 +824,7 @@ class AppBottomSheets {
                               // Navigation.pushNamed(Routes.kPrivatePhoto);
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully Add To PrivateSafe")));
                               Get.back();
-                              },
+                            },
                             icon: Container(
                               height: SizeUtils.verticalBlockSize * 6,
                               width: SizeUtils.horizontalBlockSize * 40,
@@ -858,190 +858,12 @@ class AppBottomSheets {
   }
 
   int select = 0;
-  void openMoveToBottomSheet(BuildContext context, AssetEntity assetEntity, int index, File imageFile,) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
-      context: context,
-      builder: (context) {
-        return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-            child: StatefulBuilder(
-              builder: (context, setState) {
-                return SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-                    padding: const EdgeInsets.all(0.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Add to",
-                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          color: AppColor.dividercolor,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: SizeUtils.verticalBlockSize * 35,
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: List.generate(
-                                gallery.allGalleryFolders.length,
-                                (index) => RadioListTile(
-                                  controlAffinity: ListTileControlAffinity.trailing,
-                                  contentPadding: const EdgeInsets.all(8),
-                                  secondary: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: gallery.folderThumbnail[index].isNotEmpty
-                                        ? FutureBuilder<Uint8List?>(
-                                            future: gallery.folderThumbnail[index].first.thumbnailData,
-                                            builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
-                                              if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
-                                                return Container(
-                                                    width: SizeUtils.horizontalBlockSize * 15,
-                                                    height:  (SizeUtils.verticalBlockSize * 14),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                    ),
-                                                  child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    child: Image.memory(
-                                                      snapshot.data!,
-                                                      fit: BoxFit.cover,
-                                                      height: SizeUtils.verticalBlockSize * 6,
-                                                      width: SizeUtils.horizontalBlockSize * 13,
-                                                    ),
-                                                  ),
-                                                    );
-                                              } else {
-                                                return ClipRRect(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                                  child: SizedBox(
-                                                    width: (SizeUtils.screenWidth / gallery.columnCount) - SizeUtils.horizontalBlockSize * 5,
-                                                    height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
-                                                    child: const Icon(
-                                                      Icons.photo,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            })
-                                        : ClipRRect(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            child: SizedBox(
-                                              width: SizeUtils.screenWidth / gallery.columnCount,
-                                              height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
-                                              child: const Icon(
-                                                Icons.photo,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ),
-                                  ),
-                                  activeColor: AppColor.purpal,
-                                  title: Text(
-                                    gallery.allGalleryFolders[index].name,
-                                    style: TextStyle(
-                                        color: select == index ? AppColor.purpal : AppColor.greyText, fontSize: 16, fontWeight: FontWeight.w500),
-                                  ),
-                                  value: index,
-                                  groupValue: select,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      select = index;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              icon: Container(
-                                height: SizeUtils.verticalBlockSize * 6.5,
-                                width: SizeUtils.horizontalBlockSize * 40,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: AppColor.graydark),
-                                child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () async {
-                                gallery.movePhoto(gallery.allGalleryFolders[index], assetEntity);
-                              },
-                              icon: Container(
-                                height: SizeUtils.verticalBlockSize * 6.5,
-                                width: SizeUtils.horizontalBlockSize * 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: AppColor.purpal,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Add",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        });
-      },
-    );
-  }
-
-  void openCopyToBottomSheet(BuildContext context, AssetEntity assetEntity, int index, File imageFile,) {
+  void openMoveToBottomSheet(
+    BuildContext context,
+    AssetEntity assetEntity,
+    int index,
+    File imageFile,
+  ) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -1049,184 +871,403 @@ class AppBottomSheets {
       context: context,
       builder: (context) {
         return Consumer<PreviewPageProvider>(builder: (context, preview, child) {
-        return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-            child: StatefulBuilder(
-              builder: (context, setState) {
-                return SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-                    padding: const EdgeInsets.all(0.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Add to Copy",
-                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
+          return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
+            return BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              child: StatefulBuilder(
+                builder: (context, setState) {
+                  return SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                      padding: const EdgeInsets.all(0.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Add to",
+                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          color: AppColor.dividercolor,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: SizeUtils.verticalBlockSize * 35,
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: List.generate(
-                                gallery.allGalleryFolders.length,
-                                    (index) => RadioListTile(
-                                  controlAffinity: ListTileControlAffinity.trailing,
-                                  contentPadding: const EdgeInsets.all(8),
-                                  secondary: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: gallery.folderThumbnail[index].isNotEmpty
-                                        ? FutureBuilder<Uint8List?>(
-                                        future: gallery.folderThumbnail[index].first.thumbnailData,
-                                        builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
-                                            return Container(
-                                              width: SizeUtils.horizontalBlockSize * 15,
-                                              height:  (SizeUtils.verticalBlockSize * 14),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(10),
-                                                child: Image.memory(
-                                                  snapshot.data!,
-                                                  fit: BoxFit.cover,
-                                                  height: SizeUtils.verticalBlockSize * 6,
-                                                  width: SizeUtils.horizontalBlockSize * 13,
-                                                ),
-                                              ),
-                                            );
-                                          } else {
-                                            return ClipRRect(
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Divider(
+                            thickness: 1,
+                            color: AppColor.dividercolor,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: SizeUtils.verticalBlockSize * 35,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                children: List.generate(
+                                  gallery.allGalleryFolders.length,
+                                  (index) => RadioListTile(
+                                    controlAffinity: ListTileControlAffinity.trailing,
+                                    contentPadding: const EdgeInsets.all(8),
+                                    secondary: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: gallery.folderThumbnail[index].isNotEmpty
+                                          ? FutureBuilder<Uint8List?>(
+                                              future: gallery.folderThumbnail[index].first.thumbnailData,
+                                              builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
+                                                  return Container(
+                                                    width: SizeUtils.horizontalBlockSize * 15,
+                                                    height: (SizeUtils.verticalBlockSize * 14),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      child: Image.memory(
+                                                        snapshot.data!,
+                                                        fit: BoxFit.cover,
+                                                        height: SizeUtils.verticalBlockSize * 6,
+                                                        width: SizeUtils.horizontalBlockSize * 13,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return ClipRRect(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                    child: SizedBox(
+                                                      width: (SizeUtils.screenWidth / gallery.columnCount) - SizeUtils.horizontalBlockSize * 5,
+                                                      height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
+                                                      child: const Icon(
+                                                        Icons.photo,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              })
+                                          : ClipRRect(
                                               borderRadius: BorderRadius.circular(8.0),
                                               child: SizedBox(
-                                                width: (SizeUtils.screenWidth / gallery.columnCount) - SizeUtils.horizontalBlockSize * 5,
+                                                width: SizeUtils.screenWidth / gallery.columnCount,
                                                 height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
                                                 child: const Icon(
                                                   Icons.photo,
                                                   color: Colors.grey,
                                                 ),
                                               ),
-                                            );
-                                          }
-                                        })
-                                        : ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: SizedBox(
-                                        width: SizeUtils.screenWidth / gallery.columnCount,
-                                        height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
-                                        child: const Icon(
-                                          Icons.photo,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
+                                            ),
                                     ),
+                                    activeColor: AppColor.purpal,
+                                    title: Text(
+                                      gallery.allGalleryFolders[index].name,
+                                      style: TextStyle(
+                                          color: select == index ? AppColor.purpal : AppColor.greyText, fontSize: 16, fontWeight: FontWeight.w500),
+                                    ),
+                                    value: index,
+                                    groupValue: select,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        select = index;
+                                      });
+                                    },
                                   ),
-                                  activeColor: AppColor.purpal,
-                                  title: Text(
-                                    gallery.allGalleryFolders[index].name,
-                                    style: TextStyle(
-                                        color: select == index ? AppColor.purpal : AppColor.greyText, fontSize: 16, fontWeight: FontWeight.w500),
-                                  ),
-                                  value: index,
-                                  groupValue: select,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      select = index;
-                                    });
-                                  },
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              icon: Container(
-                                height: SizeUtils.verticalBlockSize * 6.5,
-                                width: SizeUtils.horizontalBlockSize * 40,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: AppColor.graydark),
-                                child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Container(
+                                  height: SizeUtils.verticalBlockSize * 6.5,
+                                  width: SizeUtils.horizontalBlockSize * 40,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: AppColor.graydark),
+                                  child: Center(
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () async {
-                                // File? imageFile = await preview.assetsList[preview.currentIndex].file;
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () async {
+                                  AssetPathEntity accessiblePath =   gallery.allGalleryFolders[select] ;
+                                  AssetEntity yourEntity = preview.assetsList[preview.currentIndex];
 
-                                await GallerySaver.saveImage(imageFile.path,albumName: gallery.allGalleryFolders[index].name);
-                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("SuccessFully Copy to Image")));
-                                Get.back();
-                              },
-                              icon: Container(
-                                height: SizeUtils.verticalBlockSize * 6.5,
-                                width: SizeUtils.horizontalBlockSize * 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: AppColor.purpal,
+                                  final AssetPathEntity pathEntity = accessiblePath;
+                                  final AssetEntity entity = yourEntity;
+
+                                  try {
+                                   bool? re4sult = await PhotoManager.editor.android.moveAssetToAnother(
+                                      entity: entity,
+                                      target: pathEntity,
+                                    );
+                                    print(accessiblePath);
+                                    print(yourEntity);
+                                    print(re4sult);
+                                    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("moved successfully")));
+                                  } catch (e) {
+                                    print("Error moving asset: $e");
+                                  }
+
+                               // PhotoManager.editor.android.moveAssetToAnother(
+                               //      entity: preview.assetsList[preview.currentIndex],
+                               //      target: gallery.allGalleryFolders[select],
+                               //    );
+                                  Get.back();
+                                },
+                                icon: Container(
+                                  height: SizeUtils.verticalBlockSize * 6.5,
+                                  width: SizeUtils.horizontalBlockSize * 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: AppColor.purpal,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Add",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                                    ),
+                                  ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    "Copy",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          });
+        });
+      },
+    );
+  }
+
+
+  void openCopyToBottomSheet(
+    BuildContext context,
+    AssetEntity assetEntity,
+    int index,
+    File imageFile,
+  ) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Consumer<PreviewPageProvider>(builder: (context, preview, child) {
+          return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
+            return BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              child: StatefulBuilder(
+                builder: (context, setState) {
+                  return SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                      padding: const EdgeInsets.all(0.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Add to Copy",
+                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Divider(
+                            thickness: 1,
+                            color: AppColor.dividercolor,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: SizeUtils.verticalBlockSize * 35,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                children: List.generate(
+                                  gallery.allGalleryFolders.length,
+                                  (index) => RadioListTile(
+                                    controlAffinity: ListTileControlAffinity.trailing,
+                                    contentPadding: const EdgeInsets.all(8),
+                                    secondary: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: gallery.folderThumbnail[index].isNotEmpty
+                                          ? FutureBuilder<Uint8List?>(
+                                              future: gallery.folderThumbnail[index].first.thumbnailData,
+                                              builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
+                                                  return Container(
+                                                    width: SizeUtils.horizontalBlockSize * 15,
+                                                    height: (SizeUtils.verticalBlockSize * 14),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      child: Image.memory(
+                                                        snapshot.data!,
+                                                        fit: BoxFit.cover,
+                                                        height: SizeUtils.verticalBlockSize * 6,
+                                                        width: SizeUtils.horizontalBlockSize * 13,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return ClipRRect(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                    child: SizedBox(
+                                                      width: (SizeUtils.screenWidth / gallery.columnCount) - SizeUtils.horizontalBlockSize * 5,
+                                                      height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
+                                                      child: const Icon(
+                                                        Icons.photo,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              })
+                                          : ClipRRect(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              child: SizedBox(
+                                                width: SizeUtils.screenWidth / gallery.columnCount,
+                                                height: (SizeUtils.screenWidth / gallery.columnCount) - (SizeUtils.verticalBlockSize * 2),
+                                                child: const Icon(
+                                                  Icons.photo,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                    ),
+                                    activeColor: AppColor.purpal,
+                                    title: Text(
+                                      gallery.allGalleryFolders[index].name,
+                                      style: TextStyle(
+                                          color: select == index ? AppColor.purpal : AppColor.greyText, fontSize: 16, fontWeight: FontWeight.w500),
+                                    ),
+                                    value: index,
+                                    groupValue: select,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        select = index;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),
                             ),
-                            const Spacer(),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        )
-                      ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Container(
+                                  height: SizeUtils.verticalBlockSize * 6.5,
+                                  width: SizeUtils.horizontalBlockSize * 40,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: AppColor.graydark),
+                                  child: Center(
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () async {
+                                  // File? imageFile = await preview.assetsList[preview.currentIndex].file;
+
+                                  final AssetEntity? result = await PhotoManager.editor.copyAssetToPath(
+                                    asset: preview.assetsList[preview.currentIndex],
+                                    pathEntity: gallery.allGalleryFolders[select],
+                                  );
+                                  print(result);
+
+
+                                  Get.back();
+                                },
+                                icon: Container(
+                                  height: SizeUtils.verticalBlockSize * 6.5,
+                                  width: SizeUtils.horizontalBlockSize * 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: AppColor.purpal,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Copy",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          );
+                  );
+                },
+              ),
+            );
+          });
         });
-        });
-        },
+      },
     );
   }
 
@@ -1330,9 +1371,9 @@ class AppBottomSheets {
                         child: IconButton(
                           onPressed: () {
                             saveindex;
-                            Navigation.replace(
+                            Navigation.replaceAll(
                               Routes.kPrivatePhoto,
-                              arguments: {saveindex, name2},
+                              arg: {saveindex, name2},
                             );
                           },
                           icon: Container(

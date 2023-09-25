@@ -5,6 +5,7 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,45 @@ class RecentGalleryList extends StatefulWidget {
 }
 
 class _RecentGalleryListState extends State<RecentGalleryList> {
+
+  Future<void> moveImage() async {
+    // Source and destination paths
+    final tempDir = await getTemporaryDirectory();
+    final String sourcePath = '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}_.png';
+    const String destinationPath = 'path_to_destination_folder/your_image.png';
+
+    try {
+      // Create a File object for the source image
+      final File sourceFile = File(sourcePath);
+
+      // Check if the source file exists
+      if (await sourceFile.exists()) {
+        // Create a Directory object for the destination folder
+        final Directory destinationDir = Directory('path_to_destination_folder');
+
+        // Ensure that the destination folder exists, create it if necessary
+        if (!await destinationDir.exists()) {
+          await destinationDir.create(recursive: true);
+        }
+
+        // Move the image to the destination folder
+        await sourceFile.rename(destinationPath);
+
+        // Check if the image was successfully moved
+        final File movedFile = File(destinationPath);
+        if (await movedFile.exists()) {
+          print('Image moved successfully');
+        } else {
+          print('Image move failed');
+        }
+      } else {
+        print('Source image does not exist');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   ScrollController scrollController = ScrollController();
 
 

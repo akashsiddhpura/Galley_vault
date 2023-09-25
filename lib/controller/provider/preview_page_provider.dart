@@ -43,6 +43,8 @@ class PreviewPageProvider extends ChangeNotifier {
         loaded = false;
 
         notifyListeners();
+      } else {
+        notifyListeners();
       }
     }
   }
@@ -62,8 +64,6 @@ class PreviewPageProvider extends ChangeNotifier {
   AssetEntity get yourEntity => yourEntity;
 
   AssetPathEntity get accessiblePath => accessiblePath;
-
-
 
   @override
   void dispose() {

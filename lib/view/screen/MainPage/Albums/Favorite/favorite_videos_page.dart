@@ -122,9 +122,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   itemCount: favoriteData.length,
                 ),
               )
-                  // ;
-                  // }
-                  // }),
                   ));
         });
   }
