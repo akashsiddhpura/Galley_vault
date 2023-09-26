@@ -15,10 +15,10 @@ import '../../../../res/app_colors.dart';
 import '../../../../utils/navigation_utils/navigation.dart';
 import '../../../../utils/size_utils.dart';
 
-
 // ignore: must_be_immutable
 class InstaGrideScreen extends StatefulWidget {
   bool? isSelectImage;
+
   InstaGrideScreen({super.key, this.isSelectImage});
 
   @override
@@ -26,14 +26,15 @@ class InstaGrideScreen extends StatefulWidget {
 }
 
 class _InstaGrideScreenState extends State<InstaGrideScreen> {
+  int select = 1;
   bool show = false;
   String avi = 'Insta Grid';
-
+  List iconss = [
+    Icons.refresh,
+    Icons.crop,
+  ];
   File? _selectedImage;
   final List<File?> _splitImages = List.generate(9, (index) => null);
-
-
-
 
   @override
   void initState() {
@@ -45,7 +46,6 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
       _splitImage();
     });
   }
-
 
   Future _splitImage() async {
     // showLoadingIndicator(context);
@@ -118,54 +118,102 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
             backgroundColor: AppColor.blackdark,
           ),
           backgroundColor: AppColor.black,
-          body:show==false?
-        const Center(child: CircularProgressIndicator(color: AppColor.purpal,),):
-        Container(
-            height: SizeUtils.screenHeight,
-            width: SizeUtils.screenWidth,
-            color: AppColor.black,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                  GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
-                    itemCount: 9,
-                    itemBuilder: (context, index) {
-                      final image = _splitImages[index];
-                      return image != null
-                          ? Image.file(
-                              image,
-                              fit: BoxFit.cover,
-                            )
-                          : Container();
-                    },
+          body: show == false
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColor.purpal,
                   ),
-                const SizedBox(height: 40),
-                if (_splitImages.every((img) => img != null))
-                  InkWell(
-                    onTap: () async {
-                      _saveImagesToGallery().then((value) => Get.back());
-                    },
-                    child: Container(
-                      height: SizeUtils.verticalBlockSize * 6,
-                      width: SizeUtils.horizontalBlockSize * 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: AppColor.purpal,
+                )
+              : Container(
+                  height: SizeUtils.screenHeight,
+                  width: SizeUtils.screenWidth,
+                  color: AppColor.black,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                          itemCount: 9,
+                          itemBuilder: (context, index) {
+                            final image = _splitImages[index];
+                            return image != null
+                                ? Image.file(
+                                    image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container();
+                          },
+                        ),
                       ),
-                      child: Center(
-                          child: Text(
-                        'Save Images to Gallery',
-                        style: TextStyle(color: AppColor.white, fontWeight: FontWeight.bold),
-                      )),
-                    ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      if (_splitImages.every((img) => img != null))
+                        InkWell(
+                          onTap: () async {
+                            if (_splitImages.every((img) => img != null)) {
+                              _saveImagesToGallery().then((value) => Get.back());
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: AppColor.blackdark,
+                                  shape: InputBorder.none,
+                                  duration: const Duration(seconds: 2),
+                                  content: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(height: 20, child: const Text("Successfully Photo Save")),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  )));
+                            }
+                            else{
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: AppColor.blackdark,
+                                  shape: InputBorder.none,
+                                  duration: const Duration(seconds: 2),
+                                  content: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(height: 20, child: const Text("Please Select Only Image" ,style: TextStyle(color: AppColor.red),)),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  )));
+
+                            }
+                          },
+                          child: Container(
+                            height: SizeUtils.verticalBlockSize * 6,
+                            width: SizeUtils.horizontalBlockSize * 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: AppColor.purpal,
+                            ),
+                            child: Center(
+                                child: Text(
+                                  'Save Images to Gallery',
+                                  style: TextStyle(color: AppColor.white, fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                        ),
+
+                    ],
                   ),
-              ],
-            ),
-          ),
+                ),
         );
       },
     );

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 
@@ -268,6 +270,7 @@ class GalleryDataProvider extends ChangeNotifier {
       }
     }
   }
+
 
   void movePhoto(AssetPathEntity accessiblePath, AssetEntity yourEntity) async {
     // Make sure your path entity is accessible.

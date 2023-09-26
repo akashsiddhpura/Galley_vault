@@ -26,6 +26,8 @@ class AssetsPath {
   static const String p1 = 'asset/images/P1.png';
   static const String p2 = 'asset/images/p2.png';
   static const String p3 = 'asset/images/p3.png';
+  static const String substitution = 'asset/images/substitution.png';
+  static const String substitution2 = 'asset/images/substitution2.png';
   static const String premuum = 'asset/images/premuum.png';
   static const String security = 'asset/images/security_.png';
   static const String private = 'asset/images/private.png';

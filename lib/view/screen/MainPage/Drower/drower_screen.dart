@@ -131,8 +131,13 @@ class _DrowerScreenState extends State<DrowerScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Center(
-                  child: Image.asset(AssetsPath.premuum),
+                child: InkWell(
+                  onTap: () {
+                    Navigation.pushNamed(Routes.kSubStitution);
+                  },
+                  child: Center(
+                    child: Image.asset(AssetsPath.premuum),
+                  ),
                 ),
               ),
               const SizedBox(

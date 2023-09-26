@@ -73,7 +73,11 @@ class _AlbumListScreenState extends State<AlbumListScreen> {
                     child: SafeArea(
                       child: Column(
                         children: [
-                          Center(child: Image.asset("asset/images/upgrade.png",height: SizeUtils.verticalBlockSize*16,width: SizeUtils.horizontalBlockSize * 90,)),
+                          InkWell(
+                              onTap: () {
+                                Navigation.pushNamed(Routes.kSubStitution);
+                              },
+                              child: Center(child: Image.asset("asset/images/upgrade.png",height: SizeUtils.verticalBlockSize*16,width: SizeUtils.horizontalBlockSize * 90,))),
                           Expanded(
                             child: GridView.builder(
                               itemCount: gallery.folderThumbnail.length,

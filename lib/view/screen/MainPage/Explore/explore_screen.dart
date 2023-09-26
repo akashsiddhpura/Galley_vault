@@ -51,16 +51,13 @@ class _Explore_ScreenState extends State<Explore_Screen> {
             width: SizeUtils.screenWidth,
             color: AppColor.black,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Wrap(
                     children: List.generate(
-                        2,
+                        3,
                         (index) => InkWell(
                               onTap: () {
                                 if (index == 0) {
@@ -70,7 +67,21 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                                       .then((value) {
                                     setState(() {});
                                   });
-                                } else {}
+                                } else if(index == 2) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      backgroundColor: AppColor.blackdark,
+                                      shape: InputBorder.none,
+                                      duration: const Duration(seconds: 2),content: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+
+                                          const SizedBox(height: 10,),
+                                          Container(
+                                          height: 20,
+                                          child: const Text("Up Coming fetcher")),
+                                          const SizedBox(height: 10,),
+                                        ],
+                                      ))) ;
+                                }
                               },
                               child: Container(
                                 height: SizeUtils.verticalBlockSize * 21,
@@ -132,7 +143,7 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                        ),
                      ),
                      const SizedBox(
-                       height: 30,
+                       height: 20,
                      ),
                      InkWell(
                        onTap: () {
@@ -228,9 +239,6 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                            ),
                          ),
                        ),
-                     ),
-                     const SizedBox(
-                       height: 40,
                      ),
                    ],
                  ),

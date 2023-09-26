@@ -1,16 +1,15 @@
-import 'dart:ffi';
+
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_vault/view/res/strings_utils.dart';
-import 'package:gallery_vault/view/screen/demo.dart';
-import 'package:gallery_vault/view/screen/demo2.dart';
+
 import 'package:gallery_vault/view/utils/Share_Preference.dart';
 import 'package:gallery_vault/view/utils/net_conectivity.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
-import 'package:gallery_vault/view/utils/app_binding.dart';
+
 import 'package:gallery_vault/view/utils/my_behavior.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/widgets/exit_popup.dart';
@@ -70,9 +69,9 @@ class MyApp extends StatelessWidget {
           disabledColor: Colors.transparent,
           backgroundColor: AppColor.primaryClr,
           scaffoldBackgroundColor: AppColor.bgClr),
-      home: GalleryApp(),
-      // initialRoute: Routes.splash,
-      // getPages: Routes.routes,
+      // home: GalleryApp(),
+      initialRoute: Routes.splash,
+      getPages: Routes.routes,
       builder: EasyLoading.init(
         builder: (context, child) {
           SizeUtils().init(context);

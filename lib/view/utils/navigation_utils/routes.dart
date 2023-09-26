@@ -16,6 +16,7 @@ import '../../screen/MainPage/Explore/private_safe/private_safe.dart';
 import '../../screen/MainPage/Explore/private_safe/security_screen.dart';
 import '../../screen/MainPage/main_screen.dart';
 import '../../screen/MainPage/setting_screen.dart';
+import '../../screen/MainPage/substitution/substitution_screen.dart';
 import '../../screen/VideoPlayer/video_screen.dart';
 import '../../screen/information/duplicate_screen.dart';
 import '../../screen/information/insta.dart';
@@ -44,6 +45,7 @@ mixin Routes {
   static const String kConfirmPin2 = "/ConfirmPin2";
   static const String kPrivatePhoto = "/PrivatePhoto";
   static const String kInsta = "/Insta";
+  static const String kSubStitution = "/SubStitution";
   static const String kExplore_Screen = "/Explore_Screen";
   static const String kVideoScreen = "/VideoScreen";
   static const String kPrivateSafe = "/Private_Safe";
@@ -86,6 +88,11 @@ mixin Routes {
     GetPage<dynamic>(
       name: kRecycleBin,
       page: () => const Setting_Screen(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
+      name: kSubStitution,
+      page: () => const SubStitution(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
