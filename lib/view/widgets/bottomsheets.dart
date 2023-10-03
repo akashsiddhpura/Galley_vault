@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -9,11 +10,15 @@ import 'package:gallery_vault/controller/provider/gallery_data_provider.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/utils/navigation_utils/routes.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:gallery_vault/view/widgets/toast_helper.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:saf/saf.dart';
 
+import '../../controller/functions/hide_image.dart';
 import '../../controller/provider/preview_page_provider.dart';
 import '../utils/navigation_utils/navigation.dart';
 
@@ -820,7 +825,7 @@ class AppBottomSheets {
                           const Spacer(),
                           IconButton(
                             onPressed: () async {
-                              moveImageToPrivateFolder(imageFile);
+                              HideImage().hideImage(imageFile.path);
                               // Navigation.pushNamed(Routes.kPrivatePhoto);
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully Add To PrivateSafe")));
                               Get.back();
@@ -858,6 +863,19 @@ class AppBottomSheets {
   }
 
   int select = 0;
+
+  Future<File> movefile(File sourcefile, String newpath) async {
+    try {
+      // prefer using rename as it is probably faster
+      return await sourcefile.rename(newpath);
+    } on FileSystemException catch (e) {
+      // if rename fails, copy the source file and then delete it
+      final newfile = await sourcefile.copy(newpath);
+      await sourcefile.delete();
+      return newfile;
+    }
+  }
+
   void openMoveToBottomSheet(
     BuildContext context,
     AssetEntity assetEntity,
@@ -1012,29 +1030,32 @@ class AppBottomSheets {
                               const Spacer(),
                               IconButton(
                                 onPressed: () async {
-                                  AssetPathEntity accessiblePath =   gallery.allGalleryFolders[select] ;
                                   AssetEntity yourEntity = preview.assetsList[preview.currentIndex];
-
-                                  final AssetPathEntity pathEntity = accessiblePath;
+                                  File? thumbFile = await gallery.folderThumbnail[select].first.file;
                                   final AssetEntity entity = yourEntity;
+                                  File? sourceFile = await entity.file;
 
-                                  try {
-                                   bool? re4sult = await PhotoManager.editor.android.moveAssetToAnother(
-                                      entity: entity,
-                                      target: pathEntity,
-                                    );
-                                    print(accessiblePath);
-                                    print(yourEntity);
-                                    print(re4sult);
-                                    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("moved successfully")));
-                                  } catch (e) {
-                                    print("Error moving asset: $e");
+                                  Saf saf = Saf(thumbFile!.path);
+
+                                  String newPath = "${thumbFile.path.substring(0, thumbFile.path.lastIndexOf('/') + 1)}${entity.title}";
+
+                                  bool? isGranted = await saf.getDirectoryPermission(isDynamic: true, grantWritePermission: true);
+
+                                  if (isGranted != null && isGranted) {
+                                    movefile(sourceFile!, newPath).then((value) async {
+                                      preview.assetsList.remove(preview.assetsList[index]);
+                                      await gallery.fetchGalleryData();
+                                      AppToast.toastMessage("File Moved successfully");
+
+                                      Future.delayed(Duration(milliseconds: 300), () {
+                                        Navigation.popupUtil(Routes.kMainScreen);
+                                      });
+                                    });
+                                  } else {
+                                    // failed to get the permission
+                                    AppToast.toastMessage("Please allow folder permission");
                                   }
 
-                               // PhotoManager.editor.android.moveAssetToAnother(
-                               //      entity: preview.assetsList[preview.currentIndex],
-                               //      target: gallery.allGalleryFolders[select],
-                               //    );
                                   Get.back();
                                 },
                                 icon: Container(
@@ -1070,7 +1091,6 @@ class AppBottomSheets {
       },
     );
   }
-
 
   void openCopyToBottomSheet(
     BuildContext context,
@@ -1233,7 +1253,6 @@ class AppBottomSheets {
                                     pathEntity: gallery.allGalleryFolders[select],
                                   );
                                   print(result);
-
 
                                   Get.back();
                                 },

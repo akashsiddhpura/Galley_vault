@@ -1,5 +1,7 @@
 // import 'dart:typed_data';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
@@ -12,10 +14,10 @@ import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../controller/functions/hide_image.dart';
 import '../../../../controller/provider/gallery_data_provider.dart';
 import '../../../../controller/provider/preview_page_provider.dart';
 import '../../VideoPlayer/video_screen.dart';
-
 
 class Explore_Screen extends StatefulWidget {
   const Explore_Screen({super.key});
@@ -67,20 +69,24 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                                       .then((value) {
                                     setState(() {});
                                   });
-                                } else if(index == 2) {
+                                } else if (index == 2) {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                       backgroundColor: AppColor.blackdark,
                                       shape: InputBorder.none,
-                                      duration: const Duration(seconds: 2),content: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                                      duration: const Duration(seconds: 2),
+                                      content: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-
-                                          const SizedBox(height: 10,),
-                                          Container(
-                                          height: 20,
-                                          child: const Text("Up Coming fetcher")),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(height: 20, child: const Text("UpComing feature")),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                         ],
-                                      ))) ;
+                                      )));
                                 }
                               },
                               child: Container(
@@ -115,134 +121,159 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      index==0? "${gallery.allVideoList.length}":gallery.text2[index],
-                                      textAlign: TextAlign.start,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
-                                    ),
+                                    index == 1
+                                        ? FutureBuilder<List<FileSystemEntity>>(
+                                            future: HideImage().getMediaFromHideFolder(),
+                                            builder: (context, snapshot) {
+                                              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                                return const Text(
+                                                  "0 item",
+                                                  textAlign: TextAlign.start,
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  "${snapshot.data!.length} item",
+                                                  textAlign: TextAlign.start,
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: const TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
+                                                );
+                                              }
+                                            })
+                                        : Text(
+                                            index == 0 ? "${gallery.allVideoList.length}" : gallery.text2[index],
+                                            textAlign: TextAlign.start,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
+                                          ),
                                   ],
                                 ),
                               ),
                             )),
                   ),
-               Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                 child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     const SizedBox(
-                       height: 30,
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                       child: Text(
-                         "Create Your Photos",
-                         style: TextStyle(color: AppColor.white, fontSize: 14, fontWeight: FontWeight.w600),
-                       ),
-                     ),
-                     const SizedBox(
-                       height: 20,
-                     ),
-                     InkWell(
-                       onTap: () {
-                         Navigation.pushNamed(Routes.kImageSelectionScreen, arg: avi);
-                       },
-                       child: Container(
-                         height: SizeUtils.verticalBlockSize * 10,
-                         width: SizeUtils.screenWidth,
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(10),
-                             color: AppColor.blackdark,
-                             border: Border.all(width: 0.5, color: AppColor.white.withOpacity(0.5))),
-                         child: Padding(
-                           padding: const EdgeInsets.all(2.0),
-                           child: ListTile(
-                             leading: Stack(
-                               clipBehavior: Clip.none,
-                               children: [
-                                 Image.asset(AssetsPath.ellipse),
-                                 Positioned(
-                                     top: 0,
-                                     bottom: 0,
-                                     left: 0,
-                                     right: 0,
-                                     child: Center(
-                                         child: Image.asset(
-                                           AssetsPath.frame,
-                                           height: SizeUtils.verticalBlockSize * 15,
-                                         )))
-                               ],
-                             ),
-                             title: Text(
-                               "Insta Grid",
-                               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColor.white),
-                             ),
-                             subtitle: const Text(
-                               "Edit Photo Like Pro",
-                               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12, color: AppColor.greyText),
-                             ),
-                             trailing: Icon(
-                               Icons.arrow_forward_ios_outlined,
-                               color: AppColor.white,
-                             ),
-                           ),
-                         ),
-                       ),
-                     ),
-                     const SizedBox(
-                       height: 20,
-                     ),
-                     InkWell(
-                       onTap: () {
-                         Navigation.pushNamed(Routes.kPhotoEdit, );
-                       },
-                       child: Container(
-                         height: SizeUtils.verticalBlockSize * 10,
-                         width: SizeUtils.screenWidth,
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(10),
-                             color: AppColor.blackdark,
-                             border: Border.all(width: 0.5, color: AppColor.white.withOpacity(0.5))),
-                         child: Padding(
-                           padding: const EdgeInsets.all(2.0),
-                           child: ListTile(
-                             leading: Stack(
-                               clipBehavior: Clip.none,
-                               children: [
-                                 Image.asset(AssetsPath.ellipse),
-                                 Positioned(
-                                     top: 0,
-                                     bottom: 0,
-                                     left: 0,
-                                     right: 0,
-                                     child: Center(
-                                         child: Image.asset(
-                                           AssetsPath.frame2,
-                                           height: SizeUtils.verticalBlockSize * 15,
-                                         )))
-                               ],
-                             ),
-                             title: Text(
-                               "Photo Editor",
-                               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColor.white),
-                             ),
-                             subtitle: const Text(
-                               "Edit Photo Like Pro",
-                               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12, color: AppColor.greyText),
-                             ),
-                             trailing: Icon(
-                               Icons.arrow_forward_ios_outlined,
-                               color: AppColor.white,
-                             ),
-                           ),
-                         ),
-                       ),
-                     ),
-                   ],
-                 ),
-               )
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            "Create Your Photos",
+                            style: TextStyle(color: AppColor.white, fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigation.pushNamed(Routes.kImageSelectionScreen, arg: avi);
+                          },
+                          child: Container(
+                            height: SizeUtils.verticalBlockSize * 10,
+                            width: SizeUtils.screenWidth,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.blackdark,
+                                border: Border.all(width: 0.5, color: AppColor.white.withOpacity(0.5))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ListTile(
+                                leading: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Image.asset(AssetsPath.ellipse),
+                                    Positioned(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: Center(
+                                            child: Image.asset(
+                                          AssetsPath.frame,
+                                          height: SizeUtils.verticalBlockSize * 15,
+                                        )))
+                                  ],
+                                ),
+                                title: Text(
+                                  "Insta Grid",
+                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColor.white),
+                                ),
+                                subtitle: const Text(
+                                  "Edit Photo Like Pro",
+                                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12, color: AppColor.greyText),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  color: AppColor.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigation.pushNamed(
+                              Routes.kPhotoEdit,
+                            );
+                          },
+                          child: Container(
+                            height: SizeUtils.verticalBlockSize * 10,
+                            width: SizeUtils.screenWidth,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.blackdark,
+                                border: Border.all(width: 0.5, color: AppColor.white.withOpacity(0.5))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ListTile(
+                                leading: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Image.asset(AssetsPath.ellipse),
+                                    Positioned(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: Center(
+                                            child: Image.asset(
+                                          AssetsPath.frame2,
+                                          height: SizeUtils.verticalBlockSize * 15,
+                                        )))
+                                  ],
+                                ),
+                                title: Text(
+                                  "Photo Editor",
+                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColor.white),
+                                ),
+                                subtitle: const Text(
+                                  "Edit Photo Like Pro",
+                                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12, color: AppColor.greyText),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  color: AppColor.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

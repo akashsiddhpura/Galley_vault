@@ -1,16 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gallery_vault/controller/functions/hide_image.dart';
 import 'package:gallery_vault/view/screen/MainPage/All%20Media/recent_gallery_list.dart';
 
 import 'package:get/get.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../../../controller/provider/gallery_data_provider.dart';
 import '../../../res/app_colors.dart';
-
-
+import '../../../widgets/loder.dart';
 
 class ImageSelectionScreen extends StatefulWidget {
   const ImageSelectionScreen({super.key});
@@ -53,11 +54,23 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
             actions: [
               IconButton(
                   onPressed: () async {
-                 if (gallery.selectedImageList.isNotEmpty) {
-                      await gallery.saveImagesToFolder(gallery.selectedImageList, folderName: Get.arguments).then((value) {
-                        gallery.selectedImageList.clear();
-                        Get.back();
-                      });
+                    if (Get.arguments == "hideImage") {
+                      AppLoader.sw(context);
+                      for (var i = 0; i < gallery.selectedImageList.length; i++) {
+                        File? file = await gallery.selectedImageList[i].file;
+
+                        await HideImage().hideImage(file!.path);
+                      }
+                      AppLoader.hd();
+                      gallery.selectedImageList.clear();
+                      Get.back();
+                    } else {
+                      if (gallery.selectedImageList.isNotEmpty) {
+                        await gallery.saveImagesToFolder(gallery.selectedImageList, folderName: Get.arguments).then((value) {
+                          gallery.selectedImageList.clear();
+                          Get.back();
+                        });
+                      }
                     }
                   },
                   icon: const Icon(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
+import 'package:image_cropper/image_cropper.dart';
 
 import 'package:path_provider/path_provider.dart';
 
@@ -42,9 +43,44 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
 
     _selectedImage = Get.arguments;
     setState(() {});
-    Future.delayed(const Duration(seconds: 2), () {
+    cropImage();
+  }
+
+  Future<void> cropImage() async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: _selectedImage!.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio3x2,
+        // CropAspectRatioPreset.original,
+        // CropAspectRatioPreset.ratio4x3,
+        // CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: AppColor.blackdark,
+            toolbarWidgetColor: Colors.white,
+            backgroundColor: AppColor.primaryClr,
+            cropFrameColor: AppColor.white,
+            cropGridColor: AppColor.white.withOpacity(0.5),
+            activeControlsWidgetColor: AppColor.purpal,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+    if (croppedFile == null) {
+      Get.back();
+    } else {
+      _selectedImage = File(croppedFile.path);
       _splitImage();
-    });
+    }
   }
 
   Future _splitImage() async {
@@ -117,7 +153,6 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
             centerTitle: true,
             backgroundColor: AppColor.blackdark,
           ),
-          backgroundColor: AppColor.black,
           body: show == false
               ? const Center(
                   child: CircularProgressIndicator(
@@ -127,7 +162,7 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
               : Container(
                   height: SizeUtils.screenHeight,
                   width: SizeUtils.screenWidth,
-                  color: AppColor.black,
+                  color: Color(0xff181A20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,8 +209,7 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
                                       ),
                                     ],
                                   )));
-                            }
-                            else{
+                            } else {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: AppColor.blackdark,
                                   shape: InputBorder.none,
@@ -187,13 +221,17 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Container(height: 20, child: const Text("Please Select Only Image" ,style: TextStyle(color: AppColor.red),)),
+                                      Container(
+                                          height: 20,
+                                          child: const Text(
+                                            "Please Select Only Image",
+                                            style: TextStyle(color: AppColor.red),
+                                          )),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                     ],
                                   )));
-
                             }
                           },
                           child: Container(
@@ -205,12 +243,11 @@ class _InstaGrideScreenState extends State<InstaGrideScreen> {
                             ),
                             child: Center(
                                 child: Text(
-                                  'Save Images to Gallery',
-                                  style: TextStyle(color: AppColor.white, fontWeight: FontWeight.bold),
-                                )),
+                              'Save Images to Gallery',
+                              style: TextStyle(color: AppColor.white, fontWeight: FontWeight.bold),
+                            )),
                           ),
                         ),
-
                     ],
                   ),
                 ),

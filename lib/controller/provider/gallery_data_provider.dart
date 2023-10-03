@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 import '../functions/favoritedb.dart';
+import '../functions/hide_image.dart';
 
 enum SortOption { name, lastModifiedDate, size, path }
 
@@ -32,6 +33,9 @@ class GalleryDataProvider extends ChangeNotifier {
     AssetsPath.lock2,
     AssetsPath.cleaner,
   ];
+
+
+
   List text1 = [
     "Video",
     "Private Safe",
@@ -39,7 +43,7 @@ class GalleryDataProvider extends ChangeNotifier {
   ];
   List text2 = [
     "25 item",
-    "0 item",
+    "",
     "",
   ];
   List text3 = [
@@ -83,7 +87,7 @@ class GalleryDataProvider extends ChangeNotifier {
     }
     fetchVideos();
 
-    // notifyListeners();
+    notifyListeners();
   }
 
   Future<void> fetchVideos() async {
@@ -271,7 +275,6 @@ class GalleryDataProvider extends ChangeNotifier {
     }
   }
 
-
   void movePhoto(AssetPathEntity accessiblePath, AssetEntity yourEntity) async {
     // Make sure your path entity is accessible.
     final AssetPathEntity pathEntity = accessiblePath;
@@ -289,7 +292,6 @@ class GalleryDataProvider extends ChangeNotifier {
     // print(response);
   }
 }
-
 
 class RecentImages {
   DateTime? dateTime;

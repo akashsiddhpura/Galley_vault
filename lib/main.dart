@@ -24,7 +24,7 @@ import 'controller/provider/preview_page_provider.dart';
 Future<void> main() async {
 
 
-
+  WidgetsFlutterBinding.ensureInitialized();
 
 
   /// hive

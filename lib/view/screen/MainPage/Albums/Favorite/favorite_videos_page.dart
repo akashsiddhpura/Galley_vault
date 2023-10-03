@@ -9,7 +9,6 @@ import 'package:photo_manager/photo_manager.dart';
 import '../../../../../controller/functions/favoritedb.dart';
 import '../../../../utils/navigation_utils/navigation.dart';
 
-
 class FavouriteScreen extends StatefulWidget {
   FavouriteScreen({super.key});
 
@@ -49,8 +48,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               ),
               backgroundColor: AppColor.black,
               body: SafeArea(
-                  child:
-                      Padding(
+                  child: Padding(
                 padding: const EdgeInsets.only(top: 18.0, left: 10, right: 10),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -121,8 +119,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   }),
                   itemCount: favoriteData.length,
                 ),
-              )
-                  ));
+              )));
         });
   }
 }

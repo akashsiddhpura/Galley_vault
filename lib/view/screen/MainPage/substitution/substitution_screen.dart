@@ -66,10 +66,19 @@ class _SubStitutionState extends State<SubStitution> {
             ),
           ),
           Positioned(
-            child: Image.asset(
-              AssetsPath.substitution2,
-              fit: BoxFit.cover,
-              width: double.infinity,
+            child: Container(
+              height: SizeUtils.screenHeight,
+              width: SizeUtils.screenWidth,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.00, -1.00),
+                  end: Alignment(0, 0.4),
+                  colors: [
+                    Color(0x3D4A1871),
+                    Color(0xFF181A20),
+                  ],
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -80,7 +89,12 @@ class _SubStitutionState extends State<SubStitution> {
                 children: [
                   Text(
                     "NOW ENJOY AD FREE",
-                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: AppColor.white,fontFamily:  AppString.kMuseoModerno,),
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.white,
+                      fontFamily: AppString.kMuseoModerno,
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -89,7 +103,7 @@ class _SubStitutionState extends State<SubStitution> {
                     height: SizeUtils.verticalBlockSize * 15,
                     width: SizeUtils.horizontalBlockSize * 91.05,
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColor.graydark,width: 2),
+                      border: Border.all(color: AppColor.graydark, width: 2),
                       color: AppColor.blackdark,
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -106,7 +120,7 @@ class _SubStitutionState extends State<SubStitution> {
                                   height: SizeUtils.verticalBlockSize * 15,
                                   width: SizeUtils.horizontalBlockSize * 30,
                                   decoration: BoxDecoration(
-                                    border: select==index ? Border.all(color: AppColor.white,width: 1):Border.all(color: Colors.transparent),
+                                    border: select == index ? Border.all(color: AppColor.white, width: 1) : Border.all(color: Colors.transparent),
                                     borderRadius: ((index == 0)
                                         ? const BorderRadius.only(bottomLeft: Radius.circular(20), topLeft: Radius.circular(20))
                                         : index == 2

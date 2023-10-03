@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:saf/saf.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../view/widgets/toast_helper.dart';
 
 class PreviewPageProvider extends ChangeNotifier {
   PageController pageController = PageController();
@@ -64,6 +68,8 @@ class PreviewPageProvider extends ChangeNotifier {
   AssetEntity get yourEntity => yourEntity;
 
   AssetPathEntity get accessiblePath => accessiblePath;
+
+
 
   @override
   void dispose() {
