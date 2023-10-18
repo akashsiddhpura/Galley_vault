@@ -4,9 +4,11 @@ import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
 import 'package:gallery_vault/view/widgets/bottomsheets.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../utils/navigation_utils/navigation.dart';
+import '../../../../utils/navigation_utils/routes.dart';
 
 
 
@@ -22,6 +24,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
   bool SelectedColor = false;
   bool onSubmit = false;
   bool isMatch = false;
+  int load = 0;
   List allname = [
     "1",
     "2",
@@ -33,6 +36,28 @@ class _ConfirmPinState extends State<ConfirmPin> {
     "8",
     "9",
   ];
+
+
+  bool isFirstTimeLogin = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTimeLogin();
+  }
+  Future<void> checkFirstTimeLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('firstTimeSetPin') ?? true;
+
+    setState(() {
+      isFirstTimeLogin = isFirstTime;
+    });
+
+    if (isFirstTime) {
+      prefs.setBool('firstTimeSetPin', false); // Mark as not the first time
+    }
+  }
+
   String confirmpin = ''; //s
   int selectedIndex = -1;
 
@@ -53,9 +78,18 @@ class _ConfirmPinState extends State<ConfirmPin> {
           prefs.setString('privateSafePin', Get.arguments);
         }
         Future.delayed(const Duration(milliseconds: 300), () {
-          Get.arguments == confirmpin ? AppBottomSheets().openPrivateSafeBinBottomSheet(context) : const SizedBox();
+          if(isFirstTimeLogin) {
+            Get.arguments == confirmpin
+                ? AppBottomSheets()
+                .openPrivateSafeBinBottomSheet(context)
+                : const SizedBox();
+
+          }else{
+            Navigation.replaceAll(Routes.kMainScreen,);
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password successfuly update')));
+          }
         });
-        setState(() {});
+        // setState(() {});
       }
     });
   }
@@ -96,7 +130,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 80),
-            Center(child: Image.asset(AssetsPath.security)),
+            Center(child: Lottie.asset(AssetsPath.loaderLock,height: SizeUtils.verticalBlockSize * 12),),
             const SizedBox(height: 20),
             Text(
               "Set Confirm PIN here",
@@ -218,9 +252,9 @@ class _ConfirmPinState extends State<ConfirmPin> {
                         onTap: () async {
                           onSubmit = true;
                           isMatch = Get.arguments == confirmpin;
-                          Get.arguments == confirmpin ? AppBottomSheets().openPrivateSafeBinBottomSheet(context) : const SizedBox();
 
-                          setState(() {});
+
+
                         },
                         child: Icon(
                           Icons.done,

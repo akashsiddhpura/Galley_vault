@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gallery_vault/view/res/app_colors.dart';
 import 'package:gallery_vault/view/res/assets_path.dart';
 import 'package:gallery_vault/view/utils/size_utils.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../utils/navigation_utils/navigation.dart';
 import '../../../../utils/navigation_utils/routes.dart';
-
 
 class SecurityScreen extends StatefulWidget {
   // final TextEditingController controller;
@@ -23,6 +24,20 @@ class _SecurityScreenState extends State<SecurityScreen> {
   int select = 0;
   String? save;
   bool demo = false;
+  bool isFirstTimeLogin = true;
+
+  Future<void> checkFirstTimeLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('firstTimeLogin') ?? true;
+
+    setState(() {
+      isFirstTimeLogin = isFirstTime;
+    });
+
+    if (isFirstTime) {
+      prefs.setBool('firstTimeLogin', false); // Mark as not the first time
+    }
+  }
 
   bool selectedColor = false;
   List allName = [
@@ -42,13 +57,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
   @override
   void initState() {
     super.initState();
+    checkFirstTimeLogin();
     // PermissionHandler().getPermission();
   }
 
   Future<void> addToPin(String digit, bool selectcolor) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('pin', save!);
-    setState(()  {
+    setState(() {
       if (pin.length < 4) {
         pin += digit;
         selectcolor = true;
@@ -58,7 +74,11 @@ class _SecurityScreenState extends State<SecurityScreen> {
         setState(() {
           save = pin;
         });
-        Navigation.pushNamed(Routes.kConfirmPin, arg: save);
+
+        Get.arguments == true
+            ? Navigation.pushNamed(Routes.kConfirmPin2, arg: save)
+            : Navigation.pushNamed(Routes.kConfirmPin,
+                arg: save,);
       }
     });
   }
@@ -86,7 +106,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
         ),
         title: Text(
           "Private Safe",
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: AppColor.white),
+          style: TextStyle(
+              fontWeight: FontWeight.w600, fontSize: 18, color: AppColor.white),
         ),
         centerTitle: true,
         backgroundColor: AppColor.blackdark,
@@ -96,12 +117,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 50),
-
-          Center(child: Image.asset(AssetsPath.security)),
+          Center(child: Lottie.asset(AssetsPath.loaderLock,height: SizeUtils.verticalBlockSize * 12),),
           const SizedBox(height: 20),
           Text(
             "Set New PIN here",
-            style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w700, fontSize: 20),
+            style: TextStyle(
+                color: AppColor.white,
+                fontWeight: FontWeight.w700,
+                fontSize: 20),
           ),
           const SizedBox(height: 20),
           Row(
@@ -120,7 +143,9 @@ class _SecurityScreenState extends State<SecurityScreen> {
                     width: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: pin.length > index ? AppColor.purpal : AppColor.blackdark,
+                      color: pin.length > index
+                          ? AppColor.purpal
+                          : AppColor.blackdark,
                     ),
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                   ),
@@ -155,11 +180,15 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                 shape: BoxShape.circle,
                                 // color: AppColor.blackdark,
                               ),
-                              margin: const EdgeInsets.only(left: 30, right: 30),
+                              margin:
+                                  const EdgeInsets.only(left: 30, right: 30),
                               child: Center(
                                 child: Text(
                                   allName[index],
-                                  style: TextStyle(color: AppColor.white, fontSize: 24, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -191,7 +220,10 @@ class _SecurityScreenState extends State<SecurityScreen> {
                       child: Center(
                         child: Text(
                           "0",
-                          style: TextStyle(color: AppColor.white, fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: AppColor.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

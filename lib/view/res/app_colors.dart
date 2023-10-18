@@ -14,6 +14,7 @@ class AppColor {
   static const dividercolor =   Color(0xff35383F);
   static const homebg =  Color(0xff35383F);
   static const green =  Color(0xff30EC59);
+  static const greenAsset =  Color(0xff1E971B);
   static const deeppurple =  Color(0xff521581);
   static const red =  Color(0xffF13939);
   static Color white = Colors.white;

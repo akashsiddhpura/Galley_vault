@@ -30,7 +30,7 @@ class GalleryDataProvider extends ChangeNotifier {
   int columnCount = 3;
   List images = [
     AssetsPath.video,
-    AssetsPath.lock2,
+    // AssetsPath.lock2,
     AssetsPath.cleaner,
   ];
 
@@ -38,12 +38,12 @@ class GalleryDataProvider extends ChangeNotifier {
 
   List text1 = [
     "Video",
-    "Private Safe",
+    // "Private Safe",
     "Cleaner",
   ];
   List text2 = [
     "25 item",
-    "",
+    // "",
     "",
   ];
   List text3 = [

@@ -172,7 +172,7 @@ class _DrowerScreenState extends State<DrowerScreen> {
                             }
                             else if(index == 3) {
                               Navigation.pushNamed(
-                                Routes.kRecycleBin,
+                                Routes.kSettingScreen,
                               ).then((value) {
                                 setState(() {});
                               });

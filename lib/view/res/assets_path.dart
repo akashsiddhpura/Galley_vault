@@ -51,5 +51,6 @@ class AssetsPath {
   /*  Loader   */
 
   static const String loader =  'asset/json/Loader.json';
+  static const String loaderLock =  'asset/json/lock.json';
 }
 

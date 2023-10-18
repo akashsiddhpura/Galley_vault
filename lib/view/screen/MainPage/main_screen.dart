@@ -10,6 +10,7 @@ import 'package:gallery_vault/view/widgets/common_textstyle.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/provider/preview_page_provider.dart';
 import 'Albums/album_list_screeen.dart';
 import 'All Media/recent_gallery_list.dart';
 import 'Drower/drower_screen.dart';
@@ -61,114 +62,126 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Consumer<GalleryDataProvider>(builder: (context, gallery, child) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Gallery",
-            style: CommonTextStyle.title,
-          ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Image.asset(
-                  AssetsPath.drawer,
-                  height: 25,
-                ), // Replace with your custom icon
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-          centerTitle: true,
-          backgroundColor: AppColor.blackdark,
-          actions: [
-            if (tabController!.index == 0)
-              PopupMenuButton(
-                color: AppColor.blackdark,
-                onSelected: (value) async {
-                  if (value == 1) {
-                    openCamera();
-                  }
-                },
-                icon: Icon(
-                  Icons.camera_alt_outlined,
-                  color: AppColor.white,
-                ),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 1,
-                    child: Text(
-                      "Camera",
-                      style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
-                    ),
-                  ),
-                ],
-              ),
-            if (tabController!.index == 0)
-              PopupMenuButton<int>(
-                  itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Text(
-                            "Sort By",
-                            style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 2,
-                          child: Text(
-                            "Column Count",
-                            style: TextStyle(color: AppColor.white, fontWeight: FontWeight.w500, fontSize: 15),
-                          ),
-                        ),
-                      ],
+      return Consumer<PreviewPageProvider>(builder: (context, preview, child)
+      {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Gallery",
+              style: CommonTextStyle.title,
+            ),
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Image.asset(
+                    AssetsPath.drawer,
+                    height: 25,
+                  ), // Replace with your custom icon
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: AppColor.blackdark,
+            actions: [
+              if (tabController!.index == 0)
+                PopupMenuButton(
+                  color: AppColor.blackdark,
                   onSelected: (value) async {
                     if (value == 1) {
-                      AppBottomSheets().openFolderSortingBottomSheet(context);
-                    } else if (value == 2) {
-                      AppBottomSheets().openColumnSelectionBottomSheet(context);
+                      openCamera();
                     }
                   },
-                  offset: const Offset(10, 30),
-                  color: AppColor.blackdark,
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.more_vert_rounded,
-                      color: AppColor.white,
+                  icon:preview.camera==false? Icon(
+                    Icons.camera_alt_outlined,
+                    color: AppColor.white,
+                  ):const SizedBox(),
+                  itemBuilder: (context) =>
+                  [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text(
+                        "Camera",
+                        style: TextStyle(color: AppColor.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15),
+                      ),
                     ),
-                  )),
-          ],
-          bottom: TabBar(
-            controller: tabController,
-            labelColor: AppColor.purpal,
-            dividerColor: AppColor.black,
-            indicatorColor: AppColor.purpal,
-            tabs: const [
-              Tab(
-                text: "Albums",
-              ),
-              Tab(
-                text: "All Media",
-              ),
-              Tab(
-                text: "Explore",
-              ),
+                  ],
+                ),
+              if (tabController!.index == 0)
+                PopupMenuButton<int>(
+                    itemBuilder: (context) =>
+                    [
+                      PopupMenuItem(
+                        value: 1,
+                        child: Text(
+                          "Sort By",
+                          style: TextStyle(color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 2,
+                        child: Text(
+                          "Column Count",
+                          style: TextStyle(color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                    onSelected: (value) async {
+                      if (value == 1) {
+                        AppBottomSheets().openFolderSortingBottomSheet(context);
+                      } else if (value == 2) {
+                        AppBottomSheets().openColumnSelectionBottomSheet(
+                            context);
+                      }
+                    },
+                    offset: const Offset(10, 30),
+                    color: AppColor.blackdark,
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.more_vert_rounded,
+                        color: AppColor.white,
+                      ),
+                    )),
             ],
+            bottom: TabBar(
+              controller: tabController,
+              labelColor: AppColor.purpal,
+              dividerColor: AppColor.black,
+              indicatorColor: AppColor.purpal,
+              tabs: const [
+                Tab(
+                  text: "Albums",
+                ),
+                Tab(
+                  text: "All Media",
+                ),
+                Tab(
+                  text: "Explore",
+                ),
+              ],
+            ),
           ),
-        ),
-        drawer: Drawer(
-          width: SizeUtils.screenWidth,
-          backgroundColor: AppColor.black,
-          child: const DrowerScreen(),
-        ),
-        body: TabBarView(
-          controller: tabController,
-          children: _children,
-        ),
-      );
+          drawer: Drawer(
+            width: SizeUtils.screenWidth,
+            backgroundColor: AppColor.black,
+            child: const DrowerScreen(),
+          ),
+          body: TabBarView(
+            controller: tabController,
+            children: _children,
+          ),
+        );
+      });
     });
   }
 }

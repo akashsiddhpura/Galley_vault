@@ -14,8 +14,11 @@ import '../../screen/MainPage/Explore/private_safe/confirmpin2.dart';
 import '../../screen/MainPage/Explore/private_safe/private_photo.dart';
 import '../../screen/MainPage/Explore/private_safe/private_safe.dart';
 import '../../screen/MainPage/Explore/private_safe/security_screen.dart';
+import '../../screen/MainPage/Setting/feedback.dart';
+import '../../screen/MainPage/Setting/instructions.dart';
+import '../../screen/MainPage/Setting/setting_screen.dart';
 import '../../screen/MainPage/main_screen.dart';
-import '../../screen/MainPage/setting_screen.dart';
+
 import '../../screen/MainPage/substitution/substitution_screen.dart';
 import '../../screen/VideoPlayer/video_screen.dart';
 import '../../screen/information/duplicate_screen.dart';
@@ -24,7 +27,6 @@ import '../../screen/information/pinch_zoom.dart';
 import '../../screen/information/private_locker.dart';
 import '../../screen/information/splash_screen.dart';
 import '../../screen/information/welcome_screen.dart';
-
 
 mixin Routes {
   static const defaultTransition = Transition.rightToLeft;
@@ -53,6 +55,9 @@ mixin Routes {
   static const String kWelcomeScreen = "/WelcomeScreen";
   static const String kInstaGrideScreen = "/InstaGrideScreen";
   static const String kImageSelectionScreen = "/ImageSelectionScreen";
+  static const String kInstructionsScreen = "/InstructionsScreen";
+  static const String kSendFeedbackScreen = "/SendFeedbackScreen";
+  static const String kSettingScreen = "/Setting_Screen";
 
   static List<GetPage<dynamic>> routes = [
     GetPage<dynamic>(
@@ -74,10 +79,18 @@ mixin Routes {
       name: kPrivateLocker,
       page: () => const PrivateLocker(),
       transition: defaultTransition,
+    ),    GetPage<dynamic>(
+      name: kSendFeedbackScreen,
+      page: () => const SendFeedbackScreen(),
+      transition: defaultTransition,
     ),
     GetPage<dynamic>(
       name: kPrivatePhoto,
       page: () => const PrivatePhoto(),
+      transition: defaultTransition,
+    ),    GetPage<dynamic>(
+      name: kSettingScreen,
+      page: () => const Setting_Screen(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
@@ -101,8 +114,13 @@ mixin Routes {
       transition: defaultTransition,
     ),
     GetPage<dynamic>(
+      name: kInstructionsScreen,
+      page: () => const InstructionsScreen(),
+      transition: defaultTransition,
+    ),
+    GetPage<dynamic>(
       name: kConfirmPin2,
-      page: () => const ConfirmPin2(),
+      page: () =>  const ConfirmPin2(),
       transition: defaultTransition,
     ),
     GetPage<dynamic>(

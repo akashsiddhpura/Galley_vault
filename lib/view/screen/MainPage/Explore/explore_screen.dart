@@ -59,17 +59,12 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                 children: [
                   Wrap(
                     children: List.generate(
-                        3,
+                        2,
                         (index) => InkWell(
                               onTap: () {
                                 if (index == 0) {
                                   Navigation.pushNamed(Routes.kVideoScreen);
                                 } else if (index == 1) {
-                                  Navigation.pushNamed(privateSafePin == null ? Routes.kSecurityScreen : Routes.kConfirmPin2, arg: privateSafePin)
-                                      .then((value) {
-                                    setState(() {});
-                                  });
-                                } else if (index == 2) {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                       backgroundColor: AppColor.blackdark,
                                       shape: InputBorder.none,
@@ -155,6 +150,72 @@ class _Explore_ScreenState extends State<Explore_Screen> {
                               ),
                             )),
                   ),
+
+              preview.isPrivacyScreenVisible==false?    InkWell(
+                    onTap: () {
+                      Navigation.pushNamed(privateSafePin == null ? Routes.kSecurityScreen : Routes.kConfirmPin2, arg: privateSafePin)
+                          .then((value) {
+                        setState(() {});
+                      });
+                    },
+                    child: Container(
+                      height: SizeUtils.verticalBlockSize * 21,
+                      width: SizeUtils.horizontalBlockSize * 41,
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColor.blackdark,
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: Image.asset(
+                              AssetsPath.lock2,
+                              height: SizeUtils.verticalBlockSize * 9,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Private Safe",
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: AppColor.white, fontSize: 14, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                        FutureBuilder<List<FileSystemEntity>>(
+                              future: HideImage().getMediaFromHideFolder(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                  return const Text(
+                                    "0 item",
+                                    textAlign: TextAlign.start,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
+                                  );
+                                } else {
+                                  return Text(
+                                    "${snapshot.data!.length} item",
+                                    textAlign: TextAlign.start,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(color: AppColor.greyText, fontSize: 12, fontWeight: FontWeight.w400),
+                                  );
+                                }
+                              })
+
+                        ],
+                      ),
+                    ),
+                  ):SizedBox(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(

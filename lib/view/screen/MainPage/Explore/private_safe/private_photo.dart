@@ -69,7 +69,7 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
-                Navigation.pop();
+                Navigation.pushNamed(Routes.kMainScreen);
               },
               icon: Icon(
                 Icons.arrow_back_ios_new,
@@ -88,7 +88,7 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
             future: HideImage().getMediaFromHideFolder(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -103,7 +103,7 @@ class _PrivatePhotoState extends State<PrivatePhoto> {
                         AssetsPath.private,
                         height: 100,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(

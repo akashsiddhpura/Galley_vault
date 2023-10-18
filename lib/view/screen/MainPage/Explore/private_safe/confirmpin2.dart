@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../utils/navigation_utils/navigation.dart';
 import '../../../../utils/navigation_utils/routes.dart';
 import '../../../../utils/size_utils.dart';
+import '../../../../widgets/loder.dart';
 
 
 
@@ -39,7 +40,9 @@ class _ConfirmPin2State extends State<ConfirmPin2> {
   ];
   String confirmpin = ''; //s
   int selectedIndex = -1;
-
+Map<String, String> avi = {
+  "avi":"kano"
+};
   // Navigation.pushNamed(Routes.kFolderDataScreen).then((value) => const Duration(milliseconds: 300));
 
   Future<void> addToPin(String digit, bool selectcolor) async {
@@ -56,8 +59,11 @@ class _ConfirmPin2State extends State<ConfirmPin2> {
         isMatch = Get.arguments == confirmpin;
         if (isMatch) {
           prefs.setString('privateSafePin', Get.arguments);
+          Get.parameters.isNotEmpty ?  Navigation.pushNamed(Routes.kSecurityScreen,params: avi):
           Navigation.replace(Routes.kPrivatePhoto);
-          setState(() {});
+          setState(() {
+
+          });
         }
       }
     });
@@ -98,7 +104,7 @@ class _ConfirmPin2State extends State<ConfirmPin2> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 80),
-            Center(child: Image.asset(AssetsPath.security)),
+            Center(child: Lottie.asset(AssetsPath.loaderLock,height: SizeUtils.verticalBlockSize * 12),),
             const SizedBox(height: 20),
             Text(
               "Confirm PIN here",

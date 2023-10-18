@@ -827,7 +827,7 @@ class AppBottomSheets {
                             onPressed: () async {
                               HideImage().hideImage(imageFile.path);
                               // Navigation.pushNamed(Routes.kPrivatePhoto);
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully Add To PrivateSafe")));
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Successfully Add To PrivateSafe")));
                               Get.back();
                             },
                             icon: Container(
@@ -929,7 +929,7 @@ class AppBottomSheets {
                           ),
                           Container(
                             height: SizeUtils.verticalBlockSize * 35,
-                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Column(
@@ -1047,7 +1047,7 @@ class AppBottomSheets {
                                       await gallery.fetchGalleryData();
                                       AppToast.toastMessage("File Moved successfully");
 
-                                      Future.delayed(Duration(milliseconds: 300), () {
+                                      Future.delayed(const Duration(milliseconds: 300), () {
                                         Navigation.popupUtil(Routes.kMainScreen);
                                       });
                                     });
@@ -1145,7 +1145,7 @@ class AppBottomSheets {
                           ),
                           Container(
                             height: SizeUtils.verticalBlockSize * 35,
-                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Column(
@@ -1332,7 +1332,7 @@ class AppBottomSheets {
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       const Padding(
@@ -1392,7 +1392,7 @@ class AppBottomSheets {
                             saveindex;
                             Navigation.replaceAll(
                               Routes.kPrivatePhoto,
-                              arg: {saveindex, name2},
+                              arg: {saveindex!.toInt(), name2.text},
                             );
                           },
                           icon: Container(
@@ -1413,6 +1413,138 @@ class AppBottomSheets {
                       ),
                       const SizedBox(
                         height: 30,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+  List text3 = [
+    "Immediately",
+    "30 Days",
+    "60 Days",
+    "Manual Add days",
+  ];
+  void openTrashEmptyTimeIntervalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      isDismissible: false,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, top: 10, left: 20, right: 20),
+                  decoration: const BoxDecoration(
+                      color: AppColor.blackdark, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          "Trans empty time intervaln",
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColor.white),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Divider(
+                          thickness: 1,
+                          color: AppColor.dividercolor,
+                        ),
+                      ),
+                      Column(
+                        children: List.generate(
+                          4,
+                          (index) => RadioListTile(
+                            activeColor: AppColor.purpal.withOpacity(0.7),
+                            title: Text(
+                              text3[index],
+                              style: TextStyle(color: selectedColumn == index ? AppColor.purpal.withOpacity(0.7) : AppColor.greyText, fontSize: 14),
+                            ),
+                            value: index,
+                            groupValue: selectedColumn,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedColumn = value ?? 1;
+                                saveindex = index;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: SizeUtils.verticalBlockSize * 7,
+                        width: SizeUtils.horizontalBlockSize * 90,
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          color: AppColor.dividercolor,
+                        ),
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          controller: name2,
+                          style: TextStyle(color: AppColor.white),
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 20, top: 8),
+                              hintText: "Enter day number",
+                              hintStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, color: AppColor.greyText)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: IconButton(
+                          onPressed: () {
+                            saveindex;
+                            // Navigation.replaceAll(
+                            //   Routes.kPrivatePhoto,
+                            //   arg: {saveindex, name2},
+                            // );
+                            Navigation.pop();
+                          },
+                          icon: Container(
+                            height: SizeUtils.verticalBlockSize * 6,
+                            width: SizeUtils.horizontalBlockSize * 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: AppColor.purpal.withOpacity(0.7),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Ok",
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColor.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
                       )
                     ],
                   ),

@@ -19,7 +19,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
-
 import '../../../../../controller/functions/favoritedb.dart';
 import '../../../../utils/navigation_utils/routes.dart';
 import '../../../../widgets/bottomsheets.dart';

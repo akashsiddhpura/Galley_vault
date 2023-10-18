@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           disabledColor: Colors.transparent,
           backgroundColor: AppColor.primaryClr,
           scaffoldBackgroundColor: AppColor.bgClr),
-      // home: GalleryApp(),
+      // home: HomeScreen(),
       initialRoute: Routes.splash,
       getPages: Routes.routes,
       builder: EasyLoading.init(

@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'package:saf/saf.dart';
-import 'package:video_player/video_player.dart';
 
-import '../../view/widgets/toast_helper.dart';
+import 'package:photo_manager/photo_manager.dart';
+
+import 'package:video_player/video_player.dart';
 
 class PreviewPageProvider extends ChangeNotifier {
   PageController pageController = PageController();
@@ -19,6 +17,22 @@ class PreviewPageProvider extends ChangeNotifier {
   int initialIndex = 0;
   bool loaded = false;
   List<AssetEntity> assetsList = [];
+  bool _isPrivacyScreenVisible = false;
+  bool _camera = false;
+  bool get isPrivacyScreenVisible => _isPrivacyScreenVisible;
+  bool get camera => _camera;
+
+
+
+
+  void togglePrivacyScreen() {
+    _isPrivacyScreenVisible = !_isPrivacyScreenVisible;
+    notifyListeners();
+  }
+  void cameraHide(){
+    _camera = !_camera;
+    notifyListeners();
+  }
 
   void initializeData() {
     assetsList = Get.arguments["assetsList"];
